@@ -6,10 +6,21 @@ const instance = axios.create({
 })
 
 
-export const getTimeAPI = (time: string) => {
-    return instance.get(`ping?frontTime=${time}`)
+export const signUpApi = {
+
+    registration(email: string, password: string) {
+        return instance.post('auth/register', {email, password})
+
+    }
 }
 
 
+
+
+// export const getTimeAPI = (time: string) => {
+//     return instance.get(`ping?frontTime=${time}`)
+// }
+
+
 //types
-export type nameType = {}
+// export type nameType = {}
