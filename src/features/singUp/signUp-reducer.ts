@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
 import {signUpApi} from "./api-signUp";
+import {AppDispatch} from "../../app/store";
 
 const initialState = {
     newUser: {},
@@ -15,7 +16,7 @@ type newUserType = {
 
 type InitialStateType = typeof initialState
 
-export const registrationReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
+export const signUpReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
         case "SET_NEW_USER": {
             return {
@@ -42,7 +43,7 @@ export const setNewUserAC = (payload: InitialStateType) => ({type: 'SET_NEW_USER
 export const setEmailErrorAC = (error: string | null) => ({type: "SET-EMAIL-ERROR", error} as const);
 export const setPasswordErrorAC = (error: string | null) => ({type: "SET-PASSWORD-ERROR", error} as const);
 
-export const setNewUserTC = (email: string, password: string) => (dispatch: Dispatch) => {
+export const setNewUserTC = (email: string, password: string) => (dispatch: AppDispatch) => {
     // dispatch(isFetchingAC(true))
     signUpApi.registration(email, password)
         .then(response => {

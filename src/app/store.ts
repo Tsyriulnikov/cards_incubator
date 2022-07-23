@@ -1,13 +1,31 @@
-import {combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import {profileReducer} from "../features/profile/profile-reducer";
 import {appReducer} from "./app-reducer";
+import {signUpReducer} from "../features/singUp/signUp-reducer";
+import thunkMiddleware from 'redux-thunk'
 
 export const rootReducer = combineReducers({
     profile: profileReducer,
-    auth: appReducer
+    auth: appReducer,
+    registration:signUpReducer,
 })
 
-export const store = createStore(rootReducer)
+//Для DEVTools  Redux
+declare global {
+    interface Window {
+        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    }
+}
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+//
+
+
+
+
+
+// export const store = createStore(rootReducer)
+
+export const store = createStore(rootReducer,  composeEnhancers(applyMiddleware(thunkMiddleware)));
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
