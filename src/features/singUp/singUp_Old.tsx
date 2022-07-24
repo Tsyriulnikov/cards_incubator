@@ -13,7 +13,7 @@ type FormData = {
 };
 
 
-export const SingUp = () => {
+export const SingUp_Old = () => {
     const dispatch = useDispatch()
     const handleClick = () => {
         dispatch(setNewUserTC('1max@mail.com', 'mypassword') as any)
@@ -43,10 +43,12 @@ export const SingUp = () => {
             })} placeholder="Email"/>
             <div style={{height: 40}}>{errors?.email && <p>{errors?.email?.message || 'Error!'}</p>}</div>
 
+
             <input {...register("password", {required: "Password is required!"})} placeholder="Password"/>
             {errors.password && (
                 <p style={{color: "red"}}>{errors.password.message}</p>
             )}
+
 
             <input {...register("confirmPassword", {
                 required: "Please confirm password!",

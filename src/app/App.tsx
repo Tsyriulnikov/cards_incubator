@@ -3,11 +3,11 @@ import './App.css';
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {SingIn} from "../features/singIn/singIn";
 import {Header} from "../common/header/Header";
-import {SingUp} from "../features/singUp/singUp";
 import {Profile} from "../features/profile/profile";
 import {RecoveryPassword} from "../features/recoveryPassword/recoveryPassword";
 import {LogOut} from "../features/logOut/logOut";
 import {ERROR, LOG_OUT, PROFILE, REC_PASSWORD, SING_IN, SING_UP} from "../common/routes/routes";
+import {SingUp} from "../features/singUp/signUp";
 
 function App() {
     return (
