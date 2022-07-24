@@ -3,11 +3,13 @@ import {profileReducer} from "../features/profile/profile-reducer";
 import {appReducer} from "./app-reducer";
 import {signUpReducer} from "../features/singUp/signUp-reducer";
 import thunkMiddleware from 'redux-thunk'
+import {loginReducer} from "../features/singIn/signIn-reducer";
 
 export const rootReducer = combineReducers({
     profile: profileReducer,
     auth: appReducer,
     registration:signUpReducer,
+    login:loginReducer,
 })
 
 //Для DEVTools  Redux

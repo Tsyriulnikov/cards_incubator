@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
 import {setNewUserTC} from "./signUp-reducer";
 import {useForm, Controller} from "react-hook-form";
@@ -7,14 +7,15 @@ import {
     ButtonGroup,
     Checkbox,
     FormControl,
-    FormControlLabel,
+    FormControlLabel, IconButton, InputAdornment,
     Paper,
     TextField,
     Typography
 } from "@material-ui/core";
 import {useNavigate} from "react-router-dom";
 import style from "../singIn/SignIn.module.css";
-
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 interface IFormInput {
     email: string
@@ -26,11 +27,11 @@ const defaultValues = {
     email: '',
     password: '',
     confirmPassword: '',
-    };
+};
 
 export const SingUp = () => {
     const dispatch = useDispatch()
-    const methods = useForm<IFormInput>({defaultValues: defaultValues, mode: "onBlur" });
+    const methods = useForm<IFormInput>({defaultValues: defaultValues, mode: "onBlur"});
     const {handleSubmit, reset, control, getValues, formState: {errors, isValid}} = methods;
     const onSubmit = (data: IFormInput) => {
         dispatch(setNewUserTC(data.email, data.password) as any)
@@ -38,6 +39,12 @@ export const SingUp = () => {
         reset()
     };
 
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
+    const handleMouseDownPassword = () => setShowPassword(!showPassword);
+    const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
+    const handleMouseDownConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
     return (
         <div className={style.loginBlock}>
@@ -51,13 +58,13 @@ export const SingUp = () => {
                         <Controller
                             name={'email'}
                             control={control}
-                            rules={{required: 'Required!',
+                            rules={{
+                                required: 'Email is required!',
                                 pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                             }}
                             render={({
-                                         field: {onChange, value,onBlur},
+                                         field: {onChange, value, onBlur},
                                          fieldState: {error},
-                                         formState
 
                                      }) => (
                                 <TextField label={'Email'}
@@ -78,9 +85,9 @@ export const SingUp = () => {
                         <Controller
                             name={'password'}
                             control={control}
-                            rules={{required: "Password is required!", minLength:7}}
+                            rules={{required: "Password is required!", minLength: 7}}
                             render={({
-                                         field: {onChange, value,onBlur},
+                                         field: {onChange, value, onBlur},
                                          fieldState: {error},
                                          formState,
                                      }) => (
@@ -94,8 +101,20 @@ export const SingUp = () => {
                                            variant="standard"
                                            required={true}
                                            onBlur={onBlur}
-
-
+                                           type={showPassword ? "text" : "password"}
+                                           InputProps={{ // <-- This is where the toggle button is added.
+                                               endAdornment: (
+                                                   <InputAdornment position="end">
+                                                       <IconButton
+                                                           aria-label="toggle password visibility"
+                                                           onClick={handleClickShowPassword}
+                                                           onMouseDown={handleMouseDownPassword}
+                                                       >
+                                                           {showPassword ? <Visibility/> : <VisibilityOff/>}
+                                                       </IconButton>
+                                                   </InputAdornment>
+                                               )
+                                           }}
                                 />
                             )}
                         />
@@ -105,15 +124,17 @@ export const SingUp = () => {
                         <Controller
                             name={'confirmPassword'}
                             control={control}
-                            rules={{ required: "Please confirm password!",minLength:7,
+                            rules={{
+                                required: "Please confirm password!", minLength: 7,
                                 validate: {
-                                matchesPreviousPassword: (value) => {
-                                const {password} = getValues();
-                                return password === value || "Passwords should match!";
-                            }}
+                                    matchesPreviousPassword: (value) => {
+                                        const {password} = getValues();
+                                        return password === value || "Passwords should match!";
+                                    }
+                                }
                             }}
                             render={({
-                                         field: {onChange, value,onBlur},
+                                         field: {onChange, value, onBlur},
                                          fieldState: {error},
                                          formState,
                                      }) => (
@@ -126,7 +147,22 @@ export const SingUp = () => {
                                            fullWidth
                                            variant="standard"
                                            required={true}
-                                           onBlur={onBlur}/>
+                                           onBlur={onBlur}
+                                           type={showConfirmPassword ? "text" : "password"}
+                                           InputProps={{ // <-- This is where the toggle button is added.
+                                               endAdornment: (
+                                                   <InputAdornment position="end">
+                                                       <IconButton
+                                                           aria-label="toggle password visibility"
+                                                           onClick={handleClickShowConfirmPassword}
+                                                           onMouseDown={handleMouseDownConfirmPassword}
+                                                       >
+                                                           {showConfirmPassword ? <Visibility/> : <VisibilityOff/>}
+                                                       </IconButton>
+                                                   </InputAdornment>
+                                               )
+                                           }}
+                                />
                             )}
                         />
 

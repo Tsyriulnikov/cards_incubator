@@ -1,4 +1,3 @@
-import {Dispatch} from "redux";
 import {signUpApi} from "./api-signUp";
 import {AppDispatch} from "../../app/store";
 
