@@ -8,6 +8,7 @@ import {RecoveryPassword} from "../features/recoveryPassword/recoveryPassword";
 import {LogOut} from "../features/logOut/logOut";
 import {ERROR, LOG_OUT, PROFILE, REC_PASSWORD, SING_IN, SING_UP} from "../common/routes/routes";
 import {SingUp} from "../features/singUp/signUp";
+import {NotFound404} from "../features/notFound404/notFound404";
 
 function App() {
     return (
@@ -20,11 +21,14 @@ function App() {
                     <Route path={SING_UP} element={<SingUp/>}/>
                     <Route path={REC_PASSWORD} element={<RecoveryPassword/>}/>
                     <Route path={LOG_OUT} element={<LogOut/>}/>
-                    <Route path={ERROR} element={<LogOut/>}/>
-                    <Route path={'*'} element={<Navigate to={ERROR}/>}/>
+                    {/*<Route path={ERROR} element={<LogOut/>}/>*/}
+                    {/*<Route path={'*'} element={<Navigate to={ERROR}/>}/>*/}
+                    <Route path={ERROR} element={<NotFound404/>}/>
+                    <Route path={'*'} element={<Navigate to="/404"/>}/>
+
                 </Routes>
             </div>
-        </BrowserRouter>
+         </BrowserRouter>
     );
 }
 

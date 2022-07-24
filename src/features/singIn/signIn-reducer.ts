@@ -35,7 +35,6 @@ export const loginReducer = (state: LoginInitialStateType = loginInitialState, a
         case 'SET_USER_DATA':
             return {
                 ...state,
-                // user: action.payload,
                 isAuth: true
             }
         case "IS-FETCHING":

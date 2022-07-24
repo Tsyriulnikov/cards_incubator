@@ -5,6 +5,7 @@ import App from './app/App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux';
 import {store} from "./app/store";
+import {BrowserRouter} from "react-router-dom";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -12,7 +13,7 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <Provider store={store}>
-            <App/>
+                <App/>
         </Provider>
     </React.StrictMode>
 );

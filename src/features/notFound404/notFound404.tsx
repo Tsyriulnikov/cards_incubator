@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Error = () => {
+export const NotFound404 = () => {
     return (
         <div>
 404
