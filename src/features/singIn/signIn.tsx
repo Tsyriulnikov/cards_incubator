@@ -36,7 +36,7 @@ const defaultValues = {
     rememberMe: false,
 };
 
-export const SingIn = () => {
+export const SignIn = () => {
     const dispatch = useDispatch<ThunkDispatch<AppRootStateType,unknown,Action> & AppDispatch>()
     const methods = useForm<IFormInput>({defaultValues: defaultValues, mode: "onBlur"});
     const {handleSubmit, reset, control, getValues, formState: {errors, isValid}} = methods;

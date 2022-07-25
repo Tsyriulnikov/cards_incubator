@@ -1,9 +1,6 @@
 import {Dispatch} from "redux";
 import {profileAPI} from "../features/profile/profile-api";
 
-// export type AppType = {
-//     isLoggedIn: boolean
-// }
 
 const initialState: InitialStateType = {
     status: 'idle',

@@ -35,7 +35,7 @@ const defaultValues = {
     confirmPassword: '',
 };
 
-export const SingUp = () => {
+export const SignUp = () => {
         const dispatch = useDispatch<ThunkDispatch<AppRootStateType,unknown,Action> & AppDispatch>()
 
     const isFetching = useSelector<AppRootStateType, boolean>((state) => state.login.isFetching);
