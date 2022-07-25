@@ -20,6 +20,7 @@ import {Navigate} from "react-router-dom";
 import {SING_IN} from "../../common/routes/routes";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
+import {ErrorSnackbar} from "../../utils/ErrorSnackbar/ErrorSnackbar";
 
 
 interface IFormInput {
@@ -62,12 +63,14 @@ export const SingUp = () => {
      if (isRegistration) {return <Navigate to = {SING_IN}/>};
 
 
-    if (isFetching) {
-        return <div>Loading...</div>
-    }
+    // if (isFetching) {
+    //     return <div>Loading...</div>
+    // }
     return (
-
         <div className={style.loginBlock}>
+
+            <ErrorSnackbar/>
+
             <Paper elevation={3} className={style.loginBlockForm}>
                 <Typography variant={'h4'}>
                     SIGN UP

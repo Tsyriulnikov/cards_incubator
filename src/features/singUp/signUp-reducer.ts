@@ -1,6 +1,7 @@
 import {signUpApi} from "./api-signUp";
 import {AppDispatch} from "../../app/store";
 import {isFetchingAC} from "../singIn/signIn-reducer";
+import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
 const initialState = {
     newUser: {},
@@ -49,12 +50,17 @@ export const setNewUserTC = (email: string, password: string) => (dispatch: AppD
     dispatch(isFetchingAC(true))
     signUpApi.registration(email, password)
         .then(response => {
-            console.log(response.data)
+            // console.log(response.data)
             dispatch(setNewUserAC(response.data))
+
         })
-        .catch((e) => {
-            const error = e.response ? e.response.data.error : (e.message + ", more details in the console")
-            dispatch(setEmailErrorAC(error))
+        .catch((error) => {
+            const errorResponse = error.response ? error.response.data.error : (error.message + ", more details in the console")
+            // dispatch(setEmailErrorAC(error))
+            console.log(errorResponse)
+            handleServerAppError(errorResponse, dispatch)
+
+            // handleServerNetworkError(error, dispatch)
         })
         .finally(() => {
             dispatch(isFetchingAC(false))
