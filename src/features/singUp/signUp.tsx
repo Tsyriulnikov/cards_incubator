@@ -15,9 +15,11 @@ import {
 import style from "../singIn/SignIn.module.css";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import {AppRootStateType} from "../../app/store";
+import {AppDispatch, AppRootStateType} from "../../app/store";
 import {Navigate} from "react-router-dom";
 import {SING_IN} from "../../common/routes/routes";
+import {ThunkDispatch} from "redux-thunk";
+import {Action} from "redux";
 
 
 interface IFormInput {
@@ -33,17 +35,17 @@ const defaultValues = {
 };
 
 export const SingUp = () => {
-    const dispatch = useDispatch()
+        const dispatch = useDispatch<ThunkDispatch<AppRootStateType,unknown,Action> & AppDispatch>()
 
     const isFetching = useSelector<AppRootStateType, boolean>((state) => state.login.isFetching);
-    const isAuth = useSelector<AppRootStateType, boolean>(state => state.login.isAuth)
+    const isRegistration = useSelector<AppRootStateType, boolean>(state => state.registration.isReg)
 
 
 
     const methods = useForm<IFormInput>({defaultValues: defaultValues, mode: "onBlur"});
     const {handleSubmit, reset, control, getValues, formState: {errors, isValid}} = methods;
     const onSubmit = (data: IFormInput) => {
-        dispatch(setNewUserTC(data.email, data.password) as any)
+        dispatch(setNewUserTC(data.email, data.password))
         console.log(data)
         reset()
     };
@@ -55,12 +57,14 @@ export const SingUp = () => {
     const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
     const handleMouseDownConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
-    // console.log(isAuth)
+    console.log((isRegistration).toString()+'reg')
     // Если не залогинелись то редирект на страницу login
-    //  if (!isAuth) {return <Navigate to = {SING_IN}/>};
+     if (isRegistration) {return <Navigate to = {SING_IN}/>};
 
 
-
+    if (isFetching) {
+        return <div>Loading...</div>
+    }
     return (
 
         <div className={style.loginBlock}>

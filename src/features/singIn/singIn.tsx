@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import style from './SignIn.module.css';
 import {
@@ -11,12 +11,18 @@ import {
     TextField,
     Typography
 } from "@material-ui/core";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Controller, useForm} from "react-hook-form";
 import {getAuthUserData} from "./signIn-reducer";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import {useNavigate} from "react-router-dom";
+import {AppDispatch, AppRootStateType} from "../../app/store";
+import {PROFILE, SING_UP} from "../../common/routes/routes";
+import {Navigate} from "react-router-dom";
+import {Profile} from "../profile/profile";
+import {ThunkDispatch} from "redux-thunk";
+import {Action} from "redux";
 
 interface IFormInput {
     email: string
@@ -31,11 +37,11 @@ const defaultValues = {
 };
 
 export const SingIn = () => {
-    const dispatch = useDispatch()
-        const methods = useForm<IFormInput>({defaultValues: defaultValues, mode: "onBlur"});
+    const dispatch = useDispatch<ThunkDispatch<AppRootStateType,unknown,Action> & AppDispatch>()
+    const methods = useForm<IFormInput>({defaultValues: defaultValues, mode: "onBlur"});
     const {handleSubmit, reset, control, getValues, formState: {errors, isValid}} = methods;
     const onSubmit = (data: IFormInput) => {
-        dispatch(getAuthUserData(data.email, data.password, data.rememberMe) as any)
+        dispatch(getAuthUserData(data.email, data.password, data.rememberMe))
         console.log(data)
         reset()
     };
@@ -43,6 +49,13 @@ export const SingIn = () => {
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
     const navigate = useNavigate()
+
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isAuth)
+    console.log(isLoggedIn)
+    // if (isLoggedIn) {return <Navigate to = {SING_UP} replace={true}/>};
+
+
+
     return (
         <div className={style.loginBlock}>
             <Paper elevation={3} className={style.loginBlockForm}>
@@ -142,7 +155,7 @@ export const SingIn = () => {
                         <Typography variant={'subtitle2'} component={'div'} className={style.textQuestion}>
                             Don't have an account?
                         </Typography>
-                        <Button variant={'text'} color={'primary'} onClick={() => {navigate('SING_UP')}}>
+                        <Button variant={'text'} color={'primary'} onClick={() => {navigate(SING_UP,{replace:true})}}>
                             Sign Up
                         </Button>
                     </FormControl>

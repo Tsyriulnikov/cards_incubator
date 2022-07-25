@@ -153,7 +153,7 @@ export const updateProfileDataTC = (name: string, avatar: string) => (dispatch: 
     authAPI.updateProfile(name, avatar)
         .then(response => {
                 dispatch(updateUserProfileAC(response.data.updatedUser))
-                dispatch(getProfileUserdataTC())
+                // dispatch(getProfileUserdataTC())
             }
         ).catch((e) => {
         const error = e.response ? e.response.data.error : (e.message + ', more details in the console')

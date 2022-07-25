@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {LoginParamsType, profileAPI} from "./profile-api";
-// import {setIsLoggedInAC} from "../../app/app-reducer";
+import {setIsLoggedInAC} from "../../app/app-reducer";
 
 
 export type ProfileType = {
@@ -78,7 +78,7 @@ export const loginTC = (data: LoginParamsType) => {
     return (dispatch:Dispatch) => {
         profileAPI.login(data)
             .then((res) => {
-                // dispatch(setIsLoggedInAC(true))
+                dispatch(setIsLoggedInAC(true))
                 dispatch(setProfileAC(res.data))
             })
     }
@@ -87,7 +87,7 @@ export const logoutTC = () => {
     return (dispatch:Dispatch) => {
         profileAPI.logout()
             .then((res) => {
-                // dispatch(setIsLoggedInAC(false))
+                dispatch(setIsLoggedInAC(false))
             })
     }
 }

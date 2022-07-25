@@ -12,7 +12,7 @@ import {NotFound404} from "../features/notFound404/notFound404";
 
 function App() {
     return (
-        <BrowserRouter>
+        // <BrowserRouter>
             <div className="App">
                 <Header/>
                 <Routes>
@@ -28,7 +28,7 @@ function App() {
 
                 </Routes>
             </div>
-         </BrowserRouter>
+         // </BrowserRouter>
     );
 }
 
