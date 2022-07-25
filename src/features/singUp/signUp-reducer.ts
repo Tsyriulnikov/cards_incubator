@@ -1,5 +1,6 @@
 import {signUpApi} from "./api-signUp";
 import {AppDispatch} from "../../app/store";
+import {isFetchingAC} from "../singIn/signIn-reducer";
 
 const initialState = {
     newUser: {},
@@ -43,7 +44,7 @@ export const setEmailErrorAC = (error: string | null) => ({type: "SET-EMAIL-ERRO
 export const setPasswordErrorAC = (error: string | null) => ({type: "SET-PASSWORD-ERROR", error} as const);
 
 export const setNewUserTC = (email: string, password: string) => (dispatch: AppDispatch) => {
-    // dispatch(isFetchingAC(true))
+    dispatch(isFetchingAC(true))
     signUpApi.registration(email, password)
         .then(response => {
             console.log(response.data)
@@ -54,7 +55,7 @@ export const setNewUserTC = (email: string, password: string) => (dispatch: AppD
             dispatch(setEmailErrorAC(error))
         })
         .finally(() => {
-            // dispatch(isFetchingAC(false))
+            dispatch(isFetchingAC(false))
         })
 }
 

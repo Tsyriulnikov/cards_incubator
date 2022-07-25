@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {setNewUserTC} from "./signUp-reducer";
 import {useForm, Controller} from "react-hook-form";
 import {
@@ -12,10 +12,13 @@ import {
     TextField,
     Typography
 } from "@material-ui/core";
-import {useNavigate} from "react-router-dom";
 import style from "../singIn/SignIn.module.css";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import {AppRootStateType} from "../../app/store";
+import {Navigate} from "react-router-dom";
+import {SING_IN} from "../../common/routes/routes";
+
 
 interface IFormInput {
     email: string
@@ -31,6 +34,12 @@ const defaultValues = {
 
 export const SingUp = () => {
     const dispatch = useDispatch()
+
+    const isFetching = useSelector<AppRootStateType, boolean>((state) => state.login.isFetching);
+    const isAuth = useSelector<AppRootStateType, boolean>(state => state.login.isAuth)
+
+
+
     const methods = useForm<IFormInput>({defaultValues: defaultValues, mode: "onBlur"});
     const {handleSubmit, reset, control, getValues, formState: {errors, isValid}} = methods;
     const onSubmit = (data: IFormInput) => {
@@ -46,7 +55,14 @@ export const SingUp = () => {
     const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
     const handleMouseDownConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
+    // console.log(isAuth)
+    // Если не залогинелись то редирект на страницу login
+    //  if (!isAuth) {return <Navigate to = {SING_IN}/>};
+
+
+
     return (
+
         <div className={style.loginBlock}>
             <Paper elevation={3} className={style.loginBlockForm}>
                 <Typography variant={'h4'}>

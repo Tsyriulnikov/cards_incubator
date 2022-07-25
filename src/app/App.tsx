@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {SingIn} from "../features/singIn/singIn";
-import {Header} from "../common/header/Header";
+import Header from "../common/header/Header";
 import {Profile} from "../features/profile/profile";
 import {RecoveryPassword} from "../features/recoveryPassword/recoveryPassword";
 import {LogOut} from "../features/logOut/logOut";
