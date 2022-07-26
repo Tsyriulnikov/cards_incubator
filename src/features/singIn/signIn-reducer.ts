@@ -1,5 +1,6 @@
 import {AppDispatch} from "../../app/store";
 import {authAPI} from "./api-signIn";
+import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
 
 export type LoginInitialStateType = typeof loginInitialState
@@ -24,8 +25,8 @@ const loginInitialState = {
         email: '',
     },
     isFetching: false,
-    emailError: null as null | string,
-    passwordError: null as null | string,
+    // emailError: null as null | string,
+    // passwordError: null as null | string,
     isAuth: false,
     userID: ""
 }
@@ -42,16 +43,16 @@ export const loginReducer = (state: LoginInitialStateType = loginInitialState, a
                 ...state,
                 isFetching: action.isFetching
             }
-        case "SET-EMAIL-ERROR":
-            return {
-                ...state,
-                emailError: action.error
-            }
-        case "SET-PASSWORD-ERROR":
-            return {
-                ...state,
-                passwordError: action.error
-            }
+        // case "SET-EMAIL-ERROR":
+        //     return {
+        //         ...state,
+        //         emailError: action.error
+        //     }
+        // case "SET-PASSWORD-ERROR":
+        //     return {
+        //         ...state,
+        //         passwordError: action.error
+        //     }
         case "SET-USER-ID":
             return {
                 ...state,
@@ -88,8 +89,8 @@ export const loginReducer = (state: LoginInitialStateType = loginInitialState, a
 
 export const setAuthUserDataAC = (payload: LoginInitialStateType) => ({type: 'SET_USER_DATA', payload}) as const
 export const isFetchingAC = (isFetching: boolean) => ({type: "IS-FETCHING", isFetching} as const)
-export const setEmailErrorAC = (error: string | null) => ({type: "SET-EMAIL-ERROR", error} as const)
-export const setPasswordErrorAC = (error: string | null) => ({type: "SET-PASSWORD-ERROR", error} as const)
+// export const setEmailErrorAC = (error: string | null) => ({type: "SET-EMAIL-ERROR", error} as const)
+// export const setPasswordErrorAC = (error: string | null) => ({type: "SET-PASSWORD-ERROR", error} as const)
 export const setUserID = (userID: string) => ({type: "SET-USER-ID", userID} as const)
 export const logoutAC = () => ({type: "LOGOUT"} as const)
 export const updateUserProfileAC = (user: UserDataType) => ({type: 'UPDATE_PROFILE', payload: {user}} as const)
@@ -104,10 +105,13 @@ export const getAuthUserData = (email: string, password: string, rememberMe: boo
                 dispatch(setAuthUserDataAC(response.data))
                 dispatch(setUserID(response.data._id))
             }
-        ).catch((e) => {
-        const error = e.response ? e.response.data.error : (e.message + ", more details in the console")
-        console.log(error)
-        dispatch(setEmailErrorAC(error))
+        ).catch((error) => {
+         const errorResponse = error.response ? error.response.data.error : (error.message + ", more details in the console")
+        //Ошибки из ответа
+        handleServerAppError(errorResponse, dispatch)
+        //Серверные ошибки
+        // handleServerNetworkError(error, dispatch)
+
     })
         .finally(() => {
             dispatch(isFetchingAC(false))
@@ -133,7 +137,7 @@ export const isAuthUserData = () => (dispatch: AppDispatch) => {
             }
         ).catch((e) => {
         const error = e.response ? e.response.data.error : (e.message + ", more details in the console")
-        dispatch(setEmailErrorAC(error))
+        // dispatch(setEmailErrorAC(error))
     })
 }
 
@@ -144,7 +148,7 @@ export const logoutTC = () => (dispatch: AppDispatch) => {
             }
         ).catch((e) => {
         const error = e.response ? e.response.data.error : (e.message + ", more details in the console")
-        dispatch(setEmailErrorAC(error))
+        // dispatch(setEmailErrorAC(error))
     })
 }
 
@@ -166,8 +170,8 @@ export const updateProfileDataTC = (name: string, avatar: string) => (dispatch: 
 
 export type ActionsType =
     | ReturnType<typeof setAuthUserDataAC>
-    | ReturnType<typeof setEmailErrorAC>
-    | ReturnType<typeof setPasswordErrorAC>
+    // | ReturnType<typeof setEmailErrorAC>
+    // | ReturnType<typeof setPasswordErrorAC>
     | ReturnType<typeof isFetchingAC>
     | ReturnType<typeof setUserID>
     | ReturnType<typeof logoutAC>

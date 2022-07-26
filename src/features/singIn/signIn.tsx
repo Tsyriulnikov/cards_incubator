@@ -23,6 +23,7 @@ import {Navigate} from "react-router-dom";
 import {Profile} from "../profile/profile";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
+import {ErrorSnackbar} from "../../utils/ErrorSnackbar/ErrorSnackbar";
 
 interface IFormInput {
     email: string
@@ -58,6 +59,7 @@ export const SignIn = () => {
 
     return (
         <div className={style.loginBlock}>
+            <ErrorSnackbar/>
             <Paper elevation={3} className={style.loginBlockForm}>
                 <Typography variant={'h4'}>
                     SIGN IN

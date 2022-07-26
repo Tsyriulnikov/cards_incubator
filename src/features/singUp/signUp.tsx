@@ -58,10 +58,8 @@ export const SignUp = () => {
     const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
     const handleMouseDownConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
-    console.log((isRegistration).toString()+'reg')
-    // Если не залогинелись то редирект на страницу login
+     // Если не залогинелись то редирект на страницу login
      if (isRegistration) {return <Navigate to = {SING_IN}/>};
-
 
     // if (isFetching) {
     //     return <div>Loading...</div>

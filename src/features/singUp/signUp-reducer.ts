@@ -5,10 +5,7 @@ import {handleServerAppError, handleServerNetworkError} from "../../utils/error-
 
 const initialState = {
     newUser: {},
-    isReg:false,
-    emailError: null as null | string,
-    passwordError: null as null | string,
-
+    isReg: false,
 }
 
 type newUserType = {
@@ -26,25 +23,13 @@ export const signUpReducer = (state: InitialStateType = initialState, action: Ac
                 newUser: action.payload, isReg: true
             }
         }
-        case "SET-EMAIL-ERROR":
-            return {
-                ...state,
-                emailError: action.error
-            }
-        case "SET-PASSWORD-ERROR":
-            return {
-                ...state,
-                passwordError: action.error
-            }
         default:
             return state
     }
 }
 
 export const setNewUserAC = (payload: InitialStateType) => ({type: 'SET_NEW_USER', payload} as const);
-export const setEmailErrorAC = (error: string | null) => ({type: "SET-EMAIL-ERROR", error} as const);
-export const setPasswordErrorAC = (error: string | null) => ({type: "SET-PASSWORD-ERROR", error} as const);
-// export const setRegistrationAC = () => ({type: "SET-REGISTRATION"} as const);
+export const setRegistrationAC = () => ({type: "SET-REGISTRATION"} as const);
 
 export const setNewUserTC = (email: string, password: string) => (dispatch: AppDispatch) => {
     dispatch(isFetchingAC(true))
@@ -56,11 +41,10 @@ export const setNewUserTC = (email: string, password: string) => (dispatch: AppD
         })
         .catch((error) => {
             const errorResponse = error.response ? error.response.data.error : (error.message + ", more details in the console")
-            // dispatch(setEmailErrorAC(error))
-            console.log(errorResponse)
+            //Ошибки из ответа
             handleServerAppError(errorResponse, dispatch)
-
-            // handleServerNetworkError(error, dispatch)
+            //Серверные ошибки
+            handleServerNetworkError(error, dispatch)
         })
         .finally(() => {
             dispatch(isFetchingAC(false))
@@ -70,6 +54,4 @@ export const setNewUserTC = (email: string, password: string) => (dispatch: AppD
 export type SetNewUserType = ReturnType<typeof setNewUserAC>;
 
 type ActionType = SetNewUserType
-    | ReturnType<typeof setEmailErrorAC>
-    | ReturnType<typeof setPasswordErrorAC>
-    // | ReturnType<typeof setRegistrationAC>;
+     | ReturnType<typeof setRegistrationAC>;
