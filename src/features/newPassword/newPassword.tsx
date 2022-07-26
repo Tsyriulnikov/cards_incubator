@@ -1,23 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import style from '../singIn/SignIn.module.css';
 import {
     Button, ButtonGroup,
-    FormControl,
+    FormControl, IconButton, InputAdornment,
     Paper,
     TextField,
     Typography
 } from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {Controller, useForm} from "react-hook-form";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {AppDispatch, AppRootStateType} from "../../app/store";
 import {SING_IN, SING_UP} from "../../common/routes/routes";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
 import {ErrorSnackbar} from "../../utils/ErrorSnackbar/ErrorSnackbar";
-import {recoverTC} from "./recoveryPassword-reducer";
-
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import {newPasswordTC} from "./newPassword-reducer";
+import {Navigate} from "react-router-dom";
 interface IFormInput {
     email: string
     password: string
@@ -25,41 +27,47 @@ interface IFormInput {
 }
 
 const defaultValues = {
-    email: '',
-   };
+    password: '',
+};
 
-export const RecoveryPassword = () => {
-    const dispatch = useDispatch<ThunkDispatch<AppRootStateType,unknown,Action> & AppDispatch>()
+export const NewPassword = () => {
+    const {token} = useParams<{ token: string }>();
+    const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
     const methods = useForm<IFormInput>({defaultValues: defaultValues, mode: "onBlur"});
     const {handleSubmit, reset, control, getValues, formState: {errors, isValid}} = methods;
     const onSubmit = (data: IFormInput) => {
-        dispatch(recoverTC(data.email))
-        console.log(data)
+        dispatch(newPasswordTC(data.password,token))
+        // console.log(data, token)
         reset()
     };
     const navigate = useNavigate()
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
+    const handleMouseDownPassword = () => setShowPassword(!showPassword);
+
+    const newPassSucces = useSelector<AppRootStateType, boolean>(state => state.newPass.success)
+         if (newPassSucces) {return <Navigate to = {SING_IN} replace={true}/>};
+
     return (
         <div className={style.loginBlock}>
             <ErrorSnackbar/>
             <Paper elevation={3} className={style.loginBlockForm}>
                 <Typography variant={'h4'}>
-                    Forgot your password?
+                    Create new password
                 </Typography>
                 <form className={style.loginForm}>
                     <FormControl style={{width: '100%'}}>
-                        {/*//Email*/}
+                        {/*//Password*/}
                         <Controller
-                            name={'email'}
+                            name={'password'}
                             control={control}
-                            rules={{
-                                required: 'Email is required!',
-                                pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                            }}
+                            rules={{required: "Password is required!", minLength: 7}}
                             render={({
                                          field: {onChange, value, onBlur},
                                          fieldState: {error},
+                                         formState,
                                      }) => (
-                                <TextField label={'Email'}
+                                <TextField label={'Password'}
                                            helperText={error ? error.message : null}
                                            size="medium"
                                            error={!!error}
@@ -69,11 +77,26 @@ export const RecoveryPassword = () => {
                                            variant="standard"
                                            required={true}
                                            onBlur={onBlur}
+                                           type={showPassword ? "text" : "password"}
+                                           InputProps={{ // <-- This is where the toggle button is added.
+                                               endAdornment: (
+                                                   <InputAdornment position="end">
+                                                       <IconButton
+                                                           aria-label="toggle password visibility"
+                                                           onClick={handleClickShowPassword}
+                                                           onMouseDown={handleMouseDownPassword}
+                                                       >
+                                                           {showPassword ? <Visibility/> : <VisibilityOff/>}
+                                                       </IconButton>
+                                                   </InputAdornment>
+                                               )
+                                           }}
                                 />
                             )}
                         />
+
                         <Typography variant={'subtitle1'}>
-                            Enter your email address and we will send you further instructions
+                            Create new password and we will send you further instructions to email
                         </Typography>
 
                         <ButtonGroup disableElevation variant="contained" color="primary" style={{
@@ -82,19 +105,11 @@ export const RecoveryPassword = () => {
                         }}>
                             <Button onClick={handleSubmit(onSubmit)} variant={"contained"}
                                     disabled={!isValid} style={{
-                                width:'100%'
+                                width: '100%'
                             }}>
-                                Send instructions
+                                Create new password
                             </Button>
                         </ButtonGroup>
-
-
-                        <Typography variant={'subtitle2'} component={'div'} className={style.textQuestion}>
-                            Did you remember your password?
-                        </Typography>
-                        <Button variant={'text'} color={'primary'} onClick={() => {navigate(SING_IN,{replace:true})}}>
-                            Try logging in
-                        </Button>
                     </FormControl>
                 </form>
             </Paper>

@@ -14,6 +14,7 @@
     flex-direction: column;
     align-items: center;
     align-self: center;
+    justify-content: space-evenly;
 }
 .loginForm {
     width: 100%;

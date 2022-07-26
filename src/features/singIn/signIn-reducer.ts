@@ -25,8 +25,6 @@ const loginInitialState = {
         email: '',
     },
     isFetching: false,
-    // emailError: null as null | string,
-    // passwordError: null as null | string,
     isAuth: false,
     userID: ""
 }
@@ -43,16 +41,7 @@ export const loginReducer = (state: LoginInitialStateType = loginInitialState, a
                 ...state,
                 isFetching: action.isFetching
             }
-        // case "SET-EMAIL-ERROR":
-        //     return {
-        //         ...state,
-        //         emailError: action.error
-        //     }
-        // case "SET-PASSWORD-ERROR":
-        //     return {
-        //         ...state,
-        //         passwordError: action.error
-        //     }
+
         case "SET-USER-ID":
             return {
                 ...state,
@@ -89,8 +78,6 @@ export const loginReducer = (state: LoginInitialStateType = loginInitialState, a
 
 export const setAuthUserDataAC = (payload: LoginInitialStateType) => ({type: 'SET_USER_DATA', payload}) as const
 export const isFetchingAC = (isFetching: boolean) => ({type: "IS-FETCHING", isFetching} as const)
-// export const setEmailErrorAC = (error: string | null) => ({type: "SET-EMAIL-ERROR", error} as const)
-// export const setPasswordErrorAC = (error: string | null) => ({type: "SET-PASSWORD-ERROR", error} as const)
 export const setUserID = (userID: string) => ({type: "SET-USER-ID", userID} as const)
 export const logoutAC = () => ({type: "LOGOUT"} as const)
 export const updateUserProfileAC = (user: UserDataType) => ({type: 'UPDATE_PROFILE', payload: {user}} as const)

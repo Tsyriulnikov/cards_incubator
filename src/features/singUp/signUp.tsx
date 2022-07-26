@@ -36,11 +36,10 @@ const defaultValues = {
 };
 
 export const SignUp = () => {
-        const dispatch = useDispatch<ThunkDispatch<AppRootStateType,unknown,Action> & AppDispatch>()
+    const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
 
     const isFetching = useSelector<AppRootStateType, boolean>((state) => state.login.isFetching);
     const isRegistration = useSelector<AppRootStateType, boolean>(state => state.registration.isReg)
-
 
 
     const methods = useForm<IFormInput>({defaultValues: defaultValues, mode: "onBlur"});
@@ -58,8 +57,11 @@ export const SignUp = () => {
     const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
     const handleMouseDownConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
-     // Если не залогинелись то редирект на страницу login
-     if (isRegistration) {return <Navigate to = {SING_IN}/>};
+    // Если не залогинелись то редирект на страницу login
+    if (isRegistration) {
+        return <Navigate to={SING_IN}/>
+    }
+    ;
 
     // if (isFetching) {
     //     return <div>Loading...</div>

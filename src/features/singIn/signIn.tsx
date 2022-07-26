@@ -18,7 +18,7 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import {useNavigate} from "react-router-dom";
 import {AppDispatch, AppRootStateType} from "../../app/store";
-import {PROFILE, SING_UP} from "../../common/routes/routes";
+import {PROFILE, REC_PASSWORD, SING_UP} from "../../common/routes/routes";
 import {Navigate} from "react-router-dom";
 import {Profile} from "../profile/profile";
 import {ThunkDispatch} from "redux-thunk";
@@ -136,10 +136,10 @@ export const SignIn = () => {
 
 
                         <FormControlLabel label={'Remember me'} control={<Checkbox/>}/>
-                        <Button variant={'text'} size={'small'} className={style.btnForgotPass}>
+                        <Button variant={'text'} size={'small'} className={style.btnForgotPass}
+                                onClick={() => {navigate(REC_PASSWORD,{replace:true})}}>
                             Forgot Password
                         </Button>
-                        {/*<Button type={'submit'} variant={'contained'} color={'primary'} style={{marginTop:'100px'}}>*/}
 
                         <ButtonGroup disableElevation variant="contained" color="primary" style={{
                             marginTop: '100px',
