@@ -21,6 +21,7 @@ import {SING_IN} from "../../common/routes/routes";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
 import {ErrorSnackbar} from "../../utils/ErrorSnackbar/ErrorSnackbar";
+import {emailValidation, passwordValidation} from "../singIn/validation";
 
 
 interface IFormInput {
@@ -82,10 +83,7 @@ export const SingUp = () => {
                         <Controller
                             name={'email'}
                             control={control}
-                            rules={{
-                                required: 'Email is required!',
-                                pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                            }}
+                            rules={emailValidation}
                             render={({
                                          field: {onChange, value, onBlur},
                                          fieldState: {error},
@@ -109,7 +107,7 @@ export const SingUp = () => {
                         <Controller
                             name={'password'}
                             control={control}
-                            rules={{required: "Password is required!", minLength: 7}}
+                            rules={passwordValidation}
                             render={({
                                          field: {onChange, value, onBlur},
                                          fieldState: {error},
