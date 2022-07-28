@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
 
 import style from '../singIn/SignIn.module.css';
-import {
-    Button, ButtonGroup,
-    FormControl, IconButton, InputAdornment,
-    Paper,
-    TextField,
-    Typography
-} from "@material-ui/core";
+import FormControl from '@mui/material/FormControl';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
 import {useDispatch, useSelector} from "react-redux";
 import {Controller, useForm} from "react-hook-form";
 import {useParams} from "react-router-dom";
@@ -20,6 +18,9 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import {newPasswordTC, setNewPasswordSuccessAC} from "./newPassword-reducer";
 import {Navigate} from "react-router-dom";
+import {ButtonGroup, InputAdornment} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import {passwordValidation} from "../singIn/validation";
 interface IFormInput {
     email: string
     password: string
@@ -62,7 +63,7 @@ export const NewPassword = () => {
                         <Controller
                             name={'password'}
                             control={control}
-                            rules={{required: "Password is required!", minLength: 7}}
+                            rules={passwordValidation}
                             render={({
                                          field: {onChange, value, onBlur},
                                          fieldState: {error},

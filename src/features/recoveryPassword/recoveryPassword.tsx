@@ -1,13 +1,11 @@
 import React from 'react';
 
 import style from '../singIn/SignIn.module.css';
-import {
-    Button, ButtonGroup,
-    FormControl,
-    Paper,
-    TextField,
-    Typography
-} from "@material-ui/core";
+import FormControl from '@mui/material/FormControl';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
 import {useDispatch, useSelector} from "react-redux";
 import {Controller, useForm} from "react-hook-form";
 import {Navigate, useNavigate} from "react-router-dom";
@@ -17,6 +15,8 @@ import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
 import {ErrorSnackbar} from "../../utils/ErrorSnackbar/ErrorSnackbar";
 import {recoverTC, setRecoveryPasswordSuccessAC} from "./recoveryPassword-reducer";
+import {ButtonGroup} from "@mui/material";
+import {emailValidation} from "../singIn/validation";
 
 
 interface IFormInput {
@@ -59,10 +59,7 @@ export const RecoveryPassword = () => {
                         <Controller
                             name={'email'}
                             control={control}
-                            rules={{
-                                required: 'Email is required!',
-                                pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                            }}
+                            rules={emailValidation}
                             render={({
                                          field: {onChange, value, onBlur},
                                          fieldState: {error},

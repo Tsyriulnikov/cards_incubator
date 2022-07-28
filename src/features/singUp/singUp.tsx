@@ -2,16 +2,14 @@ import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {setNewUserAC, setNewUserTC} from "./signUp-reducer";
 import {useForm, Controller} from "react-hook-form";
-import {
-    Button,
-    ButtonGroup,
-    Checkbox,
-    FormControl,
-    FormControlLabel, IconButton, InputAdornment,
-    Paper,
-    TextField,
-    Typography
-} from "@material-ui/core";
+
+import FormControl from '@mui/material/FormControl';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+
+
 import style from "../singIn/SignIn.module.css";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
@@ -22,6 +20,8 @@ import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
 import {ErrorSnackbar} from "../../utils/ErrorSnackbar/ErrorSnackbar";
 import {emailValidation, passwordValidation} from "../singIn/validation";
+import {ButtonGroup, InputAdornment} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 
 
 interface IFormInput {
