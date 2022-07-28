@@ -10,13 +10,14 @@ import {
 } from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {Controller, useForm} from "react-hook-form";
-import {useNavigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import {AppDispatch, AppRootStateType} from "../../app/store";
-import {SING_IN, SING_UP} from "../../common/routes/routes";
+import {SING_IN} from "../../common/routes/routes";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
 import {ErrorSnackbar} from "../../utils/ErrorSnackbar/ErrorSnackbar";
-import {recoverTC} from "./recoveryPassword-reducer";
+import {recoverTC, setRecoveryPasswordSuccessAC} from "./recoveryPassword-reducer";
+
 
 interface IFormInput {
     email: string
@@ -26,18 +27,25 @@ interface IFormInput {
 
 const defaultValues = {
     email: '',
-   };
+};
 
 export const RecoveryPassword = () => {
-    const dispatch = useDispatch<ThunkDispatch<AppRootStateType,unknown,Action> & AppDispatch>()
+    const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
     const methods = useForm<IFormInput>({defaultValues: defaultValues, mode: "onBlur"});
-    const {handleSubmit, reset, control, getValues, formState: {errors, isValid}} = methods;
+    const {handleSubmit, reset, control, formState: {isValid}} = methods;
     const onSubmit = (data: IFormInput) => {
+        dispatch(setRecoveryPasswordSuccessAC(false))
         dispatch(recoverTC(data.email))
         console.log(data)
         reset()
     };
     const navigate = useNavigate()
+
+    const recoverPassSucces = useSelector<AppRootStateType, boolean>(state => state.recoveryPass.success)
+    if (recoverPassSucces) {
+        return <Navigate to={SING_IN} replace={true}/>
+    }
+
     return (
         <div className={style.loginBlock}>
             <ErrorSnackbar/>
@@ -53,7 +61,7 @@ export const RecoveryPassword = () => {
                             control={control}
                             rules={{
                                 required: 'Email is required!',
-                                pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                                pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                             }}
                             render={({
                                          field: {onChange, value, onBlur},
@@ -82,7 +90,7 @@ export const RecoveryPassword = () => {
                         }}>
                             <Button onClick={handleSubmit(onSubmit)} variant={"contained"}
                                     disabled={!isValid} style={{
-                                width:'100%'
+                                width: '100%'
                             }}>
                                 Send instructions
                             </Button>
@@ -92,7 +100,9 @@ export const RecoveryPassword = () => {
                         <Typography variant={'subtitle2'} component={'div'} className={style.textQuestion}>
                             Did you remember your password?
                         </Typography>
-                        <Button variant={'text'} color={'primary'} onClick={() => {navigate(SING_IN,{replace:true})}}>
+                        <Button variant={'text'} color={'primary'} onClick={() => {
+                            navigate(SING_IN, {replace: true})
+                        }}>
                             Try logging in
                         </Button>
                     </FormControl>

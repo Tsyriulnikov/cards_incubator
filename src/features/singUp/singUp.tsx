@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {setNewUserTC} from "./signUp-reducer";
+import {setNewUserAC, setNewUserTC} from "./signUp-reducer";
 import {useForm, Controller} from "react-hook-form";
 import {
     Button,
@@ -35,16 +35,17 @@ const defaultValues = {
     confirmPassword: '',
 };
 
-export const SignUp = () => {
+export const SingUp = () => {
     const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
 
-    const isFetching = useSelector<AppRootStateType, boolean>((state) => state.login.isFetching);
+    // const isFetching = useSelector<AppRootStateType, boolean>((state) => state.login.isFetching);
     const isRegistration = useSelector<AppRootStateType, boolean>(state => state.registration.isReg)
 
 
     const methods = useForm<IFormInput>({defaultValues: defaultValues, mode: "onBlur"});
     const {handleSubmit, reset, control, getValues, formState: {errors, isValid}} = methods;
     const onSubmit = (data: IFormInput) => {
+        dispatch(setNewUserAC(false))
         dispatch(setNewUserTC(data.email, data.password))
         console.log(data)
         reset()
@@ -57,7 +58,7 @@ export const SignUp = () => {
     const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
     const handleMouseDownConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
-    // Если не залогинелись то редирект на страницу login
+    // Если всё ОК то редирект на страницу login
     if (isRegistration) {
         return <Navigate to={SING_IN}/>
     }

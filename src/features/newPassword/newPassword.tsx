@@ -10,15 +10,15 @@ import {
 } from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {Controller, useForm} from "react-hook-form";
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {AppDispatch, AppRootStateType} from "../../app/store";
-import {SING_IN, SING_UP} from "../../common/routes/routes";
+import {SING_IN} from "../../common/routes/routes";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
 import {ErrorSnackbar} from "../../utils/ErrorSnackbar/ErrorSnackbar";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import {newPasswordTC} from "./newPassword-reducer";
+import {newPasswordTC, setNewPasswordSuccessAC} from "./newPassword-reducer";
 import {Navigate} from "react-router-dom";
 interface IFormInput {
     email: string
@@ -34,19 +34,20 @@ export const NewPassword = () => {
     const {token} = useParams<{ token: string }>();
     const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
     const methods = useForm<IFormInput>({defaultValues: defaultValues, mode: "onBlur"});
-    const {handleSubmit, reset, control, getValues, formState: {errors, isValid}} = methods;
+    const {handleSubmit, reset, control, formState: {isValid}} = methods;
     const onSubmit = (data: IFormInput) => {
+        dispatch(setNewPasswordSuccessAC(false))
         dispatch(newPasswordTC(data.password,token))
         // console.log(data, token)
         reset()
     };
-    const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
     const newPassSucces = useSelector<AppRootStateType, boolean>(state => state.newPass.success)
-         if (newPassSucces) {return <Navigate to = {SING_IN} replace={true}/>};
+         if (newPassSucces) {
+                return <Navigate to = {SING_IN} replace={true}/>}
 
     return (
         <div className={style.loginBlock}>
@@ -65,7 +66,7 @@ export const NewPassword = () => {
                             render={({
                                          field: {onChange, value, onBlur},
                                          fieldState: {error},
-                                         formState,
+
                                      }) => (
                                 <TextField label={'Password'}
                                            helperText={error ? error.message : null}

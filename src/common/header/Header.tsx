@@ -12,21 +12,26 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import {LOG_OUT, PROFILE, REC_PASSWORD, SING_IN, SING_UP} from "../routes/routes";
+import {CARDS, LOG_OUT, PROFILE, REC_PASSWORD, SING_IN, SING_UP} from "../routes/routes";
 import {NavLink} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../app/store";
-import {ProfileType} from "../../features/profile/profile-reducer";
+import {ResponseProfileType} from "../../features/profile/profile-reducer";
+import userPhoto from "../../assets/img/user.png";
+import {LinearProgress} from "@material-ui/core";
+import {RequestStatusType} from "../../app/app-reducer";
+
 
 const pages = ['Sing In', 'Sing Up'];
 const settings = ['Profile', 'Cards Pack', 'Recovery Password', 'Logout'];
 const pagesRoutes = [SING_IN, SING_UP]
-const settingsRoutes = [PROFILE, REC_PASSWORD, LOG_OUT]
+const settingsRoutes = [PROFILE, CARDS, REC_PASSWORD, LOG_OUT]
 
 const Header = () => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-    const profile = useSelector<AppRootStateType, ProfileType>(state => state.profile)
+    const profile = useSelector<AppRootStateType, ResponseProfileType>(state => state.profile)
+    const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
     const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -148,9 +153,10 @@ const Header = () => {
                         {/*___________________________________MENU______________________________________*/}
 
                         {isLoggedIn && <Box sx={{flexGrow: 0, position: 'absolute', right: 0}}>
+                            {profile.name + ' '}
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                    <Avatar alt="Remy Sharp" src={profile.avatar}/>
+                                    <Avatar alt="Remy Sharp" src={profile.avatar || userPhoto}/>
                                 </IconButton>
                             </Tooltip>
                             <Menu
@@ -181,6 +187,7 @@ const Header = () => {
                         </Box>}
                     </>
                 </Toolbar>
+                {status === 'loading' && <LinearProgress/>}
             </Container>
         </AppBar>
     );

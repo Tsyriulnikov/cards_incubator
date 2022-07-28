@@ -1,5 +1,8 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import TextField from '@mui/material/TextField';
+import CreateIcon from "@mui/icons-material/Create";
+import IconButton from "@mui/material/IconButton";
+import s from './profile.module.css'
 
 type EditableSpanPropsType = {
     value: string
@@ -7,12 +10,10 @@ type EditableSpanPropsType = {
 }
 
 export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
-    console.log('EditableSpan called');
     let [editMode, setEditMode] = useState(false);
     let [title, setTitle] = useState(props.value);
 
     const activateEditMode = () => {
-        console.log('aaaaaaaaaaaaaa')
         setEditMode(true);
         setTitle(props.value);
     }
@@ -20,11 +21,27 @@ export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
         setEditMode(false);
         props.onChange(title);
     }
+    
+    const handleKeyPress = (e:KeyboardEvent<HTMLInputElement>) => {
+        if(e.key === 'Enter'){
+            activateViewMode()
+        }
+    }
+    
     const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
 
-    return editMode
-        ? <TextField value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode}/>
-        : <span onClick={activateEditMode}>{props.value}</span>
+    return (
+        <div >
+            {editMode
+                ? <TextField value={title} onChange={changeTitle} onKeyPress={handleKeyPress} autoFocus onBlur={activateViewMode}/>
+                : <span onClick={activateEditMode} className={s.name}>{props.value}</span>}
+            <IconButton aria-label="create" color={'primary'} onClick={activateEditMode}>
+                <CreateIcon />
+            </IconButton>
+        </div>
+    )
+
+
 });

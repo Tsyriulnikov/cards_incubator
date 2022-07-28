@@ -1,0 +1,14 @@
+.error {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: no-repeat url(/src/assets/img/733fed6a25170bd1e15329a474aa32ea.jpg);
+    background-color: white;
+    background-position: center center;
+}
+.error > h1 {
+    margin-top: 100px;
+    color: blue;
+}

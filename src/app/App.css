@@ -1,49 +1,10 @@
-/*.App {*/
-/*  text-align: center;*/
-/*}*/
-
-/*.App-logo {*/
-/*  height: 40vmin;*/
-/*  pointer-events: none;*/
-/*}*/
-
-/*@media (prefers-reduced-motion: no-preference) {*/
-/*  .App-logo {*/
-/*    animation: App-logo-spin infinite 20s linear;*/
-/*  }*/
-/*}*/
-
-/*.App-header {*/
-/*  background-color: #282c34;*/
-/*  min-height: 100vh;*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  align-items: center;*/
-/*  justify-content: center;*/
-/*  font-size: calc(10px + 2vmin);*/
-/*  color: white;*/
-/*}*/
-
-/*.App-link {*/
-/*  color: #61dafb;*/
-/*}*/
-
-/*@keyframes App-logo-spin {*/
-/*  from {*/
-/*    transform: rotate(0deg);*/
-/*  }*/
-/*  to {*/
-/*    transform: rotate(360deg);*/
-/*  }*/
-/*}*/
 .App {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /*background: no-repeat url(/src/utils/palet.jpg);*/
-  /*background: no-repeat url('https://avatars.mds.yandex.net/get-zen_doc/2453078/pub_5ffa0ed8bb14d54ffb7546a9_5ffa3578d1a90641ca0bbb5d/scale_1200');*/
-  background-size: cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: no-repeat url(/src/assets/img/palet.jpg);
+    background-size: cover;
 }
 
 

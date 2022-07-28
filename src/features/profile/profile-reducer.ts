@@ -1,101 +1,98 @@
 import {Dispatch} from "redux";
 import {LoginParamsType, profileAPI} from "./profile-api";
-import {setIsLoggedInAC} from "../../app/app-reducer";
+import {setIsLoggedInAC} from "../singIn/auth-reducer";
+import {setAppStatusAC} from "../../app/app-reducer";
 
 
-export type ProfileType = {
-    _id: string,
-    email: string,
-    rememberMe: boolean,
-    isAdmin: boolean,
-    name: string,
-    verified: false,
-    publicCardPacksCount: number,
-    created: string,
-    updated: string,
-    __v: number,
-    token: string,
-    tokenDeathTime: number
-    avatar: string
-    isLoggedIn: boolean
+export type ResponseProfileType = {
+    _id: string | null;
+    email: string | null;
+    name: string | null;
+    avatar?: string | null;
+    publicCardPacksCount: number | null;
+    created: Date | null;
+    updated: Date | null;
+    isAdmin: boolean | null;
+    verified: boolean | null;
+    rememberMe: boolean | null;
+    error?: string | null;
+    __v: number | null;
+    token: string | null;
+    tokenDeathTime: number | null;
 }
 
 
-const initialState: any = {}
+export type updateProfileType = {
+    name: string | null
+    avatar: string | null | undefined
+}
 
-export const profileReducer = (state: ProfileType = initialState, action: setProfileACType | updateProfileTitleACType ):ProfileType => {
+const initialState: ResponseProfileType = {
+    _id: null,
+    email: null,
+    name: null,
+    avatar: null,
+    publicCardPacksCount: null,
+    created: null,
+    updated: null,
+    isAdmin: null,
+    verified: null,
+    rememberMe: null,
+    error: null,
+    __v: null,
+    token: null,
+    tokenDeathTime: null
+};
+
+
+
+export const profileReducer = (state: ResponseProfileType = initialState, action: setProfileACType | updateProfileTitleACType ):ResponseProfileType => {
     switch (action.type){
         case 'PROFILE':
             return action.profile
         case 'PROFILE-NAME-UPDATE':
-            return {...state, name: action.title}
+            return {...state, name: action.payload.name}
         default:
             return state
     }
 
 }
 
-//_________________________ACTION___________________________________
-
-
 export type setProfileACType = ReturnType<typeof setProfileAC>
-export const setProfileAC = (profile:ProfileType) => {
+export const setProfileAC = (profile:ResponseProfileType) => {
     return {
         type: 'PROFILE',
         profile
     } as const
 }
 export type updateProfileTitleACType = ReturnType<typeof updateProfileTitleAC>
-export const updateProfileTitleAC = (title:string) => {
+export const updateProfileTitleAC = ({name, avatar}:updateProfileType) => {
     return {
         type: 'PROFILE-NAME-UPDATE',
-        title
+        payload: {
+            name,
+            avatar
+        }
     } as const
 }
 
-/*export type setIsLoggedInACType = ReturnType<typeof setIsLoggedInAC>
-export const setIsLoggedInAC = (value: boolean) => {
-    return {
-        type: 'login/SET-IS-LOGGED-IN',
-        value
-    } as const
-}*/
-
-
-//__________________THUNK______________________________
-
-/*export const initTC = () => {
-    return (dispatch:Dispatch) => {
-        profileAPI.me()
-            .then((res) => {
-                dispatch(setIsLoggedInAC(true))
-            })
-
-    }
-}*/
-
-export const loginTC = (data: LoginParamsType) => {
-    return (dispatch:Dispatch) => {
-        profileAPI.login(data)
-            .then((res) => {
-                dispatch(setIsLoggedInAC(true))
-                dispatch(setProfileAC(res.data))
-            })
-    }
-}
 export const logoutTC = () => {
     return (dispatch:Dispatch) => {
+        dispatch(setAppStatusAC('loading'))
         profileAPI.logout()
             .then((res) => {
                 dispatch(setIsLoggedInAC(false))
+                dispatch(setAppStatusAC('succeeded'))
             })
     }
 }
-export const updateProfileTitleTC = (title:string) => {
+export const updateProfileTitleTC = ({name, avatar}:updateProfileType) => {
     return (dispatch:Dispatch) => {
-        profileAPI.updateTitle(title)
+        dispatch(setAppStatusAC('loading'))
+        profileAPI.updateTitle({name, avatar})
             .then((res) => {
-                dispatch(updateProfileTitleAC(res.data.name))
+                dispatch(updateProfileTitleAC({name, avatar}))
+                dispatch(setAppStatusAC('succeeded'))
             })
     }
 }
