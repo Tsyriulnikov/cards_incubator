@@ -1,4 +1,4 @@
-import {Action, Dispatch} from "redux";
+import {Dispatch} from "redux";
 import {authAPI} from "../features/singIn/auth-api";
 import {setIsLoggedInAC} from "../features/singIn/auth-reducer";
 import {setProfileAC} from "../features/profile/profile-reducer";

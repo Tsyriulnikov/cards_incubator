@@ -15,8 +15,9 @@ import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
 import {ErrorSnackbar} from "../../utils/ErrorSnackbar/ErrorSnackbar";
 import {recoverTC, setRecoveryPasswordSuccessAC} from "./recoveryPassword-reducer";
-import {ButtonGroup} from "@mui/material";
+import {ButtonGroup, CircularProgress} from "@mui/material";
 import {emailValidation} from "../singIn/validation";
+import Box from "@mui/material/Box";
 
 
 interface IFormInput {
@@ -40,10 +41,17 @@ export const RecoveryPassword = () => {
         reset()
     };
     const navigate = useNavigate()
-
+    const status = useSelector<AppRootStateType, string>((state) => state.app.status);
     const recoverPassSucces = useSelector<AppRootStateType, boolean>(state => state.recoveryPass.success)
     if (recoverPassSucces) {
         return <Navigate to={SING_IN} replace={true}/>
+    }
+
+    if (status === 'loading') {
+        return (<Box sx={{display: 'flex'}} className={style.loginBlock}>
+                <CircularProgress/>
+            </Box>
+        );
     }
 
     return (

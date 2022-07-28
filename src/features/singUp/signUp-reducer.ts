@@ -25,7 +25,6 @@ export const setNewUserAC = (success: boolean) => ({type: 'SET_NEW_USER',success
 
 export const setNewUserTC = (email: string, password: string) => (dispatch: AppDispatch) => {
     dispatch(setAppStatusAC('loading'))
-    // dispatch(isFetchingAC(true))
     signUpApi.registration(email, password)
         .then(response => {
             // console.log(response.data)
@@ -38,9 +37,10 @@ export const setNewUserTC = (email: string, password: string) => (dispatch: AppD
             handleServerAppError(errorResponse, dispatch)
             //Серверные ошибки
             // handleServerNetworkError(error, dispatch)
+            dispatch(setAppStatusAC('failed'))
         })
         .finally(() => {
-            // dispatch(isFetchingAC(false))
+            dispatch(setAppStatusAC('idle'))
         })
 }
 export type SetNewUserType = ReturnType<typeof setNewUserAC>;

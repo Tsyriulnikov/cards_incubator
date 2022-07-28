@@ -1,6 +1,8 @@
 import {Dispatch} from "redux"
 import {newPasswordAPI} from "./api-NewPassword";
 import {handleServerAppError} from "../../utils/error-utils";
+import {setAppStatusAC} from "../../app/app-reducer";
+import {AppDispatch} from "../../app/store";
 
 
 const initialState = {
@@ -18,20 +20,22 @@ export const resetPasswordReducer = (state: InitialStateType = initialState, act
     }
 }
 export const setNewPasswordSuccessAC = (success: boolean) => ({type: 'NEW_PASSWORD/SET_SUCCESS', success}) as const
-export const newPasswordTC = (password: string, resetPasswordToken: string | undefined) => (dispatch: Dispatch<ActionType>) => {
-    // dispatch(isFetchingAC(true))
+export const newPasswordTC = (password: string, resetPasswordToken: string | undefined) => (dispatch: AppDispatch) => {
+    dispatch(setAppStatusAC('loading'))
     newPasswordAPI.newPassword(password, resetPasswordToken)
         .then(res => {
             // console.log(res.data)
             dispatch(setNewPasswordSuccessAC(true))
+            dispatch(setAppStatusAC('succeeded'))
         })
         .catch((error) => {
             const errorResponse = error.response ? error.response.data.error : (error.message + ", more details in the console")
             //Ошибки из ответа
             handleServerAppError(errorResponse, dispatch)
+            dispatch(setAppStatusAC('failed'))
         })
         .finally(() => {
-            // dispatch(isFetchingAC(false))
+            dispatch(setAppStatusAC('idle'))
         })
 }
 

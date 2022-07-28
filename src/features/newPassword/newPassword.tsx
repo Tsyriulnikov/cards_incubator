@@ -18,9 +18,11 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import {newPasswordTC, setNewPasswordSuccessAC} from "./newPassword-reducer";
 import {Navigate} from "react-router-dom";
-import {ButtonGroup, InputAdornment} from "@mui/material";
+import {ButtonGroup, CircularProgress, InputAdornment} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import {passwordValidation} from "../singIn/validation";
+import Box from "@mui/material/Box";
+
 interface IFormInput {
     email: string
     password: string
@@ -38,18 +40,24 @@ export const NewPassword = () => {
     const {handleSubmit, reset, control, formState: {isValid}} = methods;
     const onSubmit = (data: IFormInput) => {
         dispatch(setNewPasswordSuccessAC(false))
-        dispatch(newPasswordTC(data.password,token))
+        dispatch(newPasswordTC(data.password, token))
         // console.log(data, token)
         reset()
     };
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
-
+    const status = useSelector<AppRootStateType, string>((state) => state.app.status);
     const newPassSucces = useSelector<AppRootStateType, boolean>(state => state.newPass.success)
-         if (newPassSucces) {
-                return <Navigate to = {SING_IN} replace={true}/>}
-
+    if (newPassSucces) {
+        return <Navigate to={SING_IN} replace={true}/>
+    }
+    if (status === 'loading') {
+        return (<Box sx={{display: 'flex'}} className={style.loginBlock}>
+                <CircularProgress/>
+            </Box>
+        );
+    }
     return (
         <div className={style.loginBlock}>
             <ErrorSnackbar/>
