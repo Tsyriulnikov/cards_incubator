@@ -1,4 +1,3 @@
-import {Dispatch} from "redux"
 import {recoveryPasswordAPI} from "./api-RecoveryPassword";
 import {handleServerAppError} from "../../utils/error-utils";
 import {setAppStatusAC} from "../../app/app-reducer";

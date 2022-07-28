@@ -1,4 +1,3 @@
-import {Dispatch} from "redux"
 import {newPasswordAPI} from "./api-NewPassword";
 import {handleServerAppError} from "../../utils/error-utils";
 import {setAppStatusAC} from "../../app/app-reducer";
