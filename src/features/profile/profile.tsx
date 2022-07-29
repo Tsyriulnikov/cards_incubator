@@ -5,7 +5,6 @@ import userPhoto from "../../assets/img/user.png";
 import s from './profile.module.css'
 import Button from "@mui/material/Button";
 import LogoutIcon from '@mui/icons-material/Logout';
-import CreateIcon from '@mui/icons-material/Create';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import IconButton from "@mui/material/IconButton";
 import {AppDispatch, AppRootStateType} from "../../app/store";
@@ -19,9 +18,6 @@ import {EditableSpan} from "./EditableSpan";
 
 export const Profile = () => {
 
-   /////////////////////
-    const [baseImage, setBaseImage] = useState<string|null|undefined>('');
-   ////////////////////
 
     const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
     const profile = useSelector<AppRootStateType, ResponseProfileType>(state => state.profile)
@@ -55,9 +51,8 @@ export const Profile = () => {
             } else {
                 const file = e.target.files[0];
                 const base64: any = await convertBase64(file);
-                setBaseImage(base64);
-                // console.log(base64)
-                user.avatar=baseImage
+                user.avatar=base64
+                user.name=profile.name
                 updateProfileHandler()
             }
         }
@@ -84,8 +79,7 @@ export const Profile = () => {
         //     dispatch(updateProfileTitleTC({'name', baseImage}))
             dispatch(updateProfileTitleTC(user))
         // }
-        console.log(baseImage)
-    }
+            }
 //////////////////////////////////////////////////////////////////IMG_end
 
 
