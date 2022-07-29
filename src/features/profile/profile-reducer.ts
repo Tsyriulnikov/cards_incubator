@@ -52,7 +52,8 @@ export const profileReducer = (state: ResponseProfileType = initialState, action
         case 'PROFILE':
             return action.profile
         case 'PROFILE-NAME-UPDATE':
-            return {...state, name: action.payload.name}
+            return {...state, name: action.payload.name,
+                avatar:action.payload.avatar}
         default:
             return state
     }
@@ -88,6 +89,7 @@ export const logoutTC = () => {
     }
 }
 export const updateProfileTitleTC = ({name, avatar}:updateProfileType) => {
+
     return (dispatch:Dispatch) => {
         dispatch(setAppStatusAC('loading'))
         profileAPI.updateTitle({name, avatar})

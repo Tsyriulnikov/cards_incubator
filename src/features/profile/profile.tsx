@@ -15,6 +15,8 @@ import {Action} from "redux";
 import Typography from "@mui/material/Typography";
 import {Navigate} from "react-router-dom";
 import {EditableSpan} from "./EditableSpan";
+import style from "../singIn/SignIn.module.css";
+import {CircularProgress} from "@mui/material";
 
 export const Profile = () => {
 
@@ -22,6 +24,9 @@ export const Profile = () => {
     const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
     const profile = useSelector<AppRootStateType, ResponseProfileType>(state => state.profile)
     const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
+    const status = useSelector<AppRootStateType, string>((state) => state.app.status);
+
+
 
     const onClickHandler = () => {
         dispatch(logoutTC())
@@ -36,6 +41,13 @@ export const Profile = () => {
         user.name = value
         dispatch(updateProfileTitleTC(user))
     }
+
+    // if (status === 'loading') {
+    //     return (<Box sx={{display: 'flex'}} className={style.loginBlock}>
+    //             <CircularProgress/>
+    //         </Box>
+    //     );
+    // }
 
     if (!isLoggedIn) {
         return <Navigate to='/singIn'/>
