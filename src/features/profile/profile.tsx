@@ -18,10 +18,13 @@ import {Navigate} from "react-router-dom";
 import {EditableSpan} from "./EditableSpan";
 import {PhotoCamera} from "@material-ui/icons";
 import {Stack} from "@mui/material";
-import {updateProfileDataTC} from "../singIn/auth-reducer";
+import {profileType, updateProfileDataTC} from "../singIn/auth-reducer";
 
 export const Profile = () => {
+   /////////////////////
     const [baseImage, setBaseImage] = useState('');
+    const avatar = useSelector<AppRootStateType, any>(state => state.auth.user.avatar  );
+   ////////////////////
     const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
     const profile = useSelector<AppRootStateType, ResponseProfileType>(state => state.profile)
     const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
@@ -77,7 +80,7 @@ export const Profile = () => {
         });
     };
 
-    //SENDING DATA
+
     const updateProfileHandler = () => {
         // setChange(!change)
         // if (change) {
@@ -95,7 +98,7 @@ export const Profile = () => {
         <Box className={s.profileBlock}>
             <Paper elevation={3} className={s.profile}>
                 <Typography variant={'h3'}>PROFILE</Typography>
-                <div><img src={profile.avatar || userPhoto} alt="user" className={s.photo}/></div>
+                <div><img src={avatar || userPhoto} alt="user" className={s.photo}/></div>
                 <div className={s.iconPhoto}>
                     {/*<IconButton aria-label="add" color={'primary'}>*/}
                     {/*<AddAPhotoIcon />*/}

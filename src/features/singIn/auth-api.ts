@@ -16,10 +16,7 @@ export const authAPI = {
         return instance.post('auth/login', data)
     },
 
-    updateProfile(name: string, avatar: string) {
-        return instance.put('auth/me', {name, avatar})
 
-    }
 };
 
 
