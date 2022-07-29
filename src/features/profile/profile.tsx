@@ -16,15 +16,13 @@ import {Action} from "redux";
 import Typography from "@mui/material/Typography";
 import {Navigate} from "react-router-dom";
 import {EditableSpan} from "./EditableSpan";
-import {PhotoCamera} from "@material-ui/icons";
-import {Stack} from "@mui/material";
-import {profileType, updateProfileDataTC} from "../singIn/auth-reducer";
 
 export const Profile = () => {
+
    /////////////////////
-    const [baseImage, setBaseImage] = useState('');
-    const avatar = useSelector<AppRootStateType, any>(state => state.auth.user.avatar  );
+    const [baseImage, setBaseImage] = useState<string|null|undefined>('');
    ////////////////////
+
     const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
     const profile = useSelector<AppRootStateType, ResponseProfileType>(state => state.profile)
     const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
@@ -50,8 +48,6 @@ export const Profile = () => {
 ///////////////////////////////////////////////////Img
 
 
-
-
     const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             if (e.target.files[0].type !== 'image/jpeg' && 'image/png' && 'image/jpg') {
@@ -61,6 +57,7 @@ export const Profile = () => {
                 const base64: any = await convertBase64(file);
                 setBaseImage(base64);
                 // console.log(base64)
+                user.avatar=baseImage
                 updateProfileHandler()
             }
         }
@@ -84,7 +81,8 @@ export const Profile = () => {
     const updateProfileHandler = () => {
         // setChange(!change)
         // if (change) {
-            dispatch(updateProfileDataTC('name', baseImage))
+        //     dispatch(updateProfileTitleTC({'name', baseImage}))
+            dispatch(updateProfileTitleTC(user))
         // }
         console.log(baseImage)
     }
@@ -98,7 +96,7 @@ export const Profile = () => {
         <Box className={s.profileBlock}>
             <Paper elevation={3} className={s.profile}>
                 <Typography variant={'h3'}>PROFILE</Typography>
-                <div><img src={avatar || userPhoto} alt="user" className={s.photo}/></div>
+                <div><img src={profile.avatar || userPhoto} alt="user" className={s.photo}/></div>
                 <div className={s.iconPhoto}>
                     {/*<IconButton aria-label="add" color={'primary'}>*/}
                     {/*<AddAPhotoIcon />*/}

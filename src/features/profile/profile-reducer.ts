@@ -53,14 +53,6 @@ export const profileReducer = (state: ResponseProfileType = initialState, action
             return action.profile
         case 'PROFILE-NAME-UPDATE':
             return {...state, name: action.payload.name}
-// //////////////
-//         case 'UPDATE_PROFILE':
-//             return {
-//                 ...state, name: action.payload.user.name,
-//                     avatar: action.payload.user.avatar,
-//                     email: action.payload.user.email,
-//             }
-// ///////////////
         default:
             return state
     }
@@ -74,7 +66,6 @@ export const setProfileAC = (profile:ResponseProfileType) => {
         profile
     } as const
 }
-////////////////////////
 export type updateProfileTitleACType = ReturnType<typeof updateProfileTitleAC>
 export const updateProfileTitleAC = ({name, avatar}:updateProfileType) => {
     return {
@@ -107,27 +98,3 @@ export const updateProfileTitleTC = ({name, avatar}:updateProfileType) => {
     }
 }
 
-////////////////////
-
-// export type updateUserProfileACType=ReturnType<typeof updateUserProfileAC>
-// export const updateUserProfileAC = (user: ResponseProfileType) => ({type: 'UPDATE_PROFILE', payload: {user}} as const)
-//
-//
-//
-// export const updateProfileDataTC = (name: string, avatar: string) => (dispatch: Dispatch) => {
-//
-//     authAPI.updateProfile(name, avatar)
-//         .then(res => {
-//                 dispatch(updateUserProfileAC(res.data.updatedUser))
-//                 // @ts-ignore
-//                 dispatch(getProfileUserdataTC())
-//             }
-//         ).catch( (error) => {
-//         const errorResponse = error.response ? error.response.data.error : (error.message + ', more details in the console')
-//         handleServerAppError(errorResponse, dispatch)
-//         console.log(error)
-//     })
-//         .finally(() => {
-//
-//         })
-// }
