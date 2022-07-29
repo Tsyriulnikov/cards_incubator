@@ -20,13 +20,9 @@ import {CircularProgress} from "@mui/material";
 
 export const Profile = () => {
 
-
     const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
     const profile = useSelector<AppRootStateType, ResponseProfileType>(state => state.profile)
     const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
-    const status = useSelector<AppRootStateType, string>((state) => state.app.status);
-
-
 
     const onClickHandler = () => {
         dispatch(logoutTC())
@@ -36,25 +32,18 @@ export const Profile = () => {
         name: null,
         avatar: null
     }
-
     const onTitleChangeHandler = (value: string) => {
         user.name = value
+        user.avatar = profile.avatar
         dispatch(updateProfileTitleTC(user))
     }
-
-    // if (status === 'loading') {
-    //     return (<Box sx={{display: 'flex'}} className={style.loginBlock}>
-    //             <CircularProgress/>
-    //         </Box>
-    //     );
-    // }
 
     if (!isLoggedIn) {
         return <Navigate to='/singIn'/>
     }
 
-///////////////////////////////////////////////////Img
 
+///////////////////////////////////////////////////Img
 
     const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -63,8 +52,8 @@ export const Profile = () => {
             } else {
                 const file = e.target.files[0];
                 const base64: any = await convertBase64(file);
-                user.avatar=base64
-                user.name=profile.name
+                user.avatar = base64
+                user.name = profile.name
                 updateProfileHandler()
             }
         }
@@ -84,18 +73,14 @@ export const Profile = () => {
         });
     };
 
-
     const updateProfileHandler = () => {
         // setChange(!change)
         // if (change) {
         //     dispatch(updateProfileTitleTC({'name', baseImage}))
-            dispatch(updateProfileTitleTC(user))
+        dispatch(updateProfileTitleTC(user))
         // }
-            }
+    }
 //////////////////////////////////////////////////////////////////IMG_end
-
-
-
 
 
     return (
@@ -111,7 +96,7 @@ export const Profile = () => {
 
                     <IconButton color="primary" aria-label="upload picture" component="label">
                         <input hidden accept="image/*" type="file"
-                               onChange={(e)=>uploadImage(e)}
+                               onChange={(e) => uploadImage(e)}
                         />
                         <AddAPhotoIcon/>
                     </IconButton>
