@@ -5,20 +5,23 @@ import {AppDispatch} from "../../app/store";
 
 
 const initialState = {
-    success: false,
+    newPassSucces: false,
 }
 type InitialStateType = typeof initialState
 
 export const resetPasswordReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
         case 'NEW_PASSWORD/SET_SUCCESS': {
-            return {...state, success: action.success}
+            return {...state, newPassSucces: action.newPassSucces}
         }
         default:
             return state
     }
 }
-export const setNewPasswordSuccessAC = (success: boolean) => ({type: 'NEW_PASSWORD/SET_SUCCESS', success}) as const
+export const setNewPasswordSuccessAC = (newPassSucces: boolean) => ({
+    type: 'NEW_PASSWORD/SET_SUCCESS',
+    newPassSucces
+}) as const
 export const newPasswordTC = (password: string, resetPasswordToken: string | undefined) => (dispatch: AppDispatch) => {
     dispatch(setAppStatusAC('loading'))
     newPasswordAPI.newPassword(password, resetPasswordToken)
@@ -29,12 +32,8 @@ export const newPasswordTC = (password: string, resetPasswordToken: string | und
         })
         .catch((error) => {
             const errorResponse = error.response ? error.response.data.error : (error.message + ", more details in the console")
-            //Ошибки из ответа
             handleServerAppError(errorResponse, dispatch)
             dispatch(setAppStatusAC('failed'))
-        })
-        .finally(() => {
-            dispatch(setAppStatusAC('idle'))
         })
 }
 

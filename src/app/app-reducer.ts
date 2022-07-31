@@ -1,5 +1,5 @@
-import {Dispatch} from "redux";
-import {authAPI} from "../features/singIn/auth-api";
+import {Action, Dispatch} from "redux";
+import {authApi} from "../features/singIn/auth-api";
 import {setIsLoggedInAC} from "../features/singIn/auth-reducer";
 import {setProfileAC} from "../features/profile/profile-reducer";
 
@@ -29,19 +29,28 @@ export const appReducer = (state: InitialStateType = initialState, action: SetAp
     }
 }
 
-export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>
+
 export const setAppStatusAC = (status: RequestStatusType) => ({type: 'APP/SET-STATUS', status} as const)
-export type setAppInitializedACType = ReturnType<typeof setAppInitializedAC>
+
 export const setAppInitializedAC = (value: boolean) => ({type: 'APP/SET-IS-INITIALIZED', value} as const)
-export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>
+
 export const setAppErrorAC = (error: string | null) => ({type: 'APP/SET-ERROR', error} as const)
+
+export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>
+export type setAppInitializedACType = ReturnType<typeof setAppInitializedAC>
+export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>
 
 export const initTC = () => {
     return (dispatch: Dispatch) => {
-        authAPI.me()
+        authApi.me()
             .then((res) => {
                 dispatch(setProfileAC(res.data))
                 dispatch(setIsLoggedInAC(true))
+            })
+            .catch((e) => {
+                console.log(e)
+            })
+            .finally(() => {
                 dispatch(setAppInitializedAC(true))
             })
 

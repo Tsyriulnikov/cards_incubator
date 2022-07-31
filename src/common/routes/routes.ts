@@ -6,3 +6,4 @@ export const REC_PASSWORD = '/recoveryPassword';
 export const LOG_OUT = '/logOut';
 export const ERROR = '/404';
 export const NEW_PASSWORD = '/set-new-password/:token';
+export const CHECK_EMAIL = '/checkEmail';

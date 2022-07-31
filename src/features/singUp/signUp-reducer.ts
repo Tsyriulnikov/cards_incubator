@@ -11,11 +11,10 @@ type InitialStateType = typeof initialState
 
 export const signUpReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
-        case "SET_NEW_USER": {
+        case "SET_NEW_USER":
             return {
                 ...state, isReg: action.success
             }
-        }
         default:
             return state
     }
@@ -27,19 +26,15 @@ export const setNewUserTC = (email: string, password: string) => (dispatch: AppD
     dispatch(setAppStatusAC('loading'))
     signUpApi.registration(email, password)
         .then(response => {
-            // console.log(response.data)
             dispatch(setNewUserAC(true))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((error) => {
             const errorResponse = error.response ? error.response.data.error : (error.message + ", more details in the console")
-            //Ошибки из ответа
             handleServerAppError(errorResponse, dispatch)
             dispatch(setAppStatusAC('failed'))
         })
-        .finally(() => {
-            dispatch(setAppStatusAC('idle'))
-        })
+
 }
 export type SetNewUserType = ReturnType<typeof setNewUserAC>;
 

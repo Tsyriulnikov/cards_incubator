@@ -143,7 +143,7 @@ const Header = () => {
                                     <Button
                                         key={index}
                                         onClick={handleCloseNavMenu}
-                                        sx={{my: 2, color: 'white', display: 'block'}}
+                                        sx={{my: 2, color: 'white', display: 'block', margin: 0}}
                                     >
                                         {page} {/*menu for desktop*/}
                                     </Button></NavLink>

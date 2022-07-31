@@ -1,33 +1,9 @@
-.loginBlock {
-    width: 50vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-.loginBlockForm {
-    width: 400px;
-    height: 500px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-self: center;
-    justify-content: space-around;
-}
-.loginForm {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 .btnForgotPass {
     align-self: flex-end;
 }
 .textQuestion {
     align-self: center;
     color:gray;
+    text-align: center;
 }
-
 
