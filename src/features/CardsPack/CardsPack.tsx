@@ -1,21 +1,13 @@
 import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { useDemoData } from '@mui/x-data-grid-generator';
+import {PacksList} from "./packsList/packsList";
 
 export const CardsPack = () => {
-    const { data } = useDemoData({
-        dataSet: 'Commodity',
-        rowLength: 5,
-        maxColumns: 6,
-    });
 
     return (
-        <div style={{ height: 400, width: '100%', background:'white'}}>
-            <div style={{ display: 'flex', height: '100%' }}>
-                <div style={{ flexGrow: 1 }}>
-                    <DataGrid {...data} />
-                </div>
-            </div>
+        <div style={{ height: '100%', width: '100%'}}>
+          <PacksList/>
         </div>
     );
 }
