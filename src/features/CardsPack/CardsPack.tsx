@@ -1,12 +1,12 @@
 import React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import { useDemoData } from '@mui/x-data-grid-generator';
 import {PacksList} from "./packsList/packsList";
+import {PacksSearch} from "./packsSearch/packsSearch";
 
 export const CardsPack = () => {
 
     return (
         <div style={{ height: '100%', width: '100%'}}>
+         <PacksSearch/>
           <PacksList/>
         </div>
     );
