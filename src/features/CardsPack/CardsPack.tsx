@@ -1,5 +1,5 @@
 import React from 'react';
-import {PacksList} from "./packsList/packsList";
+import {Table} from "./packsList/Table/table";
 import {PacksSearch} from "./packsSearch/packsSearch";
 
 export const CardsPack = () => {
@@ -7,7 +7,7 @@ export const CardsPack = () => {
     return (
         <div style={{ height: '100%', width: '100%'}}>
          <PacksSearch/>
-          <PacksList/>
+          <Table/>
         </div>
     );
 }

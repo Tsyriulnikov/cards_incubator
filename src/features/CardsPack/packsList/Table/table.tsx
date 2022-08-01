@@ -2,12 +2,12 @@ import React from 'react';
 import {DataGrid, GridColDef} from '@mui/x-data-grid';
 import { useDemoData } from '@mui/x-data-grid-generator';
 import {useSelector} from "react-redux";
-import {AppRootStateType} from "../../../app/store";
-import {ResponseProfileType} from "../../profile/profile-reducer";
-import {CardPacksType, PackResponseType} from "../api-CardsPack";
+import {AppRootStateType} from "../../../../app/store";
+import {ResponseProfileType} from "../../../profile/profile-reducer";
+import {CardPacksType, PackResponseType} from "../../api-CardsPack";
 import Box from "@mui/material/Box";
 
-export const PacksList = () => {
+export const Table = () => {
    const packsTableData = useSelector<AppRootStateType, Array<CardPacksType>>(state => state.packs.packsTableData.cardPacks)
 
     const  rows  = packsTableData
@@ -45,6 +45,7 @@ export const PacksList = () => {
         {
             field: '',
             headerName: 'Actions',
+            type: 'string',
             width: 110,
             editable: true,
         }
@@ -64,8 +65,8 @@ export const PacksList = () => {
                         columns={columns}
                         pageSize={5}
                         rowsPerPageOptions={[5]}
-                        // checkboxSelection
                         disableSelectionOnClick
+
                     />
                 </Box>
             </div>
