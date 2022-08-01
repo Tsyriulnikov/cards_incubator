@@ -8,7 +8,13 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
-import {getPacksTC} from "../../cardsPack-reducer";
+import {deleteCardsPackTC, getPacksTC, updateCardsPackTC} from "../../cardsPack-reducer";
+import IconButton from "@mui/material/IconButton";
+import {Delete, Edit} from "@material-ui/icons";
+import {CardsList} from "../../../Cards/CardsList";
+import {CARDS, CARDS_LIST, SING_UP} from "../../../../common/routes/routes";
+import {useNavigate} from "react-router-dom";
+import PaginationRounded from "../../../../common/pagination/Pagination";
 
 export const TableList = () => {
     const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
@@ -16,11 +22,21 @@ export const TableList = () => {
     const page = useSelector<AppRootStateType, number>(state => state.packs.packsTableData.page)
     const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.packsTableData.cardPacksTotalCount)
 
+    const totalCount=useSelector<AppRootStateType, number>(state => state.packs.packsTableData.cardPacksTotalCount)
+    const pageCount=useSelector<AppRootStateType, number>(state => state.packs.packsTableData.pageCount)
+
+
+
+    const navigate = useNavigate();
     const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
         dispatch(getPacksTC({page: page}))
     }
-    
-
+    const removePackCards = (idPack:string) => {
+        dispatch(deleteCardsPackTC(idPack) as any)
+    }
+    const editPackCards = (idPack:string) => {
+       dispatch(updateCardsPackTC({_id:idPack,name:'MaxTsNew'}) as any)
+    }
     return (
         <Paper>
             <div style={{height: 400, width: '100%', background: 'white'}}>
@@ -31,6 +47,7 @@ export const TableList = () => {
                             <TableCell align="left">Cards</TableCell>
                             <TableCell align="left">Last updated</TableCell>
                             <TableCell align="left">Created by</TableCell>
+                            <TableCell align="left">Action</TableCell>
                         </TableRow>
                     </TableHead>
 
@@ -39,9 +56,12 @@ export const TableList = () => {
                             <TableRow
                                 hover
                                 key={pack._id}
+
                             >
                                 {/*Name*/}
-                                <TableCell>
+                                <TableCell   onClick={() => {
+                                    navigate(CARDS_LIST, {replace: true} )
+                                }}>
                                     <Box
                                         sx={{
                                             alignItems: 'center',
@@ -104,6 +124,31 @@ export const TableList = () => {
                                         </Typography>
                                     </Box>
                                 </TableCell>
+                                {/*Action*/}
+                                <TableCell>
+                                    <Box
+                                        sx={{
+                                            alignItems: 'center',
+                                            display: 'flex'
+                                        }}
+                                    >
+                                        <Typography
+                                            color="textPrimary"
+                                            variant="body1"
+                                        >
+                                            {<IconButton onClick={e=>removePackCards(pack._id)}>
+                                                <Delete/>
+                                            </IconButton>
+                                            }
+                                            {<IconButton onClick={e=>editPackCards(pack._id)}>
+                                                <Edit/>
+                                            </IconButton>
+                                            }
+                                        </Typography>
+                                    </Box>
+                                </TableCell>
+
+
                             </TableRow>
 
                         ))}
@@ -117,6 +162,18 @@ export const TableList = () => {
                     page={page}
                     onPageChange={handleChangePage}
                 />
+
+                <div>
+                    <PaginationRounded totalCount={cardPacksTotalCount}
+                                       pageCount={pageCount}
+                                       page={page}
+                                       onChangePage={handleChangePage}
+                    />
+
+                </div>
+
+
+
             </div>
         </Paper>
     );

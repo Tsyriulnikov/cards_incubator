@@ -1,7 +1,9 @@
 import {
+    AddPackPayloadType,
     PackResponseType,
     packsAPI,
-    PacksQueryParamsType} from "../CardsPack/api-CardsPack";
+    PacksQueryParamsType, UpdatePackPayloadType
+} from "../CardsPack/api-CardsPack";
 import {Dispatch} from "redux";
 import {authApi} from "../singIn/auth-api";
 import {ThunkAction} from "redux-thunk";
@@ -38,13 +40,11 @@ export const getPacksAC = (packsTableData: PackResponseType) => ({type: "GET-PAC
 export const setOptionsAC = (options: PacksQueryParamsType) => ({type: "SET-OPTIONS", options} as const)
 
 
-
 export const getStartPacksTC = () => (dispatch: Dispatch<ActionType>, getState: () => AppRootStateType) => {
     const packsOptions = getState().packs.options
     authApi.me()
         .then(res => {
             dispatch(setProfileAC(res.data))
-            // dispatch(setUserID(res.data._id))
             packsAPI.getPacks(packsOptions)
                 .then(res => {
                     dispatch(getPacksAC(res.data))
@@ -53,7 +53,7 @@ export const getStartPacksTC = () => (dispatch: Dispatch<ActionType>, getState: 
                 })
         })
         .finally(() => {
-            })
+        })
 }
 export const getPacksTC = (options?: PacksQueryParamsType) => (dispatch: Dispatch<ActionType>, getState: () => AppRootStateType) => {
 
@@ -73,36 +73,34 @@ export const getPacksTC = (options?: PacksQueryParamsType) => (dispatch: Dispatc
         })
 }
 
-// export const addCardsPackTC = (addPackPayload: AddPackPayloadType): ThunkType => (dispatch) => {
-//
-//     packsAPI.addPack(addPackPayload)
-//         .then(() => {
-//             dispatch(getPacksTC())
-//         })
-//         .finally(() => {
-//
-//         })
-// }
-// export const deleteCardsPackTC = (idPack: string): ThunkType => (dispatch) => {
-//     dispatch(isFetchingAC(true))
-//     packsAPI.deletePack(idPack)
-//         .then(() => {
-//             dispatch(getPacksTC())
-//         })
-//         .finally(() => {
-//             dispatch(isFetchingAC(false))
-//         })
-// }
-// export const updateCardsPackTC = (updatePackPayload: updatePackPayloadType): ThunkType => (dispatch) => {
-//
-//     packsAPI.updatePack(updatePackPayload)
-//         .then(() => {
-//             dispatch(getPacksTC())
-//         })
-//         .finally(() => {
-//
-//         })
-// }
+export const addCardsPackTC = (addPackPayload: AddPackPayloadType): ThunkType => (dispatch) => {
+
+    packsAPI.addPack(addPackPayload)
+        .then(() => {
+            dispatch(getPacksTC())
+        })
+        .finally(() => {
+
+        })
+}
+export const deleteCardsPackTC = (idPack: string): ThunkType => (dispatch) => {
+    packsAPI.deletePack(idPack)
+        .then(() => {
+            dispatch(getPacksTC())
+        })
+        .finally(() => {
+        })
+}
+export const updateCardsPackTC = (updatePackPayload: UpdatePackPayloadType): ThunkType => (dispatch) => {
+
+    packsAPI.updatePack(updatePackPayload)
+        .then(() => {
+            dispatch(getPacksTC())
+        })
+        .finally(() => {
+
+        })
+}
 
 
 // Types
@@ -119,4 +117,3 @@ type ThunkType = ThunkAction<void, AppRootStateType, {}, ActionType>
 type ActionType = ReturnType<typeof getPacksAC>
     | ReturnType<typeof setOptionsAC>
     | ReturnType<typeof setProfileAC>
-    // | ReturnType<typeof setUserID>

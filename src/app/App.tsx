@@ -15,7 +15,7 @@ import {
     SING_IN,
     SING_UP,
     NEW_PASSWORD,
-    CHECK_EMAIL
+    CHECK_EMAIL, CARDS_LIST
 } from "../common/routes/routes";
 import {CardsPack} from "../features/CardsPack/CardsPack";
 import Header from "../common/header/Header";
@@ -28,6 +28,7 @@ import {NewPassword} from "../features/newPassword/newPassword";
 import {initTC} from "./app-reducer";
 import {CheckEmail} from "../features/CheckEmail/CheckEmail";
 import CircularProgress from "@mui/material/CircularProgress";
+import {CardsList} from "../features/Cards/CardsList";
 
 function App() {
 
@@ -52,6 +53,7 @@ function App() {
                     <Route path={SING_IN} element={<SingIn/>}/>
                     <Route path={SING_UP} element={<SingUp/>}/>
                     <Route path={CARDS} element={<CardsPack/>}/>
+                    <Route path={CARDS_LIST} element={<CardsList/>}/>
                     <Route path={REC_PASSWORD} element={<RecoveryPassword/>}/>
                     <Route path={NEW_PASSWORD} element={<NewPassword/>}/>
                     <Route path={LOG_OUT} element={<LogOut/>}/>

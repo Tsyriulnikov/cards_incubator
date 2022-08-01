@@ -51,7 +51,7 @@ export type PacksQueryParamsType = {
     min?: number
     max?: number
     page?: number
-    user_id?: string
+    user_id?: string|null
     sortPacks?: string
 }
 
