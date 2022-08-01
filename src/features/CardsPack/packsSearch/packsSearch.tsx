@@ -13,6 +13,7 @@ import {ThunkDispatch} from "redux-thunk";
 import {AppDispatch, AppRootStateType} from "../../../app/store";
 import {Action} from "redux";
 import {PacksQueryParamsType} from "../api-CardsPack";
+import {Table} from "@mui/material";
 
 
 export const PacksSearch = () => {
@@ -38,6 +39,8 @@ export const PacksSearch = () => {
             component="form"
             sx={{p: '2px 4px', display: 'flex', alignItems: 'center', width: 400}}
         >
+
+
 
             <InputBase
 

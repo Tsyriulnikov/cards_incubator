@@ -20,7 +20,7 @@ const initialState = {
         pageCount: 0
     },
     isFetching: false,
-    options: {pageCount: 5} as PacksQueryParamsType
+    options: {pageCount: 10} as PacksQueryParamsType
 }
 
 export const packsReducer = (state: PacksInitialStateType = initialState, action: ActionType): PacksInitialStateType => {
@@ -74,13 +74,13 @@ export const getPacksTC = (options?: PacksQueryParamsType) => (dispatch: Dispatc
 }
 
 // export const addCardsPackTC = (addPackPayload: AddPackPayloadType): ThunkType => (dispatch) => {
-//     dispatch(isFetchingAC(true))
+//
 //     packsAPI.addPack(addPackPayload)
 //         .then(() => {
 //             dispatch(getPacksTC())
 //         })
 //         .finally(() => {
-//             dispatch(isFetchingAC(false))
+//
 //         })
 // }
 // export const deleteCardsPackTC = (idPack: string): ThunkType => (dispatch) => {
@@ -94,13 +94,13 @@ export const getPacksTC = (options?: PacksQueryParamsType) => (dispatch: Dispatc
 //         })
 // }
 // export const updateCardsPackTC = (updatePackPayload: updatePackPayloadType): ThunkType => (dispatch) => {
-//     dispatch(isFetchingAC(true))
+//
 //     packsAPI.updatePack(updatePackPayload)
 //         .then(() => {
 //             dispatch(getPacksTC())
 //         })
 //         .finally(() => {
-//             dispatch(isFetchingAC(false))
+//
 //         })
 // }
 
@@ -111,7 +111,6 @@ export type SelectValueType = 5 | 10 | 25 | 50 | 100;
 
 export type PacksInitialStateType = {
     packsTableData: PackResponseType
-    isFetching: boolean
     options: PacksQueryParamsType
 }
 
