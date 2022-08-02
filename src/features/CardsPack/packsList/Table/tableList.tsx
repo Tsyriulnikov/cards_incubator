@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, AppRootStateType} from "../../../../app/store";
-import {CardPacksType, PackResponseType} from "../../api-CardsPack";
+import {CardPacksType} from "../../api-CardsPack";
 import Box from "@mui/material/Box";
 import {TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -11,8 +11,7 @@ import {Action} from "redux";
 import {deleteCardsPackTC, getPacksTC, updateCardsPackTC} from "../../cardsPack-reducer";
 import IconButton from "@mui/material/IconButton";
 import {Delete, Edit} from "@material-ui/icons";
-import {CardsList} from "../../../Cards/CardsList";
-import {CARDS, CARDS_LIST, SING_UP} from "../../../../common/routes/routes";
+// import {CARDS_LIST} from "../../../../common/routes/routes";
 import {useNavigate} from "react-router-dom";
 import PaginationRounded from "../../../../common/pagination/Pagination";
 
@@ -22,15 +21,22 @@ export const TableList = () => {
     const page = useSelector<AppRootStateType, number>(state => state.packs.packsTableData.page)
     const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.packsTableData.cardPacksTotalCount)
 
-    const totalCount=useSelector<AppRootStateType, number>(state => state.packs.packsTableData.cardPacksTotalCount)
     const pageCount=useSelector<AppRootStateType, number>(state => state.packs.packsTableData.pageCount)
 
 
 
     const navigate = useNavigate();
-    const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
+    //
+    // const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
+    //     dispatch(getPacksTC({page: page}))
+    // }
+
+
+    const handleChangePage = (page: number) => {
         dispatch(getPacksTC({page: page}))
     }
+
+
     const removePackCards = (idPack:string) => {
         dispatch(deleteCardsPackTC(idPack) as any)
     }
@@ -59,9 +65,7 @@ export const TableList = () => {
 
                             >
                                 {/*Name*/}
-                                <TableCell   onClick={() => {
-                                    navigate(CARDS_LIST, {replace: true} )
-                                }}>
+                                <TableCell>
                                     <Box
                                         sx={{
                                             alignItems: 'center',
@@ -154,14 +158,6 @@ export const TableList = () => {
                         ))}
                     </TableBody>
                 </TableContainer>
-                <TablePagination
-                    component="div"
-                    rowsPerPageOptions={[10]}
-                    count={cardPacksTotalCount}
-                    rowsPerPage={10}
-                    page={page}
-                    onPageChange={handleChangePage}
-                />
 
                 <div>
                     <PaginationRounded totalCount={cardPacksTotalCount}

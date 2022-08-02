@@ -23,6 +23,8 @@ export const setIsLoggedInAC = (value: boolean) =>
     ({type: 'SET-IS-LOGGED-IN', value} as const);
 
 
+
+
 export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
     authApi.login(data)
@@ -33,9 +35,14 @@ export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
         })
         .catch((error) => {
             const errorResponse = error.response ? error.response.data.error : (error.message + ", more details in the console")
+            //Ошибки из ответа
             handleServerAppError(errorResponse, dispatch)
+
         })
 
+        .finally(() => {
+
+        })
 };
 
 type ActionsType = ReturnType<typeof setIsLoggedInAC>

@@ -12,7 +12,7 @@ import {emailValidation, passwordValidation} from "../../common/validation/valid
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, AppRootStateType} from "../../app/store";
 import {Navigate} from 'react-router-dom';
-import {PROFILE, REC_PASSWORD, SING_UP} from "../../common/routes/routes";
+import {CARDS, REC_PASSWORD, SING_UP} from "../../common/routes/routes";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
 import {useNavigate} from "react-router-dom";
@@ -57,7 +57,7 @@ export const SingIn = () => {
     };
 
     if (isLoggedIn) {
-        return <Navigate to={PROFILE}/>
+        return <Navigate to={CARDS}/>
     }
     return (
         <div className={s.block}>

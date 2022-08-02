@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import userPhoto from "../../assets/img/user.png";
@@ -23,14 +23,12 @@ import {Navigate} from "react-router-dom";
 import {EditableSpan} from "./EditableSpan";
 import {initTC} from "../../app/app-reducer";
 
+
 export const Profile = () => {
 
     const dispatch = useDispatch<ThunkDispatch<AppRootStateType,unknown,Action> & AppDispatch>()
     const profile = useSelector<AppRootStateType, ResponseProfileType>(state => state.profile)
     const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
-
-
-
 
     const onClickHandler = () => {
         dispatch(logoutTC())
