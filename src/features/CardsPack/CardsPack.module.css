@@ -1,0 +1,51 @@
+.blockTable {
+    margin-top: 20px;
+    height: 85vh;
+    width: 70vw;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 5px;
+}
+.headerCardsPack {
+    width: 100%;
+    height: 150px;
+    display: grid;
+    grid-template-areas:
+    "title . button"
+    "search change slider";
+    grid-template-rows: 80px 70px;
+    grid-template-columns: 1.5fr 1fr 1fr;
+}
+.titleHeaderCP {
+    grid-area: title;
+    margin-top: 20px;
+}
+.blockBtnAddCP {
+    grid-area: button;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.btnAddCP {
+    with: 100px;
+    height: 30px;
+}
+.searchCardsPack {
+    grid-area: search;
+}
+.changeCardsPack {
+    grid-area: change;
+    display: flex;
+    justify-content: start;
+    align-items: flex-end;
+}
+.sliderCardsPack {
+    grid-area: slider;
+}
+.btnCardsPack {
+    width: 120px;
+    height: 40px;
+}

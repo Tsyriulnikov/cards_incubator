@@ -1,41 +1,30 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {TableList} from "./packsList/Table/tableList";
-import {PacksSearch} from "./packsSearch/packsSearch";
-import Button from '@mui/material/Button';
-import {useDispatch, useSelector} from "react-redux";
+import Paper from "@mui/material/Paper";
+import style from './CardsPack.module.css'
+import {HeaderCardsPack} from "./packsList/header/HeaderCardsPack";
+import {PaginationCardsPack} from "./packsList/footer/PaginationCardsPack";
+import {getPacksTC, getStartPacksTC} from "./cardsPack-reducer";
+import {useDispatch} from "react-redux";
 import {ThunkDispatch} from "redux-thunk";
 import {AppDispatch, AppRootStateType} from "../../app/store";
 import {Action} from "redux";
-import {addCardsPackTC, getPacksTC} from "./cardsPack-reducer";
-import {ResponseProfileType} from "../profile/profile-reducer";
+import {ErrorSnackbar} from "../../utils/ErrorSnackbar/ErrorSnackbar";
 
 export const CardsPack = () => {
     const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
-    const userId = useSelector<AppRootStateType, string|null>(state => state.profile._id)
-    const addPack = (name: string) => {
-        dispatch(addCardsPackTC({name: name}) as any)
-    }
-
-    const onClickMyButton = () => {
-        dispatch(getPacksTC({user_id: userId}))
-    }
-    const onClickAllButton = () => {
-        dispatch(getPacksTC({user_id: ""}))
-    }
-
-
-
+    useEffect(() => {
+        // dispatch(getPacksTC({packName:packNameSearch}))
+        dispatch(getStartPacksTC())
+    }, [])
 
     return (
-        <div style={{height: '100%', width: '100%', display: "flex", flexDirection: 'column'}}>
-            <PacksSearch/>
-<Button onClick={onClickMyButton} variant="contained" size={"small"} sx={{width: 400, margin: 5}}>My Packs</Button>
-<Button onClick={onClickAllButton} variant="contained" size={"small"} sx={{width: 400, margin: 5}}>All Packs</Button>
-
-            <Button onClick={event => addPack('MaxTs')} variant="contained" size={"small"} sx={{width: 400, margin: 5}}
-            >Add new pack</Button>
-            <TableList/>
-        </div>
+            <div className={style.blockTable}>
+                <ErrorSnackbar/>
+                <HeaderCardsPack/>
+                <TableList/>
+                <PaginationCardsPack/>
+            </div>
     );
 }
 

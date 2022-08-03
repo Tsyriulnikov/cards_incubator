@@ -1,5 +1,16 @@
 import {Navigate, Route, Routes} from "react-router-dom";
-import {CARDS, CHECK_EMAIL, ERROR, LOG_OUT, NEW_PASSWORD, PROFILE, REC_PASSWORD, SING_IN, SING_UP} from "./routes";
+import {
+    CARDS,
+    CARDSFORPACKS,
+    CHECK_EMAIL,
+    ERROR,
+    LOG_OUT,
+    NEW_PASSWORD,
+    PROFILE,
+    REC_PASSWORD,
+    SING_IN,
+    SING_UP
+} from "./routes";
 import {Profile} from "../../features/profile/profile";
 import {SingIn} from "../../features/singIn/singIn";
 import {SingUp} from "../../features/singUp/singUp";
@@ -10,6 +21,7 @@ import {CheckEmail} from "../../features/CheckEmail/CheckEmail";
 import {ErrorPage} from "../../features/error/ErrorPage";
 import React from "react";
 import {CardsPack} from "../../features/CardsPack/CardsPack";
+import {Cards} from "../../features/CardsPack/cardsList/Cards";
 
 export const RoutesComponent = () => {
 
@@ -20,6 +32,7 @@ export const RoutesComponent = () => {
                 <Route path={SING_IN} element={<SingIn/>}/>
                 <Route path={SING_UP} element={<SingUp/>}/>
                 <Route path={CARDS} element={<CardsPack/>}/>
+                <Route path={CARDSFORPACKS} element={<Cards/>}/>
                 <Route path={REC_PASSWORD} element={<RecoveryPassword/>}/>
                 <Route path={NEW_PASSWORD} element={<NewPassword/>}/>
                 <Route path={LOG_OUT} element={<LogOut/>}/>

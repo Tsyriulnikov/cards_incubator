@@ -5,12 +5,10 @@ import {
     PacksQueryParamsType, UpdatePackPayloadType
 } from "../CardsPack/api-CardsPack";
 import {Dispatch} from "redux";
-import {authApi} from "../singIn/auth-api";
 import {ThunkAction} from "redux-thunk";
 import {AppRootStateType} from "../../app/store";
 import {setProfileAC} from "../profile/profile-reducer";
-// import {AppRootStateType} from "./store";
-
+import {handleServerAppError} from "../../utils/error-utils";
 
 const initialState = {
     packsTableData: {
@@ -27,84 +25,86 @@ const initialState = {
 
 export const packsReducer = (state: PacksInitialStateType = initialState, action: ActionType): PacksInitialStateType => {
     switch (action.type) {
-        case "GET-PACKS":
+        case 'CARDS-PACK/GET-PACKS':
             return {...state, packsTableData: action.packsTableData}
-        case "SET-OPTIONS":
+        case 'CARDS-PACK/SET-OPTIONS':
             return {...state, options: {...state.options, ...action.options}}
         default:
             return state
     }
 }
+//AC
+export const getPacksAC = (packsTableData: PackResponseType) => ({
+    type: 'CARDS-PACK/GET-PACKS',
+    packsTableData
+} as const)
+export const setOptionsAC = (options: PacksQueryParamsType) => ({type: 'CARDS-PACK/SET-OPTIONS', options} as const)
 
-export const getPacksAC = (packsTableData: PackResponseType) => ({type: "GET-PACKS", packsTableData} as const)
-export const setOptionsAC = (options: PacksQueryParamsType) => ({type: "SET-OPTIONS", options} as const)
-
-
-export const getStartPacksTC = () => (dispatch: Dispatch<ActionType>, getState: () => AppRootStateType) => {
-    const packsOptions = getState().packs.options
-    authApi.me()
-        .then(res => {
-            dispatch(setProfileAC(res.data))
-            packsAPI.getPacks(packsOptions)
-                .then(res => {
-                    dispatch(getPacksAC(res.data))
-                })
-                .catch((e) => {
-                })
-        })
-        .finally(() => {
-        })
-}
-export const getPacksTC = (options?: PacksQueryParamsType) => (dispatch: Dispatch<ActionType>, getState: () => AppRootStateType) => {
-
-    if (options) {
-        dispatch(setOptionsAC(options))
-    }
-    const packsOptions = getState().packs.options
-
-    packsAPI.getPacks(packsOptions)
-        .then(res => {
+//TS
+export const getStartPacksTC = () => {
+    return async (dispatch: Dispatch<ActionType>, getState: () => AppRootStateType) => {
+        const packsOptions = getState().packs.options
+        try {
+            const res = await packsAPI.getPacks(packsOptions)
             dispatch(getPacksAC(res.data))
-        })
-        .catch((e) => {
-
-        })
-        .finally(() => {
-        })
+        } catch (err: any) {
+            handleServerAppError(err.response.data.error, dispatch)
+        }
+    }
 }
 
-export const addCardsPackTC = (addPackPayload: AddPackPayloadType): ThunkType => (dispatch) => {
+export const getPacksTC = (options?: PacksQueryParamsType) => {
 
-    packsAPI.addPack(addPackPayload)
-        .then(() => {
-            dispatch(getPacksTC())
-        })
-        .finally(() => {
-
-        })
+    return async (dispatch: Dispatch<ActionType>, getState: () => AppRootStateType) => {
+        if (options) {
+            dispatch(setOptionsAC(options))
+        }
+        const packsOptions = getState().packs.options
+        try {
+            const res = await packsAPI.getPacks(packsOptions)
+            dispatch(getPacksAC(res.data))
+        } catch (err: any) {
+            handleServerAppError(err.response.data.error, dispatch)
+        }
+    }
 }
-export const deleteCardsPackTC = (idPack: string): ThunkType => (dispatch) => {
-    packsAPI.deletePack(idPack)
-        .then(() => {
+
+export const addCardsPackTC = (addPackPayload: AddPackPayloadType): ThunkType => {
+    return async (dispatch) => {
+        try {
+            const res = await packsAPI.addPack(addPackPayload)
             dispatch(getPacksTC())
-        })
-        .finally(() => {
-        })
+        } catch (err: any) {
+            handleServerAppError(err.response.data.error, dispatch)
+        }
+    }
 }
-export const updateCardsPackTC = (updatePackPayload: UpdatePackPayloadType): ThunkType => (dispatch) => {
 
-    packsAPI.updatePack(updatePackPayload)
-        .then(() => {
+export const deleteCardsPackTC = (idPack: string): ThunkType => {
+    return async (dispatch) => {
+        try {
+            const res = await packsAPI.deletePack(idPack)
             dispatch(getPacksTC())
-        })
-        .finally(() => {
+        } catch (err: any) {
+            handleServerAppError(err.response.data.error, dispatch)
+        }
+    }
+}
 
-        })
+export const updateCardsPackTC = (updatePackPayload: UpdatePackPayloadType): ThunkType => {
+    return async (dispatch) => {
+        try {
+            const res = await packsAPI.updatePack(updatePackPayload)
+            dispatch(getPacksTC())
+        } catch (err: any) {
+            handleServerAppError(err.response.data.error, dispatch)
+        }
+    }
 }
 
 
 // Types
-export type SelectValueType = 5 | 10 | 25 | 50 | 100;
+export type SelectValueType = 5 | 10 | 25 | 50
 
 
 export type PacksInitialStateType = {
