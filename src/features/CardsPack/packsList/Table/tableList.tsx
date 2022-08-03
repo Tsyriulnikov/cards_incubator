@@ -5,8 +5,7 @@ import {CardPacksType} from "../../api-CardsPack";
 import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
 import {deleteCardsPackTC, updateCardsPackTC} from "../../cardsPack-reducer";
-import {useNavigate} from "react-router-dom";
-import {Table} from "../../../../common/table/Table";
+import {TableShow} from "../../../../common/table/TableShow";
 import {setCardsTC} from "../../../../common/table/cards-reducer";
 
 
@@ -32,7 +31,7 @@ export const TableList = () => {
     const tableCell = ['Name', 'Cards', 'LastUpdated', 'Created by', 'Actions']
     return (
         <div>
-            <Table
+            <TableShow
                 tableCell={tableCell}
                 tableData={packsTableData}
                 removeData={removePackCards}
