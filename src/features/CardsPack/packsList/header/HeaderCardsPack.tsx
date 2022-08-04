@@ -14,7 +14,7 @@ export const HeaderCardsPack = () => {
     const addPack = (name: string) => {
         dispatch(addCardsPackTC({name: name}) as any)
     }
-    const [buttonPaks,setButtonPaks]=useState(false)
+    const [buttonPaks,setButtonPaks]=useState(true)
 
     const onClickMyButton = () => {
         setButtonPaks(false)
