@@ -103,8 +103,7 @@ export const updateCardsPackTC = (updatePackPayload: UpdatePackPayloadType): Thu
 }
 
 
-// Types
-export type SelectValueType = 5 | 10 | 25 | 50
+
 
 
 export type PacksInitialStateType = {

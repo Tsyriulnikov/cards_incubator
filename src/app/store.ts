@@ -7,7 +7,7 @@ import {resetPasswordReducer} from "../features/newPassword/newPassword-reducer"
 import {passwordRecoverReducer} from "../features/recoveryPassword/recoveryPassword-reducer";
 import {authReducer} from "../features/singIn/auth-reducer";
 import {packsReducer} from "../features/CardsPack/cardsPack-reducer";
-import {cardsReducer} from "../common/table/cards-reducer";
+import {cardsReducer} from "../features/CardsPack/cardsList/cards-reducer";
 
 
 

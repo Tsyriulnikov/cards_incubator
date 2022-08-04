@@ -32,7 +32,7 @@ export const RoutesComponent = () => {
                 <Route path={SING_IN} element={<SingIn/>}/>
                 <Route path={SING_UP} element={<SingUp/>}/>
                 <Route path={CARDS} element={<CardsPack/>}/>
-                <Route path={CARDSFORPACKS} element={<Cards/>}/>
+                <Route path={CARDSFORPACKS + `/:id`} element={<Cards/>}/>
                 <Route path={REC_PASSWORD} element={<RecoveryPassword/>}/>
                 <Route path={NEW_PASSWORD} element={<NewPassword/>}/>
                 <Route path={LOG_OUT} element={<LogOut/>}/>

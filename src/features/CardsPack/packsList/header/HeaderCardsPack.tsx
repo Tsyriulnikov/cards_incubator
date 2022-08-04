@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {PacksSearch} from "../../packsSearch/packsSearch";
 import Button from "@mui/material/Button";
 import {addCardsPackTC, getPacksTC} from "../../cardsPack-reducer";
@@ -14,18 +14,21 @@ export const HeaderCardsPack = () => {
     const addPack = (name: string) => {
         dispatch(addCardsPackTC({name: name}) as any)
     }
+    const [buttonPaks,setButtonPaks]=useState(false)
 
     const onClickMyButton = () => {
+        setButtonPaks(false)
         dispatch(getPacksTC({user_id: userId}))
     }
     const onClickAllButton = () => {
+        setButtonPaks(true)
         dispatch(getPacksTC({user_id: ""}))
     }
 
     return <div className={style.headerCardsPack}>
         <h2 className={style.titleHeaderCP}>Packs list</h2>
         <div className={style.blockBtnAddCP}>
-            <Button onClick={event => addPack('MaxTs')} variant="contained" size={"small"} className={style.btnAddCP}
+            <Button onClick={event => addPack('MaxTs')} variant="contained"  className={style.btnAddCP}
             >Add new pack</Button>
         </div>
         <div className={style.searchCardsPack}>
@@ -33,9 +36,9 @@ export const HeaderCardsPack = () => {
             <PacksSearch/>
         </div>
         <div className={style.changeCardsPack}>
-            <Button onClick={onClickMyButton} variant="contained" className={style.btnCardsPack}>My
+            <Button onClick={onClickMyButton} variant={buttonPaks? "contained":"outlined"} className={style.btnCardsPack}>My
                 Packs</Button>
-            <Button onClick={onClickAllButton} variant="contained" className={style.btnCardsPack}>All
+            <Button onClick={onClickAllButton} variant={!buttonPaks? "contained":"outlined"} className={style.btnCardsPack}>All
                 Packs</Button>
         </div>
         <div className={style.sliderCardsPack}></div>

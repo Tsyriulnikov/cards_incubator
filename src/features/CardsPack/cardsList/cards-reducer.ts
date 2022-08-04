@@ -1,13 +1,13 @@
-import {PacksQueryParamsType} from "../../features/CardsPack/api-CardsPack";
+import {PacksQueryParamsType} from "../api-CardsPack";
 import {
     cardsAPI,
     CardsQueryParamsType,
     CardsResponseType,
     CardsType
-} from "../../features/CardsPack/cardsList/api-Cards";
+} from "./api-Cards";
 import {Action, Dispatch} from "redux";
-import {AppRootStateType} from "../../app/store";
-import {setOptionsAC} from "../../features/CardsPack/cardsPack-reducer";
+import {AppRootStateType} from "../../../app/store";
+import {setOptionsAC} from "../cardsPack-reducer";
 
 const initialState = {
     cardsTableData: {
