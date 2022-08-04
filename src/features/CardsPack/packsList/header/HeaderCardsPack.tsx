@@ -14,21 +14,21 @@ export const HeaderCardsPack = () => {
     const addPack = (name: string) => {
         dispatch(addCardsPackTC({name: name}) as any)
     }
-    const [buttonPaks,setButtonPaks]=useState(true)
+    const [buttonPaks, setButtonPaks] = useState(true)
 
     const onClickMyButton = () => {
-        setButtonPaks(false)
+        setButtonPaks(buttonPaks=>!buttonPaks)
         dispatch(getPacksTC({user_id: userId}))
     }
     const onClickAllButton = () => {
-        setButtonPaks(true)
+        setButtonPaks(buttonPaks=>!buttonPaks)
         dispatch(getPacksTC({user_id: ""}))
     }
 
     return <div className={style.headerCardsPack}>
         <h2 className={style.titleHeaderCP}>Packs list</h2>
         <div className={style.blockBtnAddCP}>
-            <Button onClick={event => addPack('MaxTs')} variant="contained"  className={style.btnAddCP}
+            <Button onClick={event => addPack('MaxTs')} variant="contained" className={style.btnAddCP}
             >Add new pack</Button>
         </div>
         <div className={style.searchCardsPack}>
@@ -36,10 +36,10 @@ export const HeaderCardsPack = () => {
             <PacksSearch/>
         </div>
         <div className={style.changeCardsPack}>
-            <Button onClick={onClickMyButton} variant={buttonPaks? "contained":"outlined"} className={style.btnCardsPack}>My
-                Packs</Button>
-            <Button onClick={onClickAllButton} variant={!buttonPaks? "contained":"outlined"} className={style.btnCardsPack}>All
-                Packs</Button>
+            <Button onClick={onClickMyButton} variant="contained" className={style.btnCardsPack}
+                    disabled={!buttonPaks}>My Packs</Button>
+            <Button onClick={onClickAllButton} variant="contained" className={style.btnCardsPack}
+                    disabled={buttonPaks}>All Packs</Button>
         </div>
         <div className={style.sliderCardsPack}></div>
     </div>
