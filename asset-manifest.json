@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/cards_incubator/static/css/main.2829cb7e.css",
-    "main.js": "/cards_incubator/static/js/main.051dadd2.js",
+    "main.js": "/cards_incubator/static/js/main.5e8f7a72.js",
     "static/js/787.8517b185.chunk.js": "/cards_incubator/static/js/787.8517b185.chunk.js",
     "static/media/palet.jpg": "/cards_incubator/static/media/palet.da6c5df026860cb92f3e.jpg",
     "static/media/jpg": "/cards_incubator/static/media/733fed6a25170bd1e15329a474aa32ea.e8f479029f40bc1100f1.jpg",
     "static/media/user.png": "/cards_incubator/static/media/user.efcfdf0e549928f3919a.png",
     "index.html": "/cards_incubator/index.html",
     "main.2829cb7e.css.map": "/cards_incubator/static/css/main.2829cb7e.css.map",
-    "main.051dadd2.js.map": "/cards_incubator/static/js/main.051dadd2.js.map",
+    "main.5e8f7a72.js.map": "/cards_incubator/static/js/main.5e8f7a72.js.map",
     "787.8517b185.chunk.js.map": "/cards_incubator/static/js/787.8517b185.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2829cb7e.css",
-    "static/js/main.051dadd2.js"
+    "static/js/main.5e8f7a72.js"
   ]
 }
