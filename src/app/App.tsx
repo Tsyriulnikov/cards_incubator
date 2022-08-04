@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import s from './App.module.css'
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, HashRouter} from "react-router-dom";
 import Header from "../common/header/Header";
 import {useDispatch, useSelector} from "react-redux";
 import {ThunkDispatch} from "redux-thunk";
@@ -29,12 +29,12 @@ function App() {
     }
 
     return (
-        <BrowserRouter>
+        <HashRouter>
             <div className={s.App}>
                 <Header/>
                 <RoutesComponent/>
             </div>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 

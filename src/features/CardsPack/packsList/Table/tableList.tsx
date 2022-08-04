@@ -32,6 +32,16 @@ export const TableList = () => {
     }
 
     const tableCell = ['Name', 'Cards', 'LastUpdated', 'Created by', 'Actions']
+
+    //Нормализация Даты обновления
+    const formatDate = (date: string): string => {
+        return new Date(date).toLocaleDateString("ru", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"
+        });
+    }
+
     return (
         <div>
             <TableContainer className={style.table}>
@@ -43,7 +53,7 @@ export const TableList = () => {
                                           userId={item.user_id}
                                           itemOne={item.name}
                                           itemTwo={item.cardsCount}
-                                          itemTree={item.updated}
+                                          itemTree={formatDate(item.updated)}
                                           itemFour={item.user_name}
                                           myId={myId}
                                           removeData={removePackCards}

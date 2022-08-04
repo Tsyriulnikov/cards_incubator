@@ -1,3 +1,4 @@
+export const ROOT = '/';
 export const PROFILE = '/cards';
 export const SING_IN = '/singIn';
 export const SING_UP = '/singUp';

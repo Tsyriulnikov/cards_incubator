@@ -7,7 +7,7 @@ import {
     LOG_OUT,
     NEW_PASSWORD,
     PROFILE,
-    REC_PASSWORD,
+    REC_PASSWORD, ROOT,
     SING_IN,
     SING_UP
 } from "./routes";
@@ -28,6 +28,7 @@ export const RoutesComponent = () => {
     return (
         <div>
             <Routes>
+                <Route path={ROOT} element={<Profile/>}/>
                 <Route path={PROFILE} element={<Profile/>}/>
                 <Route path={SING_IN} element={<SingIn/>}/>
                 <Route path={SING_UP} element={<SingUp/>}/>
@@ -37,9 +38,9 @@ export const RoutesComponent = () => {
                 <Route path={NEW_PASSWORD} element={<NewPassword/>}/>
                 <Route path={LOG_OUT} element={<LogOut/>}/>
                 <Route path={CHECK_EMAIL} element={<CheckEmail/>}/>
+                <Route path={CHECK_EMAIL} element={<CheckEmail/>}/>
                 <Route path={ERROR} element={<ErrorPage/>}/>
                 <Route path={'*'} element={<Navigate to={ERROR}/>}/>
-                <Route path={CHECK_EMAIL} element={<CheckEmail/>}/>
             </Routes>
         </div>
     )
