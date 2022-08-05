@@ -9,18 +9,20 @@ import {ThunkAction} from "redux-thunk";
 import {AppRootStateType} from "../../app/store";
 import {setProfileAC} from "../profile/profile-reducer";
 import {handleServerAppError} from "../../utils/error-utils";
+import {setAppStatusAC} from "../../app/app-reducer";
+import {cardStatusAC, cardStatusACType} from "./cardsList/cards-reducer";
 
 const initialState = {
     packsTableData: {
         cardPacks: [],
         cardPacksTotalCount: 0,
-        maxCardsCount: 0,
+        maxCardsCount: 100,
         minCardsCount: 0,
         page: 1,
         pageCount: 5
     },
     isFetching: false,
-    options: {pageCount: 10} as PacksQueryParamsType
+    options: {pageCount: 10, min: 0, max: 100} as PacksQueryParamsType
 }
 
 export const packsReducer = (state: PacksInitialStateType = initialState, action: ActionType): PacksInitialStateType => {
@@ -41,17 +43,6 @@ export const getPacksAC = (packsTableData: PackResponseType) => ({
 export const setOptionsAC = (options: PacksQueryParamsType) => ({type: 'CARDS-PACK/SET-OPTIONS', options} as const)
 
 //TS
-export const getStartPacksTC = () => {
-    return async (dispatch: Dispatch<ActionType>, getState: () => AppRootStateType) => {
-        const packsOptions = getState().packs.options
-        try {
-            const res = await packsAPI.getPacks(packsOptions)
-            dispatch(getPacksAC(res.data))
-        } catch (err: any) {
-            handleServerAppError(err.response.data.error, dispatch)
-        }
-    }
-}
 
 export const getPacksTC = (options?: PacksQueryParamsType) => {
 
@@ -63,6 +54,7 @@ export const getPacksTC = (options?: PacksQueryParamsType) => {
         try {
             const res = await packsAPI.getPacks(packsOptions)
             dispatch(getPacksAC(res.data))
+            dispatch(cardStatusAC('none'))
         } catch (err: any) {
             handleServerAppError(err.response.data.error, dispatch)
         }
@@ -102,17 +94,14 @@ export const updateCardsPackTC = (updatePackPayload: UpdatePackPayloadType): Thu
     }
 }
 
-
-
-
-
 export type PacksInitialStateType = {
     packsTableData: PackResponseType
     options: PacksQueryParamsType
 }
 
-type ThunkType = ThunkAction<void, AppRootStateType, {}, ActionType>
+export type ThunkType = ThunkAction<void, AppRootStateType, {}, ActionType>
 
 type ActionType = ReturnType<typeof getPacksAC>
     | ReturnType<typeof setOptionsAC>
     | ReturnType<typeof setProfileAC>
+    | cardStatusACType

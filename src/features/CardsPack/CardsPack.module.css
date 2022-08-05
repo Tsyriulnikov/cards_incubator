@@ -10,7 +10,7 @@
 }
 .headerCardsPack {
     width: 100%;
-    height: 150px;
+    height: 130px;
     display: grid;
     grid-template-areas:
     "title . button"
@@ -39,13 +39,27 @@
 .changeCardsPack {
     grid-area: change;
     display: flex;
-    justify-content: start;
-    align-items: flex-end;
+    flex-direction: column;
+    padding-left: 10px;
 }
 .sliderCardsPack {
     grid-area: slider;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.titleSliderCardsPack {
+    align-self: center;
 }
 .btnCardsPack {
-    width: 120px;
+    width: 40%;
     height: 40px;
+}
+.headerCardsTable {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

@@ -7,7 +7,7 @@ import {
     LOG_OUT,
     NEW_PASSWORD,
     PROFILE,
-    REC_PASSWORD, ROOT,
+    REC_PASSWORD,
     SING_IN,
     SING_UP
 } from "./routes";
@@ -25,22 +25,27 @@ import {Cards} from "../../features/CardsPack/cardsList/Cards";
 
 export const RoutesComponent = () => {
 
+    const routes = [
+        {path: PROFILE, component: <Profile/>},
+        {path: SING_IN, component: <SingIn/>},
+        {path: SING_UP, component: <SingUp/>},
+        {path: CARDS, component: <CardsPack/>},
+        {path: CARDSFORPACKS, component: <Cards/>},
+        {path: REC_PASSWORD, component: <RecoveryPassword/>},
+        {path: NEW_PASSWORD, component: <NewPassword/>},
+        {path: LOG_OUT, component: <LogOut/>},
+        {path: CHECK_EMAIL, component: <Profile/>},
+        {path: CHECK_EMAIL, component: <CheckEmail/>},
+        {path: ERROR, component: <ErrorPage/>}
+    ]
+
     return (
         <div>
             <Routes>
-                <Route path={ROOT} element={<Profile/>}/>
-                <Route path={PROFILE} element={<Profile/>}/>
-                <Route path={SING_IN} element={<SingIn/>}/>
-                <Route path={SING_UP} element={<SingUp/>}/>
-                <Route path={CARDS} element={<CardsPack/>}/>
-                <Route path={CARDSFORPACKS + `/:id`} element={<Cards/>}/>
-                <Route path={REC_PASSWORD} element={<RecoveryPassword/>}/>
-                <Route path={NEW_PASSWORD} element={<NewPassword/>}/>
-                <Route path={LOG_OUT} element={<LogOut/>}/>
-                <Route path={CHECK_EMAIL} element={<CheckEmail/>}/>
-                <Route path={CHECK_EMAIL} element={<CheckEmail/>}/>
-                <Route path={ERROR} element={<ErrorPage/>}/>
                 <Route path={'*'} element={<Navigate to={ERROR}/>}/>
+                    {routes.map((route, index) => (
+                        <Route key={index} path={route.path} element={route.component}/>
+                    ))}
             </Routes>
         </div>
     )

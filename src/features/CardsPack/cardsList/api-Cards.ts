@@ -6,11 +6,11 @@ export const cardsAPI = {
     getCards(options: CardsQueryParamsType) {
         return instance.get<CardsResponseType, AxiosResponse<CardsResponseType>>(`cards/card`, {params: options})
     },
-    addPCards(newCard: newCardsType) {
+    addCards(newCard: newCardsType) {
         return instance.post('cards/card', {card: newCard})
     },
-    deleteCards(idCard: string) {
-        return instance.delete(`cards/card?id=${idCard}`)
+    deleteCards(cardsPack_id: string) {
+        return instance.delete(`cards/card?id=${cardsPack_id}`)
     },
     updateCards(updateCard: updateCardsType) {
         return instance.put('cards/card', {cardsPack: updateCard})
@@ -62,7 +62,7 @@ export type CardsQueryParamsType = {
 }
 
 export type newCardsType = {
-    card: {
+
         cardsPack_id: string
         question?: string
         answer?: string
@@ -72,7 +72,7 @@ export type newCardsType = {
         questionImg?: string
         questionVideo?: string
         answerVideo?: string
-    }
+
 }
 
 export type updateCardsType = {

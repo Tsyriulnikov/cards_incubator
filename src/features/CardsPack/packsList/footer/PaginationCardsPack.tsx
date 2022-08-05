@@ -25,9 +25,8 @@ export const PaginationCardsPack = () => {
         dispatch(getPacksTC())
     }
 
-
     return (
-        <Box style={{display: 'flex'}}>
+        <Box style={{display: 'flex', marginTop: '10px'}}>
             <Box>
                 <PaginationRounded totalCount={cardPacksTotalCount}
                                    pageCount={pageCount}
