@@ -10,8 +10,7 @@ import style from "../../../../common/table/TableList.module.css";
 import {Table, TableContainer} from "@mui/material";
 import {TableHeadComp} from "../../../../common/table/TableHeadComp";
 import {TableBodyComp} from "../../../../common/table/TableBody";
-import {Navigate, useNavigate} from "react-router-dom";
-import {CARDSFORPACKS} from "../../../../common/routes/routes";
+import {useNavigate} from "react-router-dom";
 import {formatDate} from "../../../../common/formatDate/formatDate";
 
 
@@ -30,7 +29,7 @@ export const TableList = () => {
         dispatch(updateCardsPackTC({_id: idPack, name: 'MaxTsNew'}) as any)
     }
     const callCards = (cardsPack_id:string) => {
-        dispatch(setCardsTC(cardsPack_id))
+        // dispatch(setCardsTC(cardsPack_id))
         navigate(`/cards-for-packs/${cardsPack_id}`)
     }
 

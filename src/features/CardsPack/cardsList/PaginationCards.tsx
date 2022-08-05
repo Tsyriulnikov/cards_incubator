@@ -17,7 +17,8 @@ export const PaginationCards = () => {
     const cards=useSelector<AppRootStateType, CardsType[]>(state => state.cards.cardsTableData.cards)
     const handleChangePage = (page: number) => {
         const id = cards.map(el => el.cardsPack_id)
-        dispatch(setCardsTC(id[0], {page: page}))
+        // dispatch(setCardsTC(id[0], {page: page}))
+        dispatch(setCardsTC({cardsPack_id:id[0], page: page}))
     }
 
     return (

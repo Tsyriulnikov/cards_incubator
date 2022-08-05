@@ -23,6 +23,7 @@ export const CardsList = () => {
     const editPackCards = (idPack: string) => {
     }
     const callCards = (cardsPack_id:string) => {
+
     }
     const sortUpdate = () => {
 

@@ -22,7 +22,7 @@ export const Cards = () => {
     console.log(cardsTotalCount)
     useEffect(() => {
         if (id) {
-            dispatch(setCardsTC(id))
+            dispatch(setCardsTC({cardsPack_id:id}))
         }
         console.log(cardsTotalCount)
     }, [cardsTotalCount])
