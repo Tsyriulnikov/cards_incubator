@@ -17,7 +17,7 @@ const initialState = {
         maxCardsCount: 0,
         minCardsCount: 0,
         page: 1,
-        pageCount: 0
+        pageCount: 5
     },
     isFetching: false,
     options: {pageCount: 10} as PacksQueryParamsType

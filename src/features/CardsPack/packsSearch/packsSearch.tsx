@@ -16,8 +16,9 @@ export const PacksSearch = () => {
     const debouncedSearchPaks = useDebounce(packNameSearch, 500);
     useEffect(
         () => {
-            dispatch(getPacksTC({packName: packNameSearch}))
-        }, [debouncedSearchPaks]);
+            if (debouncedSearchPaks) {
+                dispatch(getPacksTC({packName: packNameSearch}))
+            }}, [debouncedSearchPaks]);
 
     return (
         <Paper
