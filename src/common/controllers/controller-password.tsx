@@ -3,8 +3,9 @@ import TextField from '@mui/material/TextField';
 import {Controller, useFormContext} from "react-hook-form";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+
+
 
 
 type ControllerPasswordType = {

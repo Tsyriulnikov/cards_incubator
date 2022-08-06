@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import style from "./TableList.module.css";
 import {TableCell, TableHead, TableRow} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import {ArrowDownward, ArrowUpward, Delete, KeyboardArrowDown} from "@material-ui/icons";
+import {ArrowDownward, ArrowUpward, Delete, KeyboardArrowDown} from "@mui/icons-material";
 
 type TableHeadCompType = {
     tableCell: string[],
-    callbackSort: (sort: string) => void
+    callbackSort: (sort: any) => void
 }
 
 export const TableHeadComp = (props: TableHeadCompType) => {

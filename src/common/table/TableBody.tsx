@@ -4,7 +4,9 @@ import {Table, TableBody, TableCell, TableRow} from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import {Delete, Edit} from "@material-ui/icons";
+import Delete from "@mui/icons-material/Delete";
+import Edit from "@mui/icons-material/Edit";
+
 
 
 type TableBodyType = {

@@ -26,14 +26,12 @@ export const HeaderCard = (props:HeaderCardType) => {
     const cards=useSelector<AppRootStateType, CardsType[]>(state => state.cards.cardsTableData.cards)
     const myId = useSelector<AppRootStateType, string | null>(state => state.profile._id)
     const packUserId=useSelector<AppRootStateType, string>(state => state.cards.cardsTableData.packUserId)
-    const id = cards.map(el => el.cardsPack_id)
-
     const card = packs.find((el) => el._id === props.id)
 
     const addCardHandler = () => {
-        // @ts-ignore
-       props.id && dispatch(addCardTC({cardsPack_id: props.id}))
-
+        if (props.id) {
+            dispatch(addCardTC({cardsPack_id: props.id}))
+        }
     }
     const onClickHandler = () => {
         navigate(CARDS)
@@ -43,7 +41,7 @@ export const HeaderCard = (props:HeaderCardType) => {
     return (
 
         <div className={style.headerCardsTable}>
-            <Button variant="contained" size={"small"} startIcon={<KeyboardBackspaceIcon/>} onClick={onClickHandler}>
+            <Button variant="contained" size={"small"} style={{width: '75px'}} startIcon={<KeyboardBackspaceIcon/>} onClick={onClickHandler}>
                 BACK
             </Button>
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
