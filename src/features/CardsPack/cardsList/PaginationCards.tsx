@@ -22,10 +22,10 @@ export const PaginationCards = () => {
 
     return (
         <div>
-            <PaginationRounded totalCount={cardsTotalCount}
-                               pageCount={pageCount}
-                               page={page}
-                               onChangePage={handleChangePage}
+            {/*<PaginationRounded totalCount={cardsTotalCount}*/}
+            {/*                   pageCount={pageCount}*/}
+            {/*                   page={page}*/}
+            {/*                   onChangePage={handleChangePage}*/}
             />
         </div>
     )
