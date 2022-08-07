@@ -45,7 +45,7 @@ export const HeaderCardsPack = () => {
         }))
     }
     return <div className={style.headerCardsPack}>
-        <h2 className={style.titleHeaderCP}>Packs list</h2>
+        {/*<h2 className={style.titleHeaderCP}>Packs list</h2>*/}
         <div className={style.blockBtnAddCP}>
             <Button onClick={event => addPack('MaxTs')} variant="contained" className={style.btnAddCP}
             >Add new pack</Button>
