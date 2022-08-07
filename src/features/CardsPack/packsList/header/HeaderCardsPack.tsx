@@ -17,7 +17,7 @@ export const HeaderCardsPack = () => {
     const min = useSelector<AppRootStateType, number | undefined>(state => state.cardsPack.options.min)
 
     const [value, setValue] = useState([min || 0, max || 100])
-    const [buttonPaks, setButtonPaks] = useState(true)
+    const [buttonPaks, setButtonPaks] = useState(false)
 
     const addPack = (name: string) => {
         dispatch(addCardsPackTC({name: name}) as any)
@@ -25,11 +25,11 @@ export const HeaderCardsPack = () => {
 
 
     const onClickMyButton = () => {
-        setButtonPaks(buttonPaks=>!buttonPaks)
+        setButtonPaks(true)
         dispatch(getPacksTC({user_id: userId}))
     }
     const onClickAllButton = () => {
-        setButtonPaks(buttonPaks=>!buttonPaks)
+        setButtonPaks(false)
         dispatch(getPacksTC({user_id: ""}))
     }
 
@@ -57,10 +57,10 @@ export const HeaderCardsPack = () => {
         <div className={style.changeCardsPack}>
             <h4>Show packs cards</h4>
             <div>
-                <Button onClick={onClickMyButton} variant="contained" className={style.btnCardsPack}
-                        disabled={!buttonPaks}>My Packs</Button>
-                <Button onClick={onClickAllButton} variant="contained" className={style.btnCardsPack}
-                        disabled={buttonPaks}>All Packs</Button>
+                <Button onClick={onClickMyButton} variant={buttonPaks? "contained":"outlined"} className={style.btnCardsPack}>My
+                    Packs</Button>
+                <Button onClick={onClickAllButton} variant={!buttonPaks? "contained":"outlined"} className={style.btnCardsPack}>All
+                    Packs</Button>
             </div>
         </div>
         <div className={style.sliderCardsPack}>
