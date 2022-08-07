@@ -51,7 +51,7 @@ export type CardsResponseType = {
 }
 
 export type CardsQueryParamsType = {
-    cardsPack_id: string
+    cardsPack_id?: string
     cardAnswer?: string
     cardQuestion?: string
     min?: number

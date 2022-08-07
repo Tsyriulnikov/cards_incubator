@@ -13,6 +13,7 @@ import {ThunkDispatch} from "redux-thunk";
 import {Action} from "redux";
 import {addCardTC, cardStatusAC, setCardsTC} from "./cards-reducer";
 import {getPacksTC} from "../cardsPack-reducer";
+import {CardsSearch} from "../cardsSearch/cardsSearch";
 
 
 type HeaderCardType = {
@@ -50,7 +51,7 @@ export const HeaderCard = (props:HeaderCardType) => {
             </div>
             <div className={style.searchCardsPack}>
                 <h3>Search</h3>
-                <PacksSearch/>
+                <CardsSearch packId={props.id}/>
             </div>
 
         </div>

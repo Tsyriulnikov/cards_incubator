@@ -69,18 +69,19 @@ export const cardStatusAC = (cardStatus: cardStatusType) => {
 
 export type ActionCardsType = setCardsACType | setOptionsCardsACType | cardStatusACType | ReturnType<typeof setOptionsAC>
 
-export const setCardsTC = (cardsPack_id: string, options?: PacksQueryParamsType) =>
+export const setCardsTC = (cardsPack_id: string, options?: CardsQueryParamsType) =>
      async (dispatch: Dispatch<ActionCardsType>, getState: () => AppRootStateType) => {
          if (options) {
              dispatch(setOptionsCardsAC(options))
          }
-         const { sortCards, page, pageCount } = getState().cards.options;
+         const { sortCards, page, pageCount,cardQuestion } = getState().cards.options;
          try {
              const response = await cardsAPI.getCards({
                  cardsPack_id,
                  sortCards,
                  page,
                  pageCount,
+                 cardQuestion,
              })
              dispatch(setCardsAC(response.data))
              if (response.data.cards.length) {

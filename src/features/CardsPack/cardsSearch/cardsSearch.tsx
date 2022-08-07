@@ -1,23 +1,27 @@
 import React, {useEffect, useState} from 'react';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
-import {getPacksAC, getPacksTC} from "../cardsPack-reducer";
 import {useDispatch} from "react-redux";
 import {ThunkDispatch} from "redux-thunk";
 import {AppDispatch, AppRootStateType} from "../../../app/store";
 import {Action} from "redux";
 import {useDebounce} from "../../../common/hook-usedebounce/hookUseDebounce";
+import {setCardsTC} from "../cardsList/cards-reducer";
 
-
-export const PacksSearch = () => {
-    const [packNameSearch, setPackNameSearch] = useState('')
+type cardsSearchType ={
+    packId:any
+}
+export const CardsSearch = (props:cardsSearchType) => {
+    const [cardQuestionSearch, setCardQuestionSearch] = useState('')
     const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
 
-    const debouncedSearchPaks = useDebounce(packNameSearch, 700);
+    const debouncedSearchCards = useDebounce(cardQuestionSearch, 700);
     useEffect(
         () => {
-            dispatch(getPacksTC({packName: packNameSearch}))
-        }, [debouncedSearchPaks]);
+
+            console.log(cardQuestionSearch)
+            dispatch(setCardsTC(props.packId,{cardQuestion:cardQuestionSearch}))
+        }, [debouncedSearchCards]);
 
     return (
         <Paper
@@ -29,8 +33,8 @@ export const PacksSearch = () => {
                 placeholder="Provide your text"
                 inputProps={{
                     'aria-label': 'Provide your text',
-                    value: packNameSearch,
-                    onChange: (event => setPackNameSearch(event.currentTarget.value))
+                    value: cardQuestionSearch,
+                    onChange: (event => setCardQuestionSearch(event.currentTarget.value))
 
                 }}
             />
