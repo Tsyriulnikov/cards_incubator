@@ -51,7 +51,7 @@ export const HeaderCard = (props:HeaderCardType) => {
             </div>
             <div className={style.searchCardsPack}>
                 <h3>Search</h3>
-                <CardsSearch packId={props.id}/>
+                <CardsSearch />
             </div>
 
         </div>

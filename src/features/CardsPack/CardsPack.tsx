@@ -9,16 +9,21 @@ import {ThunkDispatch} from "redux-thunk";
 import {AppDispatch, AppRootStateType} from "../../app/store";
 import {Action} from "redux";
 import {ErrorSnackbar} from "../../utils/ErrorSnackbar/ErrorSnackbar";
+import {useDebounce} from "../../common/hook-usedebounce/hookUseDebounce";
 
 export const CardsPack = () => {
     const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
     const min = useSelector<AppRootStateType, number | undefined>(state => state.cardsPack.options.min)
     const max = useSelector<AppRootStateType, number | undefined>(state => state.cardsPack.options.max)
 
+    const packNameSearch = useSelector<AppRootStateType, string|undefined>(state => state.cardsPack.options.packName);
+
+    const debouncedSearchPaks = useDebounce(packNameSearch, 700);
+
 
     useEffect(() => {
         dispatch(getPacksTC())
-    }, [min, max])
+    }, [min, max, debouncedSearchPaks])
 
 
     return (

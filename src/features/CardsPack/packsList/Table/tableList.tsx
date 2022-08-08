@@ -16,7 +16,9 @@ import {formatDate} from "../../../../common/formatDate/formatDate";
 
 
 export const TableList = () => {
-    const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
+    // const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
+    const dispatch = useDispatch<AppDispatch>();
+    // const dispatch = useDispatch();
     const navigate = useNavigate();
     const packsTableData = useSelector<AppRootStateType, Array<CardPacksType>>(state => state.packs.packsTableData.cardPacks)
     const cardsStatus = useSelector<AppRootStateType, cardStatusType>(state => state.cards.cardsStatus)
@@ -35,9 +37,9 @@ export const TableList = () => {
     }
 
     
-    //Сортировка
-    const sortUpdate = (sort: string) => {
-        dispatch(getPacksTC({sortPacks: sort}))
+
+    const sortUpdate = (sort: string | undefined) => {
+        dispatch(getPacksTC({sortPacks: sort}) as any)
     }
     const tableCell = ['Name', 'Cards', 'LastUpdated', 'Created by', 'Actions']
 

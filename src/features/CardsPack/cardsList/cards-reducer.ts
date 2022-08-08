@@ -5,9 +5,9 @@ import {
     CardsResponseType,
     CardsType, newCardsType
 } from "./api-Cards";
-import {Action, Dispatch} from "redux";
+import {Dispatch} from "redux";
 import {AppRootStateType} from "../../../app/store";
-import {getPacksTC, setOptionsAC, ThunkType} from "../cardsPack-reducer";
+import { setOptionsAC, ThunkType} from "../cardsPack-reducer";
 import {handleServerAppError} from "../../../utils/error-utils";
 
 const initialState = {
@@ -21,7 +21,6 @@ const initialState = {
         packUserId: '',
         sortCards: '0updated',
     },
-    isFetching: false,
     options: {pageCount: 10} as CardsQueryParamsType,
     cardsStatus: 'exp' as cardStatusType
 }
@@ -52,7 +51,7 @@ export const setCardsAC = (cardsTableData: CardsResponseType) => {
 }
 
 type setOptionsCardsACType = ReturnType<typeof setOptionsCardsAC>
-export const setOptionsCardsAC = (options: PacksQueryParamsType) => {
+export const setOptionsCardsAC = (options: CardsQueryParamsType) => {
     return {
         type: 'cards/SET-OPTIONS',
         options

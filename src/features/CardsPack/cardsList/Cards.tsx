@@ -8,21 +8,22 @@ import {useDispatch, useSelector} from "react-redux";
 import {ThunkDispatch} from "redux-thunk";
 import {AppDispatch, AppRootStateType} from "../../../app/store";
 import {Action} from "redux";
-import {CardsType} from "./api-Cards";
 import {useParams, useNavigate} from "react-router-dom";
 import style from "../CardsPack.module.css";
-import {CARDS, SING_IN} from "../../../common/routes/routes";
+import {SING_IN} from "../../../common/routes/routes";
+import {useDebounce} from "../../../common/hook-usedebounce/hookUseDebounce";
 
 export const Cards = () => {
     const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
     const navigate = useNavigate();
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
     const cardsTotalCount = useSelector<AppRootStateType, number>(state => state.cards.cardsTableData.cardsTotalCount)
-    console.log(isLoggedIn)
-
-
     const {id} = useParams()
-    console.log(cardsTotalCount)
+
+    const cardQuestionSearch = useSelector<AppRootStateType, string|undefined>(state => state.cards.options.cardQuestion);
+    const debouncedSearchQuestion = useDebounce(cardQuestionSearch, 700);
+
+
     useEffect(() => {
         if (id) {
             dispatch(setCardsTC(id))
@@ -30,9 +31,8 @@ export const Cards = () => {
         if(!isLoggedIn) {
             navigate(SING_IN)
         }
-        console.log(cardsTotalCount)
-    }, [])
-    console.log(cardsTotalCount)
+
+    }, [debouncedSearchQuestion])
 
 
     return (

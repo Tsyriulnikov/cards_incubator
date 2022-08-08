@@ -33,6 +33,7 @@ export type CardPacksType = {
     updated: string
     more_id: string
     __v: string
+
 }
 
 export type PackResponseType = {

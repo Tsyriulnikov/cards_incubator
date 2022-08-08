@@ -25,7 +25,7 @@ export const CardsList = () => {
     const callCards = (cardsPack_id:string) => {
 
     }
-    //Сортировка
+
     const sortUpdate = (sort: any) => {
     }
     return (
