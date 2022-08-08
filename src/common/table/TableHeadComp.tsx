@@ -11,21 +11,31 @@ type TableHeadCompType = {
 
 export const TableHeadComp = (props: TableHeadCompType) => {
     const [sortUpDown, setSortUpDown] = useState(true)
+    const [currentColumn, setCurrentColumn] = useState(props.tableCell[2])
     const handlerSortUp = () => {
         setSortUpDown(sortUpDown => !sortUpDown)
-        props.callbackSort('0updated')
+        props.callbackSort('0'+currentColumn)
     }
 
     const handlerSortDown = () => {
         setSortUpDown(sortUpDown => !sortUpDown)
-        props.callbackSort('1updated')
+        props.callbackSort('1' + currentColumn)
     }
+
+    const handleCurrentColumn = (cell: string) => {
+        setCurrentColumn(cell)
+        sortUpDown ? props.callbackSort('0'+cell) :props.callbackSort('1'+cell)
+    }
+
     return (
         <TableHead className={style.tableHeader}>
             <TableRow style={{width: '100%'}}>
                 {props.tableCell.map((cell) =>
-                    cell !== 'LastUpdated' ? <TableCell align="center" key={cell}>{cell}</TableCell> :
-                        <TableCell align="center" key={cell}>{cell}
+                    cell !== currentColumn ? <TableCell align="center" key={cell}
+                                                        onClick={() => handleCurrentColumn(cell)}>
+                            {cell}</TableCell> :
+                        <TableCell align="center" key={cell}>
+                            {cell}
                             {sortUpDown ?
                                 <IconButton onClick={handlerSortDown}>
                                     <ArrowUpward/>

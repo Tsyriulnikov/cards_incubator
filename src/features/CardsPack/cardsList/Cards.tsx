@@ -18,6 +18,7 @@ export const Cards = () => {
     const navigate = useNavigate();
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
     const cardsTotalCount = useSelector<AppRootStateType, number>(state => state.cards.cardsTableData.cardsTotalCount)
+    const sortCards = useSelector<AppRootStateType, string|undefined>(state => state.cards.options.sortCards);
     const {id} = useParams()
 
     const cardQuestionSearch = useSelector<AppRootStateType, string|undefined>(state => state.cards.options.cardQuestion);
@@ -32,7 +33,7 @@ export const Cards = () => {
             navigate(SING_IN)
         }
 
-    }, [debouncedSearchQuestion])
+    }, [sortCards, debouncedSearchQuestion])
 
 
     return (

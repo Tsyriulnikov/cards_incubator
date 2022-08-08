@@ -41,7 +41,8 @@ export const TableList = () => {
     const sortUpdate = (sort: string | undefined) => {
         dispatch(getPacksTC({sortPacks: sort}) as any)
     }
-    const tableCell = ['Name', 'Cards', 'LastUpdated', 'Created by', 'Actions']
+    // const tableCell = ['Name', 'Cards', 'LastUpdated', 'Created by', 'Actions']
+    const tableCell = ['name', 'cardsCount', 'updated', 'user_name', 'Actions']
 
 
     return (

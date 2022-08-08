@@ -50,7 +50,7 @@ export const HeaderCard = (props:HeaderCardType) => {
                 {(myId === packUserId) && <Button variant="contained" onClick={addCardHandler}>Add new card</Button>}
             </div>
             <div className={style.searchCardsPack}>
-                <h3>Search</h3>
+                <h3>Search question</h3>
                 <CardsSearch />
             </div>
 

@@ -8,15 +8,16 @@ import {useDispatch, useSelector} from "react-redux";
 import {ThunkDispatch} from "redux-thunk";
 import {AppDispatch, AppRootStateType} from "../../../app/store";
 import {Action} from "redux";
-import {cardStatusType, deleteCardTC, setCardsTC} from "./cards-reducer";
+import {cardStatusType, deleteCardTC, setCardsTC, setOptionsCardsAC} from "./cards-reducer";
 import {CardsType} from "./api-Cards";
 import {deleteCardsPackTC, getPacksTC, updateCardsPackTC} from "../cardsPack-reducer";
+import {formatDate} from "../../../common/formatDate/formatDate";
 
 export const CardsList = () => {
     const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
     const cardsTableData = useSelector<AppRootStateType, CardsType[]>(state => state.cards.cardsTableData.cards)
     const myId = useSelector<AppRootStateType, string | null>(state => state.profile._id)
-    const tableCell = ['question', 'answer', 'LastUpdated', 'grade', 'Actions']
+    const tableCell = ['question', 'answer', 'updated', 'grade', 'Actions']
     const removeCard = (cardsPack_id: string) => {
         dispatch(deleteCardTC(cardsPack_id) as any)
     }
@@ -27,6 +28,7 @@ export const CardsList = () => {
     }
 
     const sortUpdate = (sort: any) => {
+        dispatch(setOptionsCardsAC({sortCards:sort}));
     }
     return (
         <div>
@@ -39,7 +41,7 @@ export const CardsList = () => {
                                               userId={item.user_id}
                                               itemOne={item.question}
                                               itemTwo={item.answer}
-                                              itemTree={item.updated}
+                                              itemTree={formatDate(item.updated)}
                                               itemFour={item.grade}
                                               myId={myId}
                                               removeData={removeCard}
