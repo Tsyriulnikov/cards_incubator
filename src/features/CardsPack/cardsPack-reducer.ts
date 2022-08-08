@@ -37,10 +37,10 @@ export const packsReducer = (state: PacksInitialStateType = initialState, action
     }
 }
 
-// export const getPacksAC = (packsTableData: PackResponseType) => ({
-//     type: 'CARDS-PACK/GET-PACKS',
-//     packsTableData
-// } as const)
+export const getPacksAC = (packsTableData: PackResponseType) => ({
+    type: 'CARDS-PACK/GET-PACKS',
+    packsTableData
+} as const)
 export const setOptionsAC = (options: PacksQueryParamsType) => ({type: 'CARDS-PACK/SET-OPTIONS', options} as const)
 
 export const getPacksTC = (options?: PacksQueryParamsType) =>
