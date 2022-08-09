@@ -1,21 +1,21 @@
 import React, {ChangeEvent} from 'react';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
-import {setOptionsAC} from "../cardsPack-reducer";
+import {setParamsAC} from "../cardsPack-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {ThunkDispatch} from "redux-thunk";
 import {AppDispatch, AppRootStateType} from "../../../app/store";
 import {Action} from "redux";
+import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
 
 
 
 export const PacksSearch = () => {
-    const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
-
-    const packNameSearch = useSelector<AppRootStateType, string | undefined>(state => state.cardsPack.options.packName);
+    const dispatch =  useAppDispatch();
+    const packNameSearch = useAppSelector((state:AppRootStateType)=> state.packs.params.packName);
 
     const onSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(setOptionsAC({packName: e.currentTarget.value}));
+        dispatch(setParamsAC({packName: e.currentTarget.value}));
     };
 
     return (

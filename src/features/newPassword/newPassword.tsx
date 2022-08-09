@@ -17,10 +17,11 @@ import {newPasswordTC, setNewPasswordSuccessAC} from "./newPassword-reducer";
 import {Navigate} from "react-router-dom";
 import {passwordValidation} from "../../common/validation/validation";
 import {ControllerPassword} from "../../common/controllers/controller-password";
+import {useAppDispatch, useAppSelector} from "../../common/hooks/hooks";
 
 interface FormInput {
     password: string
-}
+};
 
 const defaultValues = {
     password: '',
@@ -28,23 +29,27 @@ const defaultValues = {
 
 export const NewPassword = () => {
     const {token} = useParams<{ token: string }>();
-    const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
+    const dispatch = useAppDispatch();
+    const newPassSucces = useAppSelector((state:AppRootStateType) => state.newPass.newPassSuccess)
+
+    const [showPassword, setShowPassword] = useState(false);
+
     const methods = useForm<FormInput>({defaultValues: defaultValues, mode: "onBlur"});
     const {handleSubmit, formState: {isValid}} = methods;
+
     const onSubmit = (data: FormInput) => {
         dispatch(setNewPasswordSuccessAC(false))
         dispatch(newPasswordTC(data.password, token))
     };
-    const [showPassword, setShowPassword] = useState(false);
+
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
-    const newPassSucces = useSelector<AppRootStateType, boolean>(state => state.newPass.newPassSucces)
 
     if (newPassSucces) {
         return <Navigate to={SING_IN} replace={true}/>
-    }
+    };
     return (
-        <div className={s.block}>
+        <div>
             <ErrorSnackbar/>
             <Paper elevation={3} className={s.loginBlockForm}>
                 <Typography variant={'h4'}>

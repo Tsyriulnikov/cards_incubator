@@ -1,32 +1,37 @@
 import React from 'react';
-import {CardPacksType} from "../../features/CardsPack/api-CardsPack";
-import {Table, TableBody, TableCell, TableRow} from "@mui/material";
+import {TableBody, TableCell, TableRow} from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Delete from "@mui/icons-material/Delete";
 import Edit from "@mui/icons-material/Edit";
 
-
-
 type TableBodyType = {
     myId: string | null,
     removeData: (id: string) => void,
-    editData: (id: string) => void,
-    callCards: (id: string, name?: string) => void,
+    editData?: (id: string) => void,
+    callCards?: (id: string, cardsCount?: number, name?: string) => void,
     id: string,
     userId: string
     itemOne: any
     itemTwo: any
     itemTree: any
     itemFour: any
-}
+};
 
 export const TableBodyComp = (props: TableBodyType) => {
+
+    const onDoubleClickHandler = () => {
+        props.callCards && props.callCards(props.id, props.itemTwo)
+    };
+    const onClickEditDataHandler = () => {
+        props.editData && props.editData(props.id)
+    };
+
     return (
             <TableBody style={{width: '100%'}}>
 
-                <TableRow hover key={props.id} onDoubleClick={() => props.callCards(props.id)} style={{height: "30px"}}>
+                <TableRow hover key={props.id} onDoubleClick={onDoubleClickHandler} style={{height: "30px"}}>
                     {/*Name*/}
                     <TableCell>
                         <Box sx={{alignItems: 'center', display: 'flex'}}>
@@ -69,7 +74,7 @@ export const TableBodyComp = (props: TableBodyType) => {
                                             <Delete/>
                                         </IconButton>
 
-                                        <IconButton onClick={() => props.editData(props.id)}>
+                                        <IconButton onClick={onClickEditDataHandler}>
                                             <Edit/>
                                         </IconButton>
                                     </>

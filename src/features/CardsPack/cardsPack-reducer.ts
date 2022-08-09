@@ -4,13 +4,10 @@ import {
     packsAPI,
     PacksQueryParamsType, UpdatePackPayloadType
 } from "../CardsPack/api-CardsPack";
-import {Dispatch} from "redux";
-import {ThunkAction} from "redux-thunk";
-import {AppDispatch, AppRootStateType} from "../../app/store";
-import {setProfileAC} from "../profile/profile-reducer";
+import {AppRootStateType, AppThunk} from "../../app/store";
 import {handleServerAppError} from "../../utils/error-utils";
+import {cardStatusAC} from "./cardsList/cards-reducer";
 import {setAppStatusAC} from "../../app/app-reducer";
-import {cardStatusAC, cardStatusACType} from "./cardsList/cards-reducer";
 
 const initialState = {
     packsTableData: {
@@ -19,87 +16,98 @@ const initialState = {
         maxCardsCount: 100,
         minCardsCount: 0,
         page: 1,
-        pageCount: 5,
-
+        pageCount: 5
     },
-    options: {pageCount: 10, min: 0, max: 100} as PacksQueryParamsType,
-}
+    isFetching: false,
+    params: {pageCount: 10, min: 0, max: 100,packName:''} as PacksQueryParamsType
+};
 
-
-export const packsReducer = (state: PacksInitialStateType = initialState, action: ActionType): PacksInitialStateType => {
+export const packsReducer = (state: PacksInitialStateType = initialState, action: ActionPacksType): PacksInitialStateType => {
+    console.log('вызов reducer')
     switch (action.type) {
         case 'CARDS-PACK/GET-PACKS':
             return {...state, packsTableData: action.packsTableData}
-        case 'CARDS-PACK/SET-OPTIONS':
-            return {...state, options: {...state.options, ...action.options}}
+        case 'CARDS-PACK/SET-PARAMS':
+            return {...state, params: {...state.params, ...action.params}}
         default:
             return state
     }
-}
+};
 
 export const getPacksAC = (packsTableData: PackResponseType) => ({
     type: 'CARDS-PACK/GET-PACKS',
     packsTableData
-} as const)
-export const setOptionsAC = (options: PacksQueryParamsType) => ({type: 'CARDS-PACK/SET-OPTIONS', options} as const)
+} as const);
+export const setParamsAC = (params: PacksQueryParamsType) => ({type: 'CARDS-PACK/SET-PARAMS', params} as const)
 
-export const getPacksTC = (options?: PacksQueryParamsType) =>
-    async (dispatch: AppDispatch, getState: () => AppRootStateType) => {
-        if (options) {
-            dispatch(setOptionsAC(options))
-        }
-        const packsOptions = getState().packs.options
+export const getPacksTC = (params?: PacksQueryParamsType): AppThunk => {
+
+    return async (dispatch, getState: () => AppRootStateType) => {
+        dispatch(setAppStatusAC('loading'))
+        if (params) {
+            dispatch(setParamsAC(params))
+        };
+        const packsOptions = getState().packs.params;
         try {
-            const res = await packsAPI.getPacks(packsOptions)
-            dispatch(getPacksAC(res.data))
-            dispatch(cardStatusAC('none'))
-        } catch (err: any) {
-            handleServerAppError(err.response.data.error, dispatch)
+            const res = await packsAPI.getPacks(packsOptions);
+            dispatch(getPacksAC(res.data));
+            dispatch(cardStatusAC('none'));
+            dispatch(setAppStatusAC('succeeded'));
+        } catch (error: any) {
+            handleServerAppError(error.response.data.error, dispatch);
+            dispatch(setAppStatusAC('failed'));
         }
     }
+};
 
-
-export const addCardsPackTC = (addPackPayload: AddPackPayloadType): ThunkType =>
-    async (dispatch) => {
+export const addCardsPackTC = (addPackPayload: AddPackPayloadType): AppThunk => {
+    return async (dispatch) => {
+        dispatch(setAppStatusAC('loading'));
         try {
-            const res = await packsAPI.addPack(addPackPayload)
-            dispatch(getPacksTC())
-        } catch (err: any) {
-            handleServerAppError(err.response.data.error, dispatch)
+            const res = await packsAPI.addPack(addPackPayload);
+            dispatch(getPacksTC());;
+            dispatch(setAppStatusAC('succeeded'));
+        } catch (error: any) {
+            handleServerAppError(error.response.data.error, dispatch);
+            dispatch(setAppStatusAC('failed'));
         }
     }
+};
 
-export const deleteCardsPackTC = (idPack: string): ThunkType =>
-    async (dispatch) => {
+export const deleteCardsPackTC = (idPack: string): AppThunk => {
+    return async (dispatch) => {
+        dispatch(setAppStatusAC('loading'));
         try {
-            const res = await packsAPI.deletePack(idPack)
-            dispatch(getPacksTC())
-        } catch (err: any) {
-            handleServerAppError(err.response.data.error, dispatch)
+            const res = await packsAPI.deletePack(idPack);
+            dispatch(getPacksTC());
+            dispatch(setAppStatusAC('succeeded'));
+        } catch (error: any) {
+            handleServerAppError(error.response.data.error, dispatch);
+            dispatch(setAppStatusAC('failed'));
         }
     }
+};
 
-
-export const updateCardsPackTC = (updatePackPayload: UpdatePackPayloadType): ThunkType =>
-    async (dispatch) => {
+export const updateCardsPackTC = (updatePackPayload: UpdatePackPayloadType): AppThunk => {
+    return async (dispatch) => {
+        dispatch(setAppStatusAC('loading'));
         try {
-            const res = await packsAPI.updatePack(updatePackPayload)
-            dispatch(getPacksTC())
-        } catch (err: any) {
-            handleServerAppError(err.response.data.error, dispatch)
+            const res = await packsAPI.updatePack(updatePackPayload);
+            dispatch(getPacksTC());
+            dispatch(setAppStatusAC('succeeded'));
+        } catch (error: any) {
+            handleServerAppError(error.response.data.error, dispatch);
+            dispatch(setAppStatusAC('failed'));
         }
     }
-
+};
 
 export type PacksInitialStateType = {
     packsTableData: PackResponseType
-    options: PacksQueryParamsType
-}
+    isFetching: boolean
+    params: PacksQueryParamsType
+};
 
-export type ThunkType = ThunkAction<void, AppRootStateType, {}, ActionType>
-
-type ActionType = ReturnType<typeof getPacksAC>
-    | ReturnType<typeof setOptionsAC>
-    | ReturnType<typeof setProfileAC>
-    | cardStatusACType
+export type ActionPacksType = ReturnType<typeof getPacksAC>
+    | ReturnType<typeof setParamsAC>
 

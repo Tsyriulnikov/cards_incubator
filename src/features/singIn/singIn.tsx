@@ -21,13 +21,13 @@ import {loginTC} from "./auth-reducer";
 import {setRecoveryPasswordSuccessAC} from "../recoveryPassword/recoveryPassword-reducer";
 import {ControllerEmail} from "../../common/controllers/controller-email";
 import {ControllerPassword} from "../../common/controllers/controller-password";
-
+import {useAppDispatch, useAppSelector} from "../../common/hooks/hooks";
 
 type SingInFormType = {
     email: string;
     password: string;
     rememberMe: boolean;
-}
+};
 const defaultValues = {
     email: '',
     password: '',
@@ -35,8 +35,8 @@ const defaultValues = {
 };
 
 export const SingIn = () => {
-    const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
-    const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
+    const isLoggedIn = useAppSelector((state: AppRootStateType) => state.auth.isLoggedIn)
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
@@ -44,10 +44,10 @@ export const SingIn = () => {
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
-    const fogotPassHandler = () => {
+    const forgotPassHandler = () => {
         dispatch(setRecoveryPasswordSuccessAC(false))
         navigate(REC_PASSWORD, {replace: true})
-    }
+    };
 
     const methods = useForm<SingInFormType>({defaultValues: defaultValues, mode: "onBlur"});
     const {handleSubmit, control} = methods;
@@ -60,7 +60,7 @@ export const SingIn = () => {
         return <Navigate to={CARDS}/>
     }
     return (
-        <div className={s.block}>
+        <div>
             <ErrorSnackbar/>
             <Paper elevation={3} className={s.loginBlockForm}>
                 <Typography variant={'h4'}>
@@ -91,7 +91,7 @@ export const SingIn = () => {
                                 }
                             />
                             <Button variant={'text'} size={'small'} className={style.btnForgotPass}
-                                    onClick={fogotPassHandler}>
+                                    onClick={forgotPassHandler}>
                                 Forgot Password
                             </Button>
                             <Button type={'submit'} variant={'contained'} color={'primary'} style={{marginTop: '80px'}}

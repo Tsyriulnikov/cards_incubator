@@ -1,20 +1,20 @@
 import {AxiosResponse} from "axios";
-import {instance} from "../../common/instance/instance"
+import {instance} from "../../common/instance/instance";
 
 export const packsAPI = {
     getPacks(packQueryParams: PacksQueryParamsType) {
         return instance.get<PackResponseType, AxiosResponse<PackResponseType>>('cards/pack', {params: packQueryParams})
     },
     addPack(addPackPayload: AddPackPayloadType) {
-        return instance.post('cards/pack', {cardsPack: addPackPayload})
+        return instance.post<AddPackPayloadType, AxiosResponse<{newCardsPack: CardPacksType,token: string, tokenDeathTime: Date}>>('cards/pack', {cardsPack: addPackPayload})
     },
     deletePack(idPack: string) {
-        return instance.delete(`cards/pack?id=${idPack}`)
+        return instance.delete<AxiosResponse<{deletedCardsPack: CardPacksType, token: string, tokenDeathTime: Date}>>(`cards/pack?id=${idPack}`)
     },
     updatePack(updatePackPayload: UpdatePackPayloadType) {
-        return instance.put('cards/pack', {cardsPack: updatePackPayload})
+        return instance.put<UpdatePackPayloadType, AxiosResponse<{updatedCardsPack: CardPacksType, token: string, tokenDeathTime: Date}>>('cards/pack', {cardsPack: updatePackPayload})
     }
-}
+};
 
 export type CardPacksType = {
     _id: string
@@ -33,8 +33,7 @@ export type CardPacksType = {
     updated: string
     more_id: string
     __v: string
-
-}
+};
 
 export type PackResponseType = {
     cardPacks: Array<CardPacksType>
@@ -43,8 +42,7 @@ export type PackResponseType = {
     cardPacksTotalCount: number
     minCardsCount: number
     maxCardsCount: number
-
-}
+};
 
 export type PacksQueryParamsType = {
     packName?: string
@@ -52,9 +50,9 @@ export type PacksQueryParamsType = {
     min?: number
     max?: number
     page?: number
-    user_id?: string|null
+    user_id?: string | null
     sortPacks?: string
-}
+};
 
 export type AddPackPayloadType = {
     name?: string
@@ -65,9 +63,9 @@ export type AddPackPayloadType = {
     deckCover?: string
     private?: boolean
     type?: string
-}
+};
 
 export type UpdatePackPayloadType = {
     _id: string
     name?: string
-}
+};

@@ -20,30 +20,32 @@ import {ResponseProfileType} from "../../features/profile/profile-reducer";
 import userPhoto from "../../assets/img/user.png";
 import {LinearProgress} from "@material-ui/core";
 import {RequestStatusType} from "../../app/app-reducer";
+import {useAppSelector} from "../hooks/hooks";
+import {useState} from "react";
 
 
 const pages = ['Sing In', 'Sing Up'];
 const settings = ['Profile', 'Cards Pack', 'Recovery Password', 'Logout'];
-const pagesRoutes = [SING_IN, SING_UP]
-const settingsRoutes = [PROFILE, CARDS, REC_PASSWORD, LOG_OUT]
+const pagesRoutes = [SING_IN, SING_UP];
+const settingsRoutes = [PROFILE, CARDS, REC_PASSWORD, LOG_OUT];
 
-const Header = () => {
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-    const profile = useSelector<AppRootStateType, ResponseProfileType>(state => state.profile)
-    const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
-    const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
+export const Header = () => {
+    const profile = useAppSelector((state: AppRootStateType) => state.profile)
+    const status = useAppSelector((state: AppRootStateType) => state.app.status)
+    const isLoggedIn = useAppSelector((state:AppRootStateType) => state.auth.isLoggedIn)
+
+    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
-
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
-
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
@@ -90,20 +92,12 @@ const Header = () => {
                             <Menu
                                 id="menu-appbar"
                                 anchorEl={anchorElNav}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'left',
-                                }}
+                                anchorOrigin={{vertical: 'bottom', horizontal: 'left'}}
                                 keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'left',
-                                }}
+                                transformOrigin={{vertical: 'top', horizontal: 'left'}}
                                 open={Boolean(anchorElNav)}
                                 onClose={handleCloseNavMenu}
-                                sx={{
-                                    display: { xs: 'block', md: 'none' },
-                                }}
+                                sx={{display: { xs: 'block', md: 'none' }}}
                             >
                                 {pages.map((page, index) => (
                                     <MenuItem key={page} onClick={handleCloseNavMenu}>
@@ -163,15 +157,9 @@ const Header = () => {
                                 sx={{mt: '45px'}}
                                 id="menu-appbar"
                                 anchorEl={anchorElUser}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
+                                anchorOrigin={{vertical: 'top', horizontal: 'right'}}
                                 keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
+                                transformOrigin={{vertical: 'top', horizontal: 'right'}}
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
@@ -192,5 +180,4 @@ const Header = () => {
         </AppBar>
     );
 };
-export default Header;
 

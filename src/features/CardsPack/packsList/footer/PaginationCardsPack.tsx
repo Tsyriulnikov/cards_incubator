@@ -1,32 +1,31 @@
-import React from 'react'
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, AppRootStateType} from "../../../../app/store";
-import {getPacksTC, setOptionsAC} from "../../cardsPack-reducer";
-import {ThunkDispatch} from "redux-thunk";
-import {Action} from "redux";
-import PaginationRounded from "../../../../common/pagination/Pagination";
+import React from 'react';
+import {AppRootStateType} from "../../../../app/store";
+import {getPacksTC, setParamsAC} from "../../cardsPack-reducer";
 import {SelectCountRow} from "../../../../common/select-count-row/SelectCountRow";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import style from '../../CardsPack.module.css';
+import {useAppDispatch, useAppSelector} from "../../../../common/hooks/hooks";
+import {PaginationRounded} from "../../../../common/pagination/Pagination";
 
 export const PaginationCardsPack = () => {
-    const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
-
-    const page = useSelector<AppRootStateType, number>(state => state.packs.packsTableData.page)
-    const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.packsTableData.cardPacksTotalCount)
-    const pageCount = useSelector<AppRootStateType, number>(state => state.packs.packsTableData.pageCount)
+    const dispatch = useAppDispatch();
+    const page = useAppSelector((state:AppRootStateType) => state.packs.packsTableData.page);
+    const cardPacksTotalCount = useAppSelector((state:AppRootStateType) => state.packs.packsTableData.cardPacksTotalCount);
+    const pageCount = useAppSelector((state:AppRootStateType) => state.packs.packsTableData.pageCount);
 
     const handleChangePage = (page: number) => {
         dispatch(getPacksTC({page: page}))
-    }
+    };
 
-    const onChangeCountRow = (value: string) => {
-        dispatch(setOptionsAC({pageCount: +value}))
+    const onChangeCountRow = (valuePage: string) => {
+        dispatch(setParamsAC({pageCount: +valuePage}))
         dispatch(getPacksTC())
-    }
+    };
+
 
     return (
-        <Box style={{display: 'flex', marginTop: '10px'}}>
+        <Box style={{display: 'flex'}}>
             <Box>
                 <PaginationRounded totalCount={cardPacksTotalCount}
                                    pageCount={pageCount}
@@ -34,7 +33,7 @@ export const PaginationCardsPack = () => {
                                    onChangePage={handleChangePage}
                 />
             </Box>
-            <Box style={{display: 'flex', justifyContent:'space-between',width:'250px'}}>
+            <Box className={style.boxPagination}>
                 <Typography variant='subtitle1'>
                     Show
                 </Typography>
@@ -47,4 +46,4 @@ export const PaginationCardsPack = () => {
             </Box>
         </Box>
     )
-}
+};

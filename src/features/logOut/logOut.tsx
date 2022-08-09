@@ -2,13 +2,10 @@ import React from 'react';
 import LogoutIcon from "@mui/icons-material/Logout";
 import Button from "@mui/material/Button";
 import {logoutTC} from "../profile/profile-reducer";
-import {useDispatch} from "react-redux";
-import {ThunkDispatch} from "redux-thunk";
-import {AppDispatch, AppRootStateType} from "../../app/store";
-import {Action} from "redux";
+import {useAppDispatch} from "../../common/hooks/hooks";
 
 export const LogOut = () => {
-    const dispatch = useDispatch<ThunkDispatch<AppRootStateType,unknown,Action> & AppDispatch>()
+    const dispatch = useAppDispatch();
     const onClickHandler = () => {
         dispatch(logoutTC())
     }

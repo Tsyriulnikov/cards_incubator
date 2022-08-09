@@ -4,12 +4,12 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, {SelectChangeEvent} from '@mui/material/Select';
 
-
-type SelectCountRowTtype ={
+type SelectCountRowType ={
     callBackChange:(countRow:string)=>void
     pageCount:string
-}
-export const SelectCountRow = (props:SelectCountRowTtype) => {
+};
+
+export const SelectCountRow = (props:SelectCountRowType) => {
        const handleChange = (event: SelectChangeEvent) => {
        props.callBackChange(event.target.value)
     };
@@ -32,4 +32,4 @@ export const SelectCountRow = (props:SelectCountRowTtype) => {
             </FormControl>
         </Box>
     );
-}
+};

@@ -1,50 +1,43 @@
 import React from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, AppRootStateType} from "../../../../app/store";
+import {AppRootStateType} from "../../../../app/store";
 import {CardPacksType} from "../../api-CardsPack";
-import {ThunkDispatch} from "redux-thunk";
-import {Action} from "redux";
 import {deleteCardsPackTC, getPacksTC, updateCardsPackTC} from "../../cardsPack-reducer";
-import {cardStatusType, setCardsTC} from "../../cardsList/cards-reducer";
 import style from "../../../../common/table/TableList.module.css";
 import {Table, TableContainer} from "@mui/material";
 import {TableHeadComp} from "../../../../common/table/TableHeadComp";
 import {TableBodyComp} from "../../../../common/table/TableBody";
-import {Navigate, useNavigate} from "react-router-dom";
-import {CARDSFORPACKS} from "../../../../common/routes/routes";
+import {useNavigate} from "react-router-dom";
 import {formatDate} from "../../../../common/formatDate/formatDate";
-
+import {useAppDispatch, useAppSelector} from "../../../../common/hooks/hooks";
 
 export const TableList = () => {
-    // const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
-    const dispatch = useDispatch<AppDispatch>();
-    // const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const packsTableData = useSelector<AppRootStateType, Array<CardPacksType>>(state => state.packs.packsTableData.cardPacks)
-    const cardsStatus = useSelector<AppRootStateType, cardStatusType>(state => state.cards.cardsStatus)
-    const myId = useSelector<AppRootStateType, string | null>(state => state.profile._id)
+    const packsTableData = useAppSelector((state: AppRootStateType) => state.packs.packsTableData.cardPacks);
+    const cardsStatus = useAppSelector((state:AppRootStateType) => state.cards.cardsStatus);
 
+    const myId = useAppSelector((state:AppRootStateType) => state.profile._id);
 
     const removePackCards = (idPack: string) => {
         dispatch(deleteCardsPackTC(idPack) as any)
-    }
+    };
     const editPackCards = (idPack: string) => {
         dispatch(updateCardsPackTC({_id: idPack, name: 'MaxTsNew'}) as any)
-    }
-    const callCards = (cardsPack_id:string) => {
+    };
+
+    const callCards = (cardsPack_id:string, cardsCount: number | undefined) => {
+        if(cardsCount) {
+            navigate(`/cards-for-packs/${cardsPack_id}`)
+        }
         /*dispatch(setCardsTC(cardsPack_id))*/
-        navigate(`/cards-for-packs/${cardsPack_id}`)
-    }
+        // navigate(`/cards-for-packs/${cardsPack_id}`)
+    };
 
-    
-
-    const sortUpdate = (sort: string | undefined) => {
-        dispatch(getPacksTC({sortPacks: sort}) as any)
-    }
-    // const tableCell = ['Name', 'Cards', 'LastUpdated', 'Created by', 'Actions']
-    const tableCell = ['name', 'cardsCount', 'updated', 'user_name', 'Actions']
-
-
+    const sortUpdate = (sort: string) => {
+        dispatch(getPacksTC({sortPacks: sort}))
+    };
+    // const tableCell = ['Name', 'Cards', 'LastUpdated', 'Created by', 'Actions'];
+    const tableCell = ['name', 'cardsCount', 'updated', 'user_name', 'actions']
     return (
         <div>
             <TableContainer className={style.table}>
@@ -67,5 +60,5 @@ export const TableList = () => {
             </TableContainer>
         </div>
     );
-}
+};
 

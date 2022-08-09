@@ -6,7 +6,8 @@ type ControllerEmailType = {
     name: string
     label: string
     rules: any
-}
+};
+
 export const ControllerEmail = ({name,label,rules}: ControllerEmailType) => {
     const { control } = useFormContext()
     return (

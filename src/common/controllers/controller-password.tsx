@@ -5,9 +5,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 
-
-
-
 type ControllerPasswordType = {
     name: string
     label: string
@@ -15,7 +12,8 @@ type ControllerPasswordType = {
     rules: object
     handleClickShowPassword: () => void
     handleMouseDownPassword: () => void
-}
+};
+
 export const ControllerPassword = (props: ControllerPasswordType) => {
     const {control} = useFormContext()
     return (

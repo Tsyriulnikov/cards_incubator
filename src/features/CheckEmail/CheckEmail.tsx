@@ -14,7 +14,7 @@ export const CheckEmail = () => {
     const navigate = useNavigate();
 
     return (
-        <div className={s.block}>
+        <div>
             <ErrorSnackbar/>
             <Paper elevation={3} className={s.loginBlockForm}>
                 <Typography variant={'h4'} style={{marginBottom: '20px'}}>

@@ -1,22 +1,16 @@
 import React, {useEffect} from 'react';
 import s from './App.module.css'
-import {BrowserRouter} from "react-router-dom";
-import Header from "../common/header/Header";
-import {useDispatch, useSelector} from "react-redux";
-import {ThunkDispatch} from "redux-thunk";
-import {AppDispatch, AppRootStateType} from "./store";
-import {Action} from "redux";
+import {Header} from "../common/header/Header";
+import {AppRootStateType} from "./store";
 import {initTC} from "./app-reducer";
 import CircularProgress from "@mui/material/CircularProgress";
 import {RoutesComponent} from "../common/routes/RoutesComponent";
+import {useAppDispatch, useAppSelector} from "../common/hooks/hooks";
 
-function App() {
-    console.log('app')
+export const App = () => {
+    const isInitialized = useAppSelector((state: AppRootStateType): boolean => state.app.isInitialized);
+    const dispatch = useAppDispatch();
 
-    const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized)
-    const dispatch = useDispatch<ThunkDispatch<AppRootStateType,unknown,Action> & AppDispatch>()
-
-// console.log('initialized: ',isInitialized)
     useEffect(() => {
         dispatch(initTC())
     },[])
@@ -34,6 +28,4 @@ function App() {
                 <RoutesComponent/>
             </div>
     );
-}
-
-export default App;
+};

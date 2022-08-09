@@ -7,7 +7,8 @@ type PaginationTypes = {
     pageCount: number
     page: number
     onChangePage: (page: number) => void
-}
+};
+
 const useStyles = makeStyles((theme) =>
     createStyles({
         root: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) =>
     }),
 );
 
-export default function PaginationRounded(props: PaginationTypes) {
+export const PaginationRounded = (props: PaginationTypes) => {
     const classes = useStyles();
     let count = 1
     let countCards = Math.ceil(props.totalCount / props.pageCount)
@@ -31,4 +32,4 @@ export default function PaginationRounded(props: PaginationTypes) {
         </div>
 
     );
-}
+};

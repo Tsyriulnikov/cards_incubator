@@ -22,29 +22,26 @@ import Typography from "@mui/material/Typography";
 import {Navigate} from "react-router-dom";
 import {EditableSpan} from "./EditableSpan";
 import {initTC} from "../../app/app-reducer";
-
+import {useAppDispatch, useAppSelector} from "../../common/hooks/hooks";
 
 export const Profile = () => {
-
-    const dispatch = useDispatch<ThunkDispatch<AppRootStateType,unknown,Action> & AppDispatch>()
-    const profile = useSelector<AppRootStateType, ResponseProfileType>(state => state.profile)
-    const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
+    const dispatch = useAppDispatch();
+    const profile = useAppSelector((state: AppRootStateType) => state.profile);
+    const isLoggedIn = useAppSelector((state:AppRootStateType) => state.auth.isLoggedIn);
 
     const onClickHandler = () => {
         dispatch(logoutTC())
-    }
+    };
 
     let user:updateProfileType = {
         name: null,
         avatar: null
-    }
-
-
+    };
 
     const onTitleChangeHandler = (value: string) => {
         user.name = value
         dispatch(updateProfileTitleTC(user))
-    }
+    };
 
     const onChangePicture = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -59,7 +56,7 @@ export const Profile = () => {
 
     if (!isLoggedIn) {
         return <Navigate to='/singIn'/>
-    }
+    };
 
     return (
         <Box className={s.profileBlock}>

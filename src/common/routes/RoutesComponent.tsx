@@ -1,3 +1,4 @@
+import React from "react";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {
     CARDS,
@@ -19,12 +20,11 @@ import {NewPassword} from "../../features/newPassword/newPassword";
 import {LogOut} from "../../features/logOut/logOut";
 import {CheckEmail} from "../../features/CheckEmail/CheckEmail";
 import {ErrorPage} from "../../features/error/ErrorPage";
-import React from "react";
 import {CardsPack} from "../../features/CardsPack/CardsPack";
 import {Cards} from "../../features/CardsPack/cardsList/Cards";
+import s from '../../app/App.module.css'
 
 export const RoutesComponent = () => {
-
     const routes = [
         {path: PROFILE, component: <Profile/>},
         {path: SING_IN, component: <SingIn/>},
@@ -37,10 +37,10 @@ export const RoutesComponent = () => {
         {path: CHECK_EMAIL, component: <Profile/>},
         {path: CHECK_EMAIL, component: <CheckEmail/>},
         {path: ERROR, component: <ErrorPage/>}
-    ]
+    ];
 
     return (
-        <div>
+        <div className={s.block}>
             <Routes>
                 <Route path={'*'} element={<Navigate to={ERROR}/>}/>
                     {routes.map((route, index) => (
@@ -49,4 +49,4 @@ export const RoutesComponent = () => {
             </Routes>
         </div>
     )
-}
+};

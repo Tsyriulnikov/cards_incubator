@@ -1,20 +1,17 @@
 import React, {ChangeEvent} from 'react';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
-import {useDispatch, useSelector} from "react-redux";
-import {ThunkDispatch} from "redux-thunk";
-import {AppDispatch, AppRootStateType} from "../../../app/store";
-import {Action} from "redux";
-import {setOptionsCardsAC} from "../cardsList/cards-reducer";
+import {AppRootStateType} from "../../../app/store";
+import {setParamsCardsAC} from "../cardsList/cards-reducer";
+import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
 
 
 export const CardsSearch = () => {
-    const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
-
-    const questionSearch = useSelector<AppRootStateType, string | undefined>(state => state.cards.options.cardQuestion);
+    const dispatch =  useAppDispatch();
+    const questionSearch = useAppSelector((state:AppRootStateType) => state.cards.params.cardQuestion);
 
     const onSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(setOptionsCardsAC({cardQuestion:e.currentTarget.value}));
+        dispatch(setParamsCardsAC({cardQuestion:e.currentTarget.value}));
     };
 
     return (

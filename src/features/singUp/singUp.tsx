@@ -1,13 +1,10 @@
 import React, {useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
 import {setNewUserAC, setNewUserTC} from "./signUp-reducer";
 import {useForm, FormProvider} from "react-hook-form";
 import s from "../../app/App.module.css";
-import {AppDispatch, AppRootStateType} from "../../app/store";
+import {AppRootStateType} from "../../app/store";
 import {Navigate} from "react-router-dom";
 import {SING_IN} from "../../common/routes/routes";
-import {ThunkDispatch} from "redux-thunk";
-import {Action} from "redux";
 import {ErrorSnackbar} from "../../utils/ErrorSnackbar/ErrorSnackbar";
 import Paper from '@mui/material/Paper';
 import FormControl from '@mui/material/FormControl';
@@ -17,12 +14,13 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import {emailValidation, passwordValidation} from "../../common/validation/validation";
 import {ControllerPassword} from "../../common/controllers/controller-password";
 import {ControllerEmail} from "../../common/controllers/controller-email";
+import {useAppDispatch, useAppSelector} from "../../common/hooks/hooks";
 
 interface IFormInput {
     email: string
     password: string
     confirmPassword: string
-}
+};
 
 const defaultValues = {
     email: '',
@@ -31,14 +29,17 @@ const defaultValues = {
 };
 
 export const SingUp = () => {
-    const dispatch = useDispatch<ThunkDispatch<AppRootStateType, unknown, Action> & AppDispatch>()
-    const isRegistration = useSelector<AppRootStateType, boolean>(state => state.registration.isReg)
+    const isRegistration = useAppSelector((state: AppRootStateType) => state.registration.isReg);
+    const dispatch = useAppDispatch();
+
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const methods = useForm<IFormInput>({defaultValues: defaultValues, mode: "onBlur"});
     const {handleSubmit, reset, getValues, formState: {isValid}, } = methods;
     const onSubmit = (data: IFormInput) => {
-        dispatch(setNewUserAC(false))
-        dispatch(setNewUserTC(data.email, data.password))
+        // dispatch(setNewUserAC(false));
+        dispatch(setNewUserTC(data.email, data.password));
     };
 
     const passwordValidationComp = {
@@ -51,8 +52,6 @@ export const SingUp = () => {
         }
     };
 
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
     const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
@@ -63,7 +62,7 @@ export const SingUp = () => {
     }
 
     return (
-        <div className={s.block}>
+        <div>
 
             <ErrorSnackbar/>
 
