@@ -21,9 +21,9 @@ export const CardsList = () => {
         dispatch(deleteCardTC(cardsPack_id) as any)
     };
 
-    const sortUpdate = (sort: string) => {
-        dispatch(setParamsCardsAC({sortCards:sort}));
-    }
+    // const sortUpdate = (sort: string) => {
+    //     dispatch(setParamsCardsAC({sortCards:sort}));
+    // }
 
     return (
         <div>
