@@ -17,7 +17,6 @@ export const CardsPack = () => {
     const max = useSelector<AppRootStateType, number | undefined>(state => state.cardsPack.options.max)
 
     const packNameSearch = useSelector<AppRootStateType, string|undefined>(state => state.cardsPack.options.packName);
-
     const debouncedSearchPaks = useDebounce(packNameSearch, 700);
 
 
