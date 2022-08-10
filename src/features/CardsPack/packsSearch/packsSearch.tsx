@@ -2,13 +2,8 @@ import React, {ChangeEvent} from 'react';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import {setParamsAC} from "../cardsPack-reducer";
-import {useDispatch, useSelector} from "react-redux";
-import {ThunkDispatch} from "redux-thunk";
-import {AppDispatch, AppRootStateType} from "../../../app/store";
-import {Action} from "redux";
+import {AppRootStateType} from "../../../app/store";
 import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
-
-
 
 export const PacksSearch = () => {
     const dispatch =  useAppDispatch();
@@ -17,7 +12,6 @@ export const PacksSearch = () => {
     const onSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(setParamsAC({packName: e.currentTarget.value}));
     };
-
     return (
         <Paper
             component="form"
@@ -30,7 +24,6 @@ export const PacksSearch = () => {
                     'aria-label': 'Provide your text',
                     value: packNameSearch,
                     onChange: (onSearchInputChange)
-
                 }}
             />
         </Paper>

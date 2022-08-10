@@ -19,7 +19,13 @@
     grid-template-rows: 80px 70px;
     grid-template-columns: 1.5fr 1fr 1fr;
 }
-
+.headerCardsTable {
+    padding: 10px 10px;
+}
+.titleEmptyCards {
+   text-align: center;
+    margin-top: 80px;
+}
 .titleHeaderCP {
     grid-area: title;
     margin-top: 10px;

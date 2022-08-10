@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import style from "./TableList.module.css";
 import {TableCell, TableHead, TableRow} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import {ArrowDownward, ArrowUpward, Delete, KeyboardArrowDown} from "@mui/icons-material";
+import {ArrowDownward, ArrowUpward} from "@mui/icons-material";
 
 type TableHeadCompType = {
     tableCell: string[],
@@ -15,7 +15,7 @@ export const TableHeadComp = (props: TableHeadCompType) => {
     const handlerSortUp = () => {
         setSortUpDown(sortUpDown => !sortUpDown)
         props.callbackSort('0'+currentColumn)
-    }
+    };
 
     const handlerSortDown = () => {
         setSortUpDown(sortUpDown => !sortUpDown)

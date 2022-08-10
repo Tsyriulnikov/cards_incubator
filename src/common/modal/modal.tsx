@@ -24,6 +24,7 @@ type PropsType = {
     name: string
     open:boolean
     setOpen: (value:boolean) => void
+    onSave: () => void
 
 }
 
@@ -31,6 +32,9 @@ export const BasicModal = (props:PropsType) =>  {
 
     const handleOpen = () => props.setOpen(true);
     const handleClose = () => props.setOpen(false);
+    const onClickSaveHandler = () => {
+        props.onSave()
+    }
 
     return (
         <div>
@@ -51,6 +55,10 @@ export const BasicModal = (props:PropsType) =>  {
                         </IconButton>
                     </div>
                     {props.children}
+                    <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '10px'}}>
+                        <Button variant="contained" onClick={handleClose}>Cancel</Button>
+                        <Button variant="contained" onClick={onClickSaveHandler}>Save</Button>
+                    </div>
                 </Box>
             </Modal>
         </div>

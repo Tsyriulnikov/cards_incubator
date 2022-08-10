@@ -10,21 +10,17 @@ import {useAppDispatch, useAppSelector, useDebounce} from "../../common/hooks/ho
 
 export const CardsPack = () => {
     const dispatch = useAppDispatch();
-    const min = useAppSelector((state:AppRootStateType) => state.packs.params.min);
-    const max = useAppSelector((state:AppRootStateType) => state.packs.params.max);
-    // const pageCount = useAppSelector((state:AppRootStateType) => state.packs.params.pageCount);
-    // const user_id = useAppSelector((state:AppRootStateType) => state.packs.params.user_id);
-    console.log(min);
-    console.log(max)
+    const min = useAppSelector((state: AppRootStateType) => state.packs.params.min);
+    const max = useAppSelector((state: AppRootStateType) => state.packs.params.max);
+    const pageCount = useAppSelector((state:AppRootStateType) => state.packs.params.pageCount);
+    const page = useAppSelector((state:AppRootStateType) => state.packs.params.page);
 
     const packNameSearch =useAppSelector((state:AppRootStateType) => state.packs.params.packName);
     const debouncedSearchPaks = useDebounce(packNameSearch, 800);
 
     useEffect(() => {
-        console.log(min)
-
         dispatch(getPacksTC())
-    }, [min, max,debouncedSearchPaks])
+    }, [min, max,debouncedSearchPaks, pageCount, page])
     //page, sortPacks, user_id, pageCount
 
     return (
@@ -35,5 +31,5 @@ export const CardsPack = () => {
             <PaginationCardsPack/>
         </div>
     );
-}
+};
 

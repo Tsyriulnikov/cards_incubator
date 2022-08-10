@@ -4,11 +4,12 @@ import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
-type NewPackModalType = {
+type EditPackModalType = {
     addPack: (name: string, privatePack: boolean) => void
+
 }
 
-export const NewPackModal = (props:NewPackModalType) =>  {
+export const EditPackModal = (props:EditPackModalType) =>  {
 
     const [title, setTitle] = useState('')
     const [open, setOpen] = React.useState(false);
@@ -27,7 +28,7 @@ export const NewPackModal = (props:NewPackModalType) =>  {
         setOpen(false)
     }
     return (
-        <BasicModal name={'Add new pack'} open={open} setOpen={setOpen} onSave={addPackHandler}>
+        <BasicModal name={''} open={open} setOpen={setOpen} onSave={addPackHandler}>
             <TextField onChange={onChangeTextFieldHandler} id="standard-basic" label="Name Pack" variant="standard" />
             <div >
                 <FormControlLabel  control={<Checkbox

@@ -8,6 +8,7 @@ import {Slider} from "@material-ui/core";
 import {NewPackModal} from "../Table/NewPackModal";
 
 import {useAppDispatch, useAppSelector} from "../../../../common/hooks/hooks";
+import {CardPacksType} from "../../api-CardsPack";
 
 export const HeaderCardsPack = () => {
     const dispatch = useAppDispatch();
@@ -19,8 +20,8 @@ export const HeaderCardsPack = () => {
 
     const [buttonPacks, setButtonPacks] = useState(true);
 
-    const addPack = (name: string) => {
-        dispatch(addCardsPackTC({name: name}) as any)
+    const addPack = (name: string, privatePack: boolean) => {
+        dispatch(addCardsPackTC({name: name, private: privatePack}))
     };
     const onClickMyButton = () => {
         setButtonPacks(buttonPacks=>!buttonPacks);
@@ -79,4 +80,4 @@ export const HeaderCardsPack = () => {
             />
         </div>
     </div>
-};
+}

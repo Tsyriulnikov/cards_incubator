@@ -14,23 +14,22 @@ export const CardsList = () => {
     const cardsTableData = useAppSelector((state: AppRootStateType) => state.cards.cardsTableData.cards);
     const myId = useAppSelector((state: AppRootStateType) => state.profile._id);
 
-    // const tableCell = ['question', 'answer', 'LastUpdated', 'grade', 'Actions'];
-    const tableCell = ['question', 'answer', 'updated', 'grade', 'actions']
+    const tableCell = ['question', 'answer', 'LastUpdated', 'grade', 'Actions'];
 
     const removeCard = (cardsPack_id: string) => {
         dispatch(deleteCardTC(cardsPack_id) as any)
     };
 
-    const sortUpdate = (sort: string) => {
-        dispatch(setParamsCardsAC({sortCards:sort}));
-    }
 
+    const sortUpdate = (sort: any) => {
+        dispatch(setParamsCardsAC({sortCards: sort}));
+    }
     return (
         <div>
             <TableContainer className={style.table}>
                 <Table>
                     <TableHeadComp tableCell={tableCell} callbackSort={sortUpdate}/>
-                    {cardsTableData.map((item:CardsType) => {
+                    {cardsTableData.map((item: CardsType) => {
                         return <TableBodyComp key={item._id}
                                               id={item._id}
                                               userId={item.user_id}
@@ -40,9 +39,10 @@ export const CardsList = () => {
                                               itemFour={item.grade}
                                               myId={myId}
                                               removeData={removeCard}
-                                              // editData={editPackCards}
-                                              // callCards={callCards}
-                                              />
+                            // editData={editPackCards}
+                            // callCards={callCards}
+                                              owner={'cards'}
+                        />
                     })}
                 </Table>
             </TableContainer>

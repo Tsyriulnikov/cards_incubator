@@ -13,9 +13,10 @@ export const Cards = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const isLoggedIn = useAppSelector((state: AppRootStateType) => state.auth.isLoggedIn);
-    const sortCards = useAppSelector((state:AppRootStateType) => state.cards.params.sortCards);
-    const page = useAppSelector((state:AppRootStateType) => state.cards.params.page);
-    const pageCount = useAppSelector((state:AppRootStateType) => state.cards.params.pageCount);
+    const sortCards = useAppSelector((state: AppRootStateType) => state.cards.params.sortCards);
+    const page = useAppSelector((state: AppRootStateType) => state.cards.params.page);
+    const cardsCount = useAppSelector((state: AppRootStateType) => state.cards.cardsTableData.cardsTotalCount);
+    const pageCount = useAppSelector((state: AppRootStateType) => state.cards.params.pageCount);
 
     const cardQuestionSearch =useAppSelector((state:AppRootStateType) => state.cards.params.cardQuestion);
     const debouncedSearchQuestion = useDebounce(cardQuestionSearch, 800);
@@ -34,8 +35,12 @@ export const Cards = () => {
     return (
         <div className={style.blockTable}>
             <HeaderCard id={id}/>
-            <CardsList/>
-            <PaginationCards/>
+            {cardsCount
+                ? <div>
+                    <CardsList/>
+                    <PaginationCards/>
+                </div>
+                : <p className={style.titleEmptyCards}>This pack is empty</p>}
         </div>
     );
 };

@@ -29,7 +29,7 @@ export type CardsType = {
     type: string,
     rating: number,
     more_id: string,
-    created: Date,
+    created: string,
     updated: string,
     __v: number,
     answerImg: string,

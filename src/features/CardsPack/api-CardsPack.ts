@@ -35,6 +35,7 @@ export type CardPacksType = {
     __v: string
 };
 
+
 export type PackResponseType = {
     cardPacks: Array<CardPacksType>
     page: number

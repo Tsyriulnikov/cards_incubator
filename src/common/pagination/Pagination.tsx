@@ -1,35 +1,51 @@
 import React from 'react';
-import {makeStyles, createStyles} from '@material-ui/styles';
-import {Pagination} from "@mui/material";
+import {SelectCountRow} from "../../common/select-count-row/SelectCountRow";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import style from '../../features/CardsPack/CardsPack.module.css';
+import {useAppDispatch} from "../../common/hooks/hooks";
+import {PaginationRounded} from "../../common/pagination/PaginationRounded";
+import {PacksQueryParamsType} from "../../features/CardsPack/api-CardsPack";
 
-type PaginationTypes = {
-    totalCount: number
-    pageCount: number
-    page: number
-    onChangePage: (page: number) => void
+type PaginationPropsType = {
+    page:number,
+    totalCount: number,
+    pageCount: number,
+    setParamsPacksOrCardsAC: (params:PacksQueryParamsType) => any
 };
 
-const useStyles = makeStyles((theme) =>
-    createStyles({
-        root: {
-            '& > *': {},
-        },
-    }),
-);
+export const Pagination = (props:PaginationPropsType) => {
+    const dispatch = useAppDispatch();
 
-export const PaginationRounded = (props: PaginationTypes) => {
-    const classes = useStyles();
-    let count = 1
-    let countCards = Math.ceil(props.totalCount / props.pageCount)
-    if (countCards) count = countCards
-    const onChangeHandler = (event: object, page: number) => {
-        props.onChangePage(page)
-    }
+    const handleChangePage = (page: number) => {
+        dispatch(props.setParamsPacksOrCardsAC({page: page}))
+    };
+
+    const onChangeCountRow = (valuePage: string) => {
+        dispatch(props.setParamsPacksOrCardsAC({pageCount: +valuePage}));
+    };
 
     return (
-        <div className={classes.root}>
-            <Pagination count={count} shape="rounded" onChange={onChangeHandler} page={props.page}/>
-        </div>
+        <Box style={{display: 'flex'}}>
+            <Box>
+                <PaginationRounded totalCount={props.totalCount}
+                                   pageCount={props.pageCount}
+                                   page={props.page}
+                                   onChangePage={handleChangePage}
+                />
+            </Box>
+            <Box className={style.boxPagination}>
+                <Typography variant='subtitle1'>
+                    Show
+                </Typography>
 
-    );
+                <SelectCountRow callBackChange={onChangeCountRow} pageCount={JSON.stringify(props.pageCount)}/>
+
+                <Typography variant='subtitle1'>
+                    Cards per page
+                </Typography>
+            </Box>
+        </Box>
+    )
+
 };
