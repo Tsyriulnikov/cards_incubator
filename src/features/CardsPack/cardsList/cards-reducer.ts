@@ -19,7 +19,7 @@ const initialState = {
         packUserId: '',
         sortCards: '0updated',
     },
-    params: {pageCount: 5, page: 1, sortCards: '0updated',cardQuestion:''} as CardsQueryParamsType,
+    params: {pageCount: 5, page: 1, sortCards: '0updated', cardQuestion: ''} as CardsQueryParamsType,
     cardsStatus: 'exp' as cardStatusType
 };
 
@@ -35,6 +35,16 @@ export const cardsReducer = (state: initialStateType = initialState, action: Act
             return {...state, params: {...state.params, ...action.params}}
         case "cards/CARD-STATUS":
             return {...state, cardsStatus: action.cardStatus}
+        case "cards/SET-CARD-RATING":
+            return {
+                ...state, cardsTableData: {
+                    ...state.cardsTableData, cards: state.cardsTableData.cards
+                        .map(card => {
+                            if (card._id === action.cardID) return {...card, grade: action.rating}
+                            else return card
+                        })
+                }
+            }
         default:
             return state
     }
@@ -44,18 +54,24 @@ export const cardsReducer = (state: initialStateType = initialState, action: Act
 export const getCardsAC = (cardsTableData: CardsResponseType) => ({type: 'cards/GET-CARDS', cardsTableData} as const);
 export const setParamsCardsAC = (params: CardsQueryParamsType) => ({type: 'cards/SET-PARAMS', params} as const);
 export const cardStatusAC = (cardStatus: cardStatusType) => ({type: 'cards/CARD-STATUS', cardStatus} as const)
+export const rateCardAC = (grade: number, cardID: string) => ({
+    type: "cards/SET-CARD-RATING",
+    rating: grade,
+    cardID
+} as const)
+
 
 type GetCardsActionType = ReturnType<typeof getCardsAC>;
 type SetParamsCardsActionType = ReturnType<typeof setParamsCardsAC>;
 export type CardStatusActionType = ReturnType<typeof cardStatusAC>;
-
+type RateCardActionType = ReturnType<typeof rateCardAC>
 
 export const getCardsTC = (cardsPack_id: string, params?: CardsQueryParamsType): AppThunk =>
     async (dispatch, getState: () => AppRootStateType) => {
         if (params) {
             dispatch(setParamsCardsAC(params))
         }
-        const {sortCards, page, pageCount,cardQuestion} = getState().cards.params;
+        const {sortCards, page, pageCount, cardQuestion} = getState().cards.params;
         dispatch(setAppStatusAC('loading'))
         try {
             const response = await cardsAPI.getCards({
@@ -70,7 +86,8 @@ export const getCardsTC = (cardsPack_id: string, params?: CardsQueryParamsType):
                 dispatch(cardStatusAC('cards'));
             } else {
                 dispatch(cardStatusAC('none'));
-            };
+            }
+            ;
             dispatch(setAppStatusAC('succeeded'));
         } catch (error: any) {
             const errorResponse = error.response ? error.response.data.error : (error.message + ", more details in the console")
@@ -104,6 +121,21 @@ export const deleteCardTC = (cardsPack_id: string): AppThunk => async dispatch =
     }
 };
 
+
+export const rateCardTC = (grade: number, cardId: string): AppThunk => async dispatch => {
+    dispatch(setAppStatusAC('loading'));
+    try {
+        const res = await cardsAPI.rate(grade, cardId);
+        dispatch(rateCardAC(res.data.updatedGrade.grade, res.data.updatedGrade.card_id));
+        dispatch(setAppStatusAC('succeeded'));
+    } catch (error: any) {
+        handleServerAppError(error.response.data.error, dispatch);
+        dispatch(setAppStatusAC('failed'));
+    }
+};
+
+
 export type ActionCardsType = GetCardsActionType
     | SetParamsCardsActionType
     | CardStatusActionType
+    | RateCardActionType

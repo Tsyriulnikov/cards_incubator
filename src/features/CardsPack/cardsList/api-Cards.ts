@@ -14,7 +14,10 @@ export const cardsAPI = {
     },
     updateCards(updateCard: updateCardsType) {
         return instance.put('cards/card', {cardsPack: updateCard})
-    }
+    },
+    rate(grade: number, cardID: string){
+        return instance.put('cards/grade', {grade: grade, card_id: cardID} )
+    },
 }
 
 export type CardsType = {
