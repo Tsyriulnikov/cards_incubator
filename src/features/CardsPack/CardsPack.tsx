@@ -27,8 +27,8 @@ export const CardsPack = () => {
         <div className={style.blockTable}>
             <ErrorSnackbar/>
             <HeaderCardsPack/>
-            {/*<TableList/>*/}
-            {/*<PaginationCardsPack/>*/}
+            <TableList/>
+            <PaginationCardsPack/>
         </div>
     );
 };
