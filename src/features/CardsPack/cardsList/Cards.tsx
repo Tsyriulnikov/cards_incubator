@@ -34,13 +34,13 @@ export const Cards = () => {
 
     return (
         <div className={style.blockTable}>
-            {/*<HeaderCard id={id}/>*/}
-            {/*{cardsCount*/}
-            {/*    ? <div>*/}
-            {/*        <CardsList/>*/}
-            {/*        <PaginationCards/>*/}
-            {/*    </div>*/}
-            {/*    : <p className={style.titleEmptyCards}>This pack is empty</p>}*/}
+            <HeaderCard id={id}/>
+            {cardsCount
+                ? <div>
+                    <CardsList/>
+                    <PaginationCards/>
+                </div>
+                : <p className={style.titleEmptyCards}>This pack is empty</p>}
         </div>
     );
 };
