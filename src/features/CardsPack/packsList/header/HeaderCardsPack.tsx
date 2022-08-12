@@ -13,7 +13,7 @@ import {CardPacksType} from "../../api-CardsPack";
 export const HeaderCardsPack = () => {
     const dispatch = useAppDispatch();
     const userId = useAppSelector((state: AppRootStateType) => state.profile._id);
-    const max = useAppSelector((state:AppRootStateType) => state.cards.params.max);
+    const max = useAppSelector((state: AppRootStateType) => state.cards.params.max);
     const min = useAppSelector((state: AppRootStateType) => state.cards.params.min);
 
     const [value, setValue] = useState([min || 0, max || 100]);
@@ -24,11 +24,11 @@ export const HeaderCardsPack = () => {
         dispatch(addCardsPackTC({name: name, private: privatePack}))
     };
     const onClickMyButton = () => {
-        setButtonPacks(buttonPacks=>!buttonPacks);
+        setButtonPacks(buttonPacks => !buttonPacks);
         dispatch(getPacksTC({user_id: userId}));
     };
     const onClickAllButton = () => {
-        setButtonPacks(buttonPacks=>!buttonPacks);
+        setButtonPacks(buttonPacks => !buttonPacks);
         dispatch(getPacksTC({user_id: ""}));
     };
     const onChangeCallback = (event: ChangeEvent<{}>, newValue: number | number[]) => {
@@ -42,12 +42,23 @@ export const HeaderCardsPack = () => {
             max: newValue[1]
         }))
     };
+
+    ///////////
+    const [activeModalAdd, setActiveModalAdd] = useState<boolean>(false)
+
+    const handlerOnClickAddPack = () => {
+        setActiveModalAdd(true)
+    }
+///////////
+
     return <div className={style.headerCardsPack}>
         <h2 className={style.titleHeaderCP}>Packs list</h2>
         <div className={style.blockBtnAddCP}>
-            <Button variant="contained" className={style.btnAddCP}>
-                <NewPackModal addPack={addPack}/>
+
+            <Button variant="contained" className={style.btnAddCP} onClick={handlerOnClickAddPack}>
+                Add new pack
             </Button>
+
         </div>
         <div className={style.searchCardsPack}>
             <h4>Search</h4>
@@ -65,7 +76,7 @@ export const HeaderCardsPack = () => {
                 <Button onClick={onClickAllButton}
                         variant={buttonPacks ? "contained" : "outlined"}
                         className={style.btnCardsPack}
-                        >
+                >
                     All Packs
                 </Button>
             </div>
@@ -77,7 +88,12 @@ export const HeaderCardsPack = () => {
                 onChange={onChangeCallback}
                 onChangeCommitted={handleChangeCommitted}
                 valueLabelDisplay="on"
+                style={{color: '#311B92'}}
+
             />
         </div>
+
+        <NewPackModal addPack={addPack} activeModalAdd={activeModalAdd} setActiveModalAdd={setActiveModalAdd} />
+
     </div>
 }

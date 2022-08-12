@@ -69,4 +69,5 @@ export type AddPackPayloadType = {
 export type UpdatePackPayloadType = {
     _id: string
     name?: string
+    private?: boolean
 };

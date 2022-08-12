@@ -6,6 +6,7 @@ import {ArrowDownward, ArrowUpward} from "@mui/icons-material";
 
 type TableHeadCompType = {
     tableCell: string[],
+    tableName: string[],
     callbackSort: (sort: any) => void
 }
 
@@ -30,12 +31,12 @@ export const TableHeadComp = (props: TableHeadCompType) => {
     return (
         <TableHead className={style.tableHeader}>
             <TableRow style={{width: '100%'}}>
-                {props.tableCell.map((cell) =>
-                    cell !== currentColumn ? <TableCell align="center" key={cell}
+                {props.tableCell.map((cell,index) =>
+                    cell !== currentColumn ? <TableCell align="center" key={index}
                                                         onClick={() => handleCurrentColumn(cell)}>
-                            {cell}</TableCell> :
-                        <TableCell align="center" key={cell}>
-                            {cell}
+                            {props.tableName[index]}</TableCell> :
+                        <TableCell align="center" key={index}>
+                            {props.tableName[index]}
                             {sortUpDown ?
                                 <IconButton onClick={handlerSortDown}>
                                     <ArrowUpward/>

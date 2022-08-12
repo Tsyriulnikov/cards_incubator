@@ -5,7 +5,8 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Delete from "@mui/icons-material/Delete";
 import Edit from "@mui/icons-material/Edit";
-import {School} from "@material-ui/icons";
+import {School} from "@mui/icons-material";
+
 
 type TableBodyType = {
     myId: string | null,
@@ -15,10 +16,7 @@ type TableBodyType = {
     learnPack?: (id: string) => void,
     id: string,
     userId: string
-    itemOne: any
-    itemTwo: any
-    itemTree: any
-    itemFour: any
+    items: any[]
     owner: string
 };
 
@@ -31,53 +29,28 @@ export const TableBodyComp = (props: TableBodyType) => {
         props.editData && props.editData(props.id)
     };
 
-    const onClickLearnPackHandler = (id:string) => {
+    const onClickLearnPackHandler = (id: string) => {
         props.learnPack && props.learnPack(id)
     };
-
 
     return (
         <TableBody style={{width: '100%'}}>
             <TableRow hover key={props.id} onDoubleClick={onDoubleClickHandler} style={{height: "30px"}}>
-                {/*Name*/}
-                <TableCell>
-                    <Box sx={{alignItems: 'center', display: 'flex'}}>
-                        <Typography color="textPrimary" variant="body1">
-                            {props.itemOne}
-                        </Typography>
-                    </Box>
-                </TableCell>
-                {/*CardsCount*/}
-                <TableCell>
-                    <Box sx={{alignItems: 'center', display: 'flex'}}>
-                        <Typography color="textPrimary" variant="body1">
-                            {props.itemTwo}
-                        </Typography>
-                    </Box>
-                </TableCell>
-                {/*updated*/}
-                <TableCell>
-                    <Box sx={{alignItems: 'center', display: 'flex'}}>
-                        <Typography color="textPrimary" variant="body1">
-                            {props.itemTree}
-                        </Typography>
-                    </Box>
-                </TableCell>
-                {/*user_name*/}
-                <TableCell>
-                    <Box sx={{alignItems: 'center', display: 'flex'}}>
-                        <Typography color="textPrimary" variant="body1">
-                            {props.itemFour}
-                        </Typography>
-                    </Box>
-                </TableCell>
-                {/*Action*/}
+                {props.items.map((item) => {
+                    return <TableCell>
+                        <Box sx={{alignItems: 'center', display: 'flex'}}>
+                            <Typography color="textPrimary" variant="body1">
+                                {item}
+                            </Typography>
+                        </Box>
+                    </TableCell>
+                })}
                 <TableCell>
                     <Box sx={{alignItems: 'center', display: 'flex'}}>
                         <Typography color="textPrimary" variant="body1">
                             {props.owner === 'packs' &&
                                 <>
-                                    <IconButton onClick={()=>onClickLearnPackHandler(props.id)}>
+                                    <IconButton onClick={() => onClickLearnPackHandler(props.id)}>
                                         <School/>
                                     </IconButton>
                                 </>
@@ -85,20 +58,20 @@ export const TableBodyComp = (props: TableBodyType) => {
 
                             {props.myId === props.userId &&
                                 <>
-                                <IconButton onClick={() => props.removeData(props.id)}>
-                                <Delete/>
-                                </IconButton>
+                                    <IconButton onClick={() => props.removeData(props.id)}>
+                                        <Delete/>
+                                    </IconButton>
 
-                                <IconButton onClick={onClickEditDataHandler}>
-                                <Edit/>
-                                </IconButton>
+                                    <IconButton onClick={onClickEditDataHandler}>
+                                        <Edit/>
+                                    </IconButton>
                                 </>
                             }
-                                </Typography>
-                                </Box>
-                                </TableCell>
-                                </TableRow>
-                                </TableBody>
-                                );
-                            };
+                        </Typography>
+                    </Box>
+                </TableCell>
+            </TableRow>
+        </TableBody>
+    );
+};
 

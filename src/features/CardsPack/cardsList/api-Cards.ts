@@ -9,11 +9,11 @@ export const cardsAPI = {
     addCards(newCard: newCardsType) {
         return instance.post('cards/card', {card: newCard})
     },
-    deleteCards(cardsPack_id: string) {
-        return instance.delete(`cards/card?id=${cardsPack_id}`)
+    deleteCards(_id: string) {
+        return instance.delete(`cards/card?id=${_id}`)
     },
     updateCards(updateCard: updateCardsType) {
-        return instance.put('cards/card', {cardsPack: updateCard})
+        return instance.put('cards/card', {card: updateCard})
     },
     rate(grade: number, cardID: string){
         return instance.put('cards/grade', {grade: grade, card_id: cardID} )
@@ -79,10 +79,8 @@ export type newCardsType = {
 }
 
 export type updateCardsType = {
-    card: {
         _id: string
         question?: string
         answer?: string
-        comments?: string
-    }
+
 }

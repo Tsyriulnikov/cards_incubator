@@ -6,6 +6,19 @@ import {initTC} from "./app-reducer";
 import CircularProgress from "@mui/material/CircularProgress";
 import {RoutesComponent} from "../common/routes/RoutesComponent";
 import {useAppDispatch, useAppSelector} from "../common/hooks/hooks";
+import {createTheme, ThemeProvider} from "@mui/material/styles";
+import {deepPurple, red} from "@mui/material/colors";
+
+const customTheme = createTheme({
+    palette: {
+        primary: {
+            main: deepPurple[900],
+        },
+        secondary: {
+            main: red[900],
+        }
+    },
+})
 
 export const App = () => {
     const isInitialized = useAppSelector((state: AppRootStateType): boolean => state.app.isInitialized);
@@ -23,9 +36,11 @@ export const App = () => {
     }
 
     return (
+        <ThemeProvider theme={customTheme}>
             <div className={s.App}>
                 <Header/>
                 <RoutesComponent/>
             </div>
+        </ThemeProvider>
     );
 };

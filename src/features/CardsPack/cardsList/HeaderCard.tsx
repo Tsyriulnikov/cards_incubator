@@ -8,6 +8,7 @@ import {AppRootStateType} from "../../../app/store";
 import {addCardTC} from "./cards-reducer";
 import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
 import {CardsSearch} from "../cardsSearch/cardsSearch";
+import {NewCardModal} from "./cardModals/newCardModal";
 
 
 
@@ -26,11 +27,15 @@ export const HeaderCard = (props:HeaderCardType) => {
 
     const card = packs.find((el) => el._id === props.id);
 
-    const addCardHandler = () => {
-        if (props.id) {
-            dispatch(addCardTC({cardsPack_id: props.id}))
-        }
+    const [open, setOpen] = React.useState(false);
+
+    const addCard = (id:string,  question: string, answer: string) => {
+        dispatch(addCardTC({cardsPack_id: id, question, answer}))
     };
+
+    const newModalCards = () => {
+        setOpen(true)
+    }
 
     const onClickHandler = () => {
         navigate(CARDS)
@@ -47,7 +52,7 @@ export const HeaderCard = (props:HeaderCardType) => {
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <h2>{card && card.name}</h2>
                         {(myId === packUserId) &&
-                            <Button variant="contained" onClick={addCardHandler}>Add new card</Button>}
+                            <Button variant="contained" onClick={newModalCards}>Add new card</Button>}
                     </div>
                 </div>
                 : <div className={style.headerCardsTable}>
@@ -58,7 +63,7 @@ export const HeaderCard = (props:HeaderCardType) => {
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <h2>{card && card.name}</h2>
                         {(myId === packUserId) &&
-                            <Button variant="contained" onClick={addCardHandler}>Add new card</Button>}
+                            <Button variant="contained" onClick={newModalCards}>Add new card</Button>}
                     </div>
                     <div className={style.searchCardsPack}>
                         <h3>Search question</h3>
@@ -66,6 +71,7 @@ export const HeaderCard = (props:HeaderCardType) => {
                     </div>
                 </div>
             }
+            <NewCardModal setOpen={setOpen} open={open} addCard={addCard} id={props.id!}/>
         </div>
     );
 };

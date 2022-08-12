@@ -14,14 +14,12 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import {CARDS, LOG_OUT, PROFILE, REC_PASSWORD, SING_IN, SING_UP} from "../routes/routes";
 import {NavLink} from "react-router-dom";
-import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../app/store";
-import {ResponseProfileType} from "../../features/profile/profile-reducer";
 import userPhoto from "../../assets/img/user.png";
 import {LinearProgress} from "@material-ui/core";
-import {RequestStatusType} from "../../app/app-reducer";
 import {useAppSelector} from "../hooks/hooks";
 import {useState} from "react";
+import StyleRoundedIcon from '@mui/icons-material/StyleRounded';
 
 
 const pages = ['Sing In', 'Sing Up'];
@@ -57,7 +55,7 @@ export const Header = () => {
                     <>
                     {/*_______________________LOGO DESKTOP_____________________________________*/}
 
-                        <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                        <StyleRoundedIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}/>
                         <Typography
                             variant="h6"
                             noWrap
@@ -73,7 +71,7 @@ export const Header = () => {
                                 textDecoration: 'none',
                             }}
                         >
-                            PROJECT
+                            CARDS
                         </Typography>
 
                         {/*__________________________________PAGE ADAPTIVE______________________________________*/}
@@ -109,7 +107,7 @@ export const Header = () => {
 
                         {/*___________________________________LOGO ADAPTIVE_________________________________________*/}
 
-                        <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                        <StyleRoundedIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
                         <Typography
                             variant="h5"
                             noWrap
@@ -126,7 +124,7 @@ export const Header = () => {
                                 textDecoration: 'none',
                             }}
                         >
-                            PROJECT
+                            CARDS
                         </Typography>
 
                         {/*_____________________________PAGE DESKTOP__________________________________________________*/}

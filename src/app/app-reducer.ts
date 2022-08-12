@@ -2,6 +2,7 @@ import {authApi} from "../features/singIn/auth-api";
 import {setIsLoggedInAC} from "../features/singIn/auth-reducer";
 import {setProfileAC, SetProfileACType} from "../features/profile/profile-reducer";
 import {AppThunk} from "./store";
+import {handleServerAppError} from "../utils/error-utils";
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 export type InitialStateType = {
@@ -45,7 +46,6 @@ export const initTC = (): AppThunk => async dispatch => {
         dispatch(setIsLoggedInAC(true));
         dispatch(setAppStatusAC('succeeded'));
     } catch (error: any) {
-        console.log(error);
         dispatch(setAppStatusAC('failed'));
     } finally {
         dispatch(setAppInitializedAC(true));
