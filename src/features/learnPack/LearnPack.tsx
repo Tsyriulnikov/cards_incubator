@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import {getCard} from "../../utils/getCard";
+import Paper from "@mui/material/Paper";
 
 export const LearnPack = () => {
     const dispatch = useAppDispatch();
@@ -62,7 +63,7 @@ export const LearnPack = () => {
     return (
         <Grid container spacing={0} direction="column" alignItems="center" justifyItems="center"
               style={{minHeight: '100vh'}}>
-            <Button variant="contained" size={"small"} style={{width: '75px', marginTop: '3%'}}
+            <Button variant="contained" size={"small"} style={{width: '75px', marginTop: '10%'}}
                     startIcon={<KeyboardBackspaceIcon/>} onClick={onClickHandler}>
                 BACK
             </Button>

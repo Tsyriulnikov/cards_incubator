@@ -3,11 +3,11 @@ import {
     PackResponseType,
     packsAPI,
     PacksQueryParamsType, UpdatePackPayloadType
-} from "../CardsPack/api-CardsPack";
-import {AppRootStateType, AppThunk} from "../../app/store";
-import {handleServerAppError} from "../../utils/error-utils";
-import {cardStatusAC} from "./cardsList/cards-reducer";
-import {setAppStatusAC} from "../../app/app-reducer";
+} from "./api-CardsPack";
+import {AppRootStateType, AppThunk} from "../../../app/store";
+import {handleServerAppError} from "../../../utils/error-utils";
+import {cardStatusAC} from "../cardsList/cards-reducer";
+import {setAppStatusAC} from "../../../app/app-reducer";
 
 const initialState = {
     packsTableData: {

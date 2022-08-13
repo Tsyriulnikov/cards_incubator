@@ -1,16 +1,14 @@
 import React from 'react';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import Button from "@mui/material/Button";
-import style from "../CardsPack.module.css";
+import style from "../packsList/CardsPack.module.css";
 import {CARDS} from "../../../common/routes/routes";
 import {useNavigate} from "react-router-dom";
 import {AppRootStateType} from "../../../app/store";
 import {addCardTC} from "./cards-reducer";
 import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
-import {CardsSearch} from "../cardsSearch/cardsSearch";
+import {CardsSearch} from "./cardsSearch/cardsSearch";
 import {NewCardModal} from "./cardModals/newCardModal";
-
-
 
 type HeaderCardType = {
     id: string | undefined
@@ -20,7 +18,6 @@ export const HeaderCard = (props:HeaderCardType) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const packs = useAppSelector((state: AppRootStateType) => state.packs.packsTableData.cardPacks);
-    const cards=useAppSelector((state:AppRootStateType) => state.cards.cardsTableData.cards);
     const myId = useAppSelector((state: AppRootStateType) => state.profile._id);
     const packUserId = useAppSelector((state: AppRootStateType) => state.cards.cardsTableData.packUserId);
     const cardsCount = useAppSelector((state: AppRootStateType) => state.cards.cardsTableData.cardsTotalCount);

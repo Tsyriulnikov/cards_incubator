@@ -11,15 +11,16 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import {CARDS, LOG_OUT, PROFILE, REC_PASSWORD, SING_IN, SING_UP} from "../routes/routes";
 import {NavLink} from "react-router-dom";
 import {AppRootStateType} from "../../app/store";
 import userPhoto from "../../assets/img/user.png";
 import {LinearProgress} from "@material-ui/core";
-import {useAppSelector} from "../hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../hooks/hooks";
 import {useState} from "react";
 import StyleRoundedIcon from '@mui/icons-material/StyleRounded';
+import {logoutTC} from "../../features/profile/profile-reducer";
+import s from './Header.module.css'
 
 
 const pages = ['Sing In', 'Sing Up'];
@@ -28,6 +29,7 @@ const pagesRoutes = [SING_IN, SING_UP];
 const settingsRoutes = [PROFILE, CARDS, REC_PASSWORD, LOG_OUT];
 
 export const Header = () => {
+    const dispatch = useAppDispatch();
     const profile = useAppSelector((state: AppRootStateType) => state.profile)
     const status = useAppSelector((state: AppRootStateType) => state.app.status)
     const isLoggedIn = useAppSelector((state:AppRootStateType) => state.auth.isLoggedIn)
@@ -48,8 +50,12 @@ export const Header = () => {
         setAnchorElUser(null);
     };
 
+    const onClickLogOutHandler = () => {
+        dispatch(logoutTC())
+    }
+
     return (
-        <AppBar position="static">
+        <AppBar position="fixed">
             <Container maxWidth="xl">
                 <Toolbar disableGutters sx={{position: 'relative'}}>
                     <>
@@ -161,14 +167,13 @@ export const Header = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {settings.map((setting, index) => (
-                                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                        <NavLink to={settingsRoutes[index]}
-                                                 style={{textDecoration: 'none', color: 'black'}}
-                                                 key={index}><Typography
-                                            textAlign="center">{setting}</Typography></NavLink> {/*settings for all*/}
-                                    </MenuItem>
-                                ))}
+                                <MenuItem onClick={handleCloseUserMenu} style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
+                                    <NavLink to={PROFILE} className={s.menuItem} >Profile</NavLink>
+                                    <NavLink to={CARDS} className={s.menuItem}>Cards Pack</NavLink>
+                                    <div onClick={onClickLogOutHandler} className={s.menuItem}>Log out</div>
+                                </MenuItem>
+
+
                             </Menu>
                         </Box>}
                     </>

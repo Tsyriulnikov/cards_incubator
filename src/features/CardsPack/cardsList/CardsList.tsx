@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Table, TableContainer} from "@mui/material";
+import {Rating, Table, TableContainer} from "@mui/material";
 import style from "../../../common/table/TableList.module.css";
 import {TableHeadComp} from "../../../common/table/TableHeadComp";
 import {TableBodyComp} from "../../../common/table/TableBody";
@@ -10,9 +10,13 @@ import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
 import {formatDate} from "../../../common/formatDate/formatDate";
 import {DeleteCardModal} from "./cardModals/DeleteCardModal";
 import {EditCardModal} from "./cardModals/editCardModal";
+import {SING_IN} from "../../../common/routes/routes";
+import {useNavigate} from "react-router-dom";
 
 export const CardsList = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const isLoggedIn = useAppSelector((state: AppRootStateType) => state.auth.isLoggedIn);
     const cardsTableData = useAppSelector((state: AppRootStateType) => state.cards.cardsTableData.cards);
     const myId = useAppSelector((state: AppRootStateType) => state.profile._id);
 
@@ -44,13 +48,17 @@ export const CardsList = () => {
     const sortUpdate = (sort: any) => {
         dispatch(setParamsCardsAC({sortCards:sort}));
     }
+
+    if(!isLoggedIn) {
+        navigate(SING_IN)
+    }
     return (
         <div>
             <TableContainer className={style.table}>
                 <Table>
                     <TableHeadComp tableCell={tableCell} tableName={tableName} callbackSort={sortUpdate}/>
                     {cardsTableData.map((item:CardsType) => {
-                        const items = [item.question, item.answer, formatDate(item.updated), item.grade]
+                        const items = [item.question, item.answer, formatDate(item.updated), <Rating name="read-only" value={item.grade} readOnly />]
                         return <TableBodyComp key={item._id}
                                               id={item._id}
                                               userId={item.user_id}

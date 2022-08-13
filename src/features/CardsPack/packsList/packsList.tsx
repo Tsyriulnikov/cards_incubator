@@ -1,21 +1,23 @@
 import React, {useState} from 'react';
-import {AppRootStateType} from "../../../../app/store";
-import {CardPacksType} from "../../api-CardsPack";
-import {deleteCardsPackTC, getPacksTC, updateCardsPackTC} from "../../cardsPack-reducer";
-import style from "../../../../common/table/TableList.module.css";
-import {listItemSecondaryActionClasses, Table, TableContainer} from "@mui/material";
-import {TableHeadComp} from "../../../../common/table/TableHeadComp";
-import {TableBodyComp} from "../../../../common/table/TableBody";
+import {AppRootStateType} from "../../../app/store";
+import {CardPacksType} from "./api-CardsPack";
+import {deleteCardsPackTC, getPacksTC, updateCardsPackTC} from "./cardsPack-reducer";
+import style from "../../../common/table/TableList.module.css";
+import {Table, TableContainer} from "@mui/material";
+import {TableHeadComp} from "../../../common/table/TableHeadComp";
+import {TableBodyComp} from "../../../common/table/TableBody";
 import {useNavigate} from "react-router-dom";
-import {formatDate} from "../../../../common/formatDate/formatDate";
-import {useAppDispatch, useAppSelector} from "../../../../common/hooks/hooks";
-import {EditPackModal} from "./EditPackModal";
-import {DeletePackModal} from "./DeletePackModal";
+import {formatDate} from "../../../common/formatDate/formatDate";
+import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
+import {EditPackModal} from "./packModals/EditPackModal";
+import {DeletePackModal} from "./packModals/DeletePackModal";
+import {SING_IN} from "../../../common/routes/routes";
 
 
-export const TableList = () => {
+export const PacksList = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const isLoggedIn = useAppSelector((state: AppRootStateType) => state.auth.isLoggedIn);
     const packsTableData = useAppSelector((state: AppRootStateType) => state.packs.packsTableData.cardPacks);
 
     const myId = useAppSelector((state:AppRootStateType) => state.profile._id);
@@ -52,6 +54,10 @@ export const TableList = () => {
 
     const callLearnPack = (cardsPack_id: string) => {
         navigate(`/learn-pack/${cardsPack_id}`)
+    }
+
+    if(!isLoggedIn) {
+        navigate(SING_IN)
     }
 
     const tableCell = ['name', 'cardsCount', 'updated', 'user_name', 'Actions']

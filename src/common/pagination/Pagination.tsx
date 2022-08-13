@@ -1,11 +1,11 @@
 import React from 'react';
-import {SelectCountRow} from "../../common/select-count-row/SelectCountRow";
+import {SelectCountRow} from "../select-count-row/SelectCountRow";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import style from '../../features/CardsPack/CardsPack.module.css';
-import {useAppDispatch} from "../../common/hooks/hooks";
-import {PaginationRounded} from "../../common/pagination/PaginationRounded";
-import {PacksQueryParamsType} from "../../features/CardsPack/api-CardsPack";
+import style from '../../features/CardsPack/packsList/CardsPack.module.css';
+import {useAppDispatch} from "../hooks/hooks";
+import {PaginationRounded} from "./PaginationRounded";
+import {PacksQueryParamsType} from "../../features/CardsPack/packsList/api-CardsPack";
 
 type PaginationPropsType = {
     page:number,
@@ -26,7 +26,7 @@ export const Pagination = (props:PaginationPropsType) => {
     };
 
     return (
-        <Box style={{display: 'flex'}}>
+        <Box style={{display: 'flex', background:'white'}}>
             <Box>
                 <PaginationRounded totalCount={props.totalCount}
                                    pageCount={props.pageCount}

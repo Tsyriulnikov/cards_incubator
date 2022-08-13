@@ -36,8 +36,8 @@ export const TableBodyComp = (props: TableBodyType) => {
     return (
         <TableBody style={{width: '100%'}}>
             <TableRow hover key={props.id} onDoubleClick={onDoubleClickHandler} style={{height: "30px"}}>
-                {props.items.map((item) => {
-                    return <TableCell>
+                {props.items.map((item, index) => {
+                    return <TableCell key={index}>
                         <Box sx={{alignItems: 'center', display: 'flex'}}>
                             <Typography color="textPrimary" variant="body1">
                                 {item}

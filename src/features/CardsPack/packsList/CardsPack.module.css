@@ -1,5 +1,5 @@
 .blockTable {
-    margin-top: 20px;
+    margin-top: 60px;
     height: 85vh;
     width: 70vw;
     display: flex;
@@ -10,7 +10,7 @@
 
 .headerCardsPack {
     width: 100%;
-    padding: 0px 10px;
+    padding: 0 10px;
     height: 130px;
     display: grid;
     grid-template-areas:
@@ -40,7 +40,7 @@
 }
 
 .btnAddCP {
-    with: 100px;
+    width: 180px;
     height: 30px;
 }
 
@@ -81,7 +81,6 @@
 }
 .boxPagination {
     display: flex;
-    /*justify-content:space-between;*/
     width: 40%;
 }
 @media screen and (max-width: 850px) {
@@ -107,7 +106,7 @@
         padding: 20px 0 0 30px;
     }
     .changeCardsPack {
-        padding-left: 0px;
+        padding-left: 0;
         padding-top: 5px;
     }
     .titleSliderCardsPack {

@@ -1,12 +1,9 @@
-import React, {ChangeEvent, SyntheticEvent, useState} from 'react';
+import React from 'react';
 import {BasicModal} from "../../../../common/modal/modal";
-import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Typography from "@mui/material/Typography";
 import {useAppSelector} from "../../../../common/hooks/hooks";
 import {AppRootStateType} from "../../../../app/store";
-import {CardPacksType} from "../../api-CardsPack";
+import {CardPacksType} from "../api-CardsPack";
 
 type DeletePackModalType = {
     setOpen: (value: boolean) => void

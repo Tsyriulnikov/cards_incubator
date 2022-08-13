@@ -1,9 +1,8 @@
-import react from 'React';
-import {getPacksTC, setParamsAC} from "../../cardsPack-reducer";
-import {Pagination} from "../../../../common/pagination/Pagination";
 import React from "react";
-import {useAppSelector} from "../../../../common/hooks/hooks";
-import {AppRootStateType} from "../../../../app/store";
+import {setParamsAC} from "./cardsPack-reducer";
+import {Pagination} from "../../../common/pagination/Pagination";
+import {useAppSelector} from "../../../common/hooks/hooks";
+import {AppRootStateType} from "../../../app/store";
 
 export const PaginationCardsPack = () => {
     const page = useAppSelector((state:AppRootStateType) => state.packs.packsTableData.page);

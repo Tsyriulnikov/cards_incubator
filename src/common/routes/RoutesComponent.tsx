@@ -20,7 +20,7 @@ import {NewPassword} from "../../features/newPassword/newPassword";
 import {LogOut} from "../../features/logOut/logOut";
 import {CheckEmail} from "../../features/CheckEmail/CheckEmail";
 import {ErrorPage} from "../../features/error/ErrorPage";
-import {CardsPack} from "../../features/CardsPack/CardsPack";
+import {PacksContainer} from "../../features/CardsPack/packsList/PacksContainer";
 import {Cards} from "../../features/CardsPack/cardsList/Cards";
 import s from '../../app/App.module.css'
 import {LearnPack} from "../../features/learnPack/LearnPack";
@@ -30,7 +30,7 @@ export const RoutesComponent = () => {
         {path: PROFILE, component: <Profile/>},
         {path: SING_IN, component: <SingIn/>},
         {path: SING_UP, component: <SingUp/>},
-        {path: CARDS, component: <CardsPack/>},
+        {path: CARDS, component: <PacksContainer/>},
         {path: CARDSFORPACKS, component: <Cards/>},
         {path: REC_PASSWORD, component: <RecoveryPassword/>},
         {path: NEW_PASSWORD, component: <NewPassword/>},

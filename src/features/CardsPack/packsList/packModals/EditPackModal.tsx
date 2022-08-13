@@ -5,7 +5,7 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import {useAppSelector} from "../../../../common/hooks/hooks";
 import {AppRootStateType} from "../../../../app/store";
-import {CardPacksType} from "../../api-CardsPack";
+import {CardPacksType} from "../api-CardsPack";
 
 type EditPackModalType = {
     setOpen: (value: boolean) => void

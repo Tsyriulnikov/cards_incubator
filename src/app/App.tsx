@@ -9,7 +9,7 @@ import {useAppDispatch, useAppSelector} from "../common/hooks/hooks";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import {deepPurple, red} from "@mui/material/colors";
 
-const customTheme = createTheme({
+export const customTheme = createTheme({
     palette: {
         primary: {
             main: deepPurple[900],
@@ -18,7 +18,7 @@ const customTheme = createTheme({
             main: red[900],
         }
     },
-})
+});
 
 export const App = () => {
     const isInitialized = useAppSelector((state: AppRootStateType): boolean => state.app.isInitialized);

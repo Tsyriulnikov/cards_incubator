@@ -1,4 +1,4 @@
-import React, {ChangeEvent, SyntheticEvent, useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {BasicModal} from "../../../../common/modal/modal";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
@@ -32,7 +32,6 @@ export const NewPackModal = (props: NewPackModalType) => {
     }
     return (
 
-        // <BasicModal name={'Add new pack'} open={props.activeModalAdd} setOpen={} onSave={addPackHandler}>
         <BasicModal name={'Add new pack'} open={props.activeModalAdd} setOpen={props.setActiveModalAdd}
                     onSave={addPackHandler} nameButton={'Save'}>
             <TextField onChange={onChangeTextFieldHandler} id="standard-basic" label="Name Pack" variant="standard" sx={{ width: '100%'}}/>

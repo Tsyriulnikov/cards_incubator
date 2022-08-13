@@ -32,10 +32,10 @@ export const TableHeadComp = (props: TableHeadCompType) => {
         <TableHead className={style.tableHeader}>
             <TableRow style={{width: '100%'}}>
                 {props.tableCell.map((cell,index) =>
-                    cell !== currentColumn ? <TableCell align="center" key={index}
+                    cell !== currentColumn ? <TableCell align="left" key={index}
                                                         onClick={() => handleCurrentColumn(cell)}>
                             {props.tableName[index]}</TableCell> :
-                        <TableCell align="center" key={index}>
+                        <TableCell align="left" key={index}>
                             {props.tableName[index]}
                             {sortUpDown ?
                                 <IconButton onClick={handlerSortDown}>

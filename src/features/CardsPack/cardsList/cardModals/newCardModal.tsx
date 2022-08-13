@@ -5,6 +5,7 @@ import FormControl from "@mui/material/FormControl";
 import {InputLabel, Select} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 
+
 type NewCardModalType = {
     setOpen: (value: boolean) => void
     open: boolean
@@ -40,7 +41,7 @@ export const NewCardModal = (props:NewCardModalType) =>  {
                 <Select
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                   // value={age}
+                    //value={age}
                     //onChange={handleChange}
                     label="Age"
                 >

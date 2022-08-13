@@ -1,19 +1,17 @@
 import React, {ChangeEvent} from 'react';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
-import {AppRootStateType} from "../../../app/store";
-import {setParamsCardsAC} from "../cardsList/cards-reducer";
-import {useAppDispatch, useAppSelector} from "../../../common/hooks/hooks";
+import {setParamsAC} from "../cardsPack-reducer";
+import {AppRootStateType} from "../../../../app/store";
+import {useAppDispatch, useAppSelector} from "../../../../common/hooks/hooks";
 
-
-export const CardsSearch = () => {
+export const PacksSearch = () => {
     const dispatch =  useAppDispatch();
-    const questionSearch = useAppSelector((state:AppRootStateType) => state.cards.params.cardQuestion);
+    const packNameSearch = useAppSelector((state:AppRootStateType)=> state.packs.params.packName);
 
     const onSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(setParamsCardsAC({cardQuestion:e.currentTarget.value}));
+        dispatch(setParamsAC({packName: e.currentTarget.value}));
     };
-
     return (
         <Paper
             component="form"
@@ -24,9 +22,8 @@ export const CardsSearch = () => {
                 placeholder="Provide your text"
                 inputProps={{
                     'aria-label': 'Provide your text',
-                    value: questionSearch,
+                    value: packNameSearch,
                     onChange: (onSearchInputChange)
-
                 }}
             />
         </Paper>
