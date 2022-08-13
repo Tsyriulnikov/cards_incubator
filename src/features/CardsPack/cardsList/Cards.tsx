@@ -25,14 +25,14 @@ export const Cards = () => {
 
     const {id} = useParams()
 
-    useEffect(() => {
-        if (id) {
-            dispatch(getCardsTC(id))
-        }
-        if(!isLoggedIn) {
-            navigate(SING_IN)
-        }
-    }, [dispatch, sortCards, page, pageCount,debouncedSearchQuestion]);
+    // useEffect(() => {
+    //     if (id) {
+    //         dispatch(getCardsTC(id))
+    //     }
+    //     if(!isLoggedIn) {
+    //         navigate(SING_IN)
+    //     }
+    // }, [dispatch, sortCards, page, pageCount,debouncedSearchQuestion]);
 
     return (
         <div className={style.blockTable}>
