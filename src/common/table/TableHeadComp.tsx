@@ -18,7 +18,15 @@ export const TableHeadComp = (props: TableHeadCompType) => {
         props.callbackSort('0'+currentColumn)
     };
 
+    const handlerSortDown = () => {
+        setSortUpDown(sortUpDown => !sortUpDown)
+        props.callbackSort('1' + currentColumn)
+    }
 
+    const handleCurrentColumn = (cell: string) => {
+        setCurrentColumn(cell)
+        sortUpDown ? props.callbackSort('0'+cell) :props.callbackSort('1'+cell)
+    }
 
     return (
         <TableHead className={style.tableHeader}>
