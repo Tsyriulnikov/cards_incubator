@@ -22,16 +22,6 @@ type TableBodyType = {
 
 export const TableBodyComp = (props: TableBodyType) => {
 
-    const onDoubleClickHandler = () => {
-        props.callCards && props.callCards(props.id)
-    };
-    const onClickEditDataHandler = () => {
-        props.editData && props.editData(props.id)
-    };
-
-    const onClickLearnPackHandler = (id: string) => {
-        props.learnPack && props.learnPack(id)
-    };
 
     return (
         <TableBody style={{width: '100%'}}>
